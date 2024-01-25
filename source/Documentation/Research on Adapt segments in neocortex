@@ -59,3 +59,14 @@ You will realize this even for human memory. Try to remember a  name of a profes
 Even then, if I show you 100 random picture which include your professor’s image, you will definitely locate your professor with high accuracy.
 b. SDR can be sub-sampled without loosing much information. Say, your SDR has 20 ones and 10000 zeros. Even if you remove 5 zeros from this SDR, we can still use the sub-sampled SDR to match with new SDRs. You will realize this even for human memory. 
 Even if we forget a lot of properties of a fruit which we tasted 10 years back, we can still classify this fruit accurately based on all other properties that we do remember.
+
+B: Semantic Encoding -
+We use an encoding engine to take input from an input source and create an SDR. We need to make sure that the encoding algorithm gives us similar SDR for similar objects. 
+This concept is very similar to embedding in the deep learning space. 
+A lot of pre-built encoders are already available online that include numeric encoding, datetime encoding, English word encoding, 
+We need to create your own encoder for specific problems. 
+Step 1 – We choose a set of documents that we will use to find semantics of words
+Step 2 – We will clean the documents and slice each document into snippets. We will then cluster these snippets so that similar snippets are kept together
+Step 3 –  We will now represent each snippet as a node in a SDR
+Step 4 – Now we pick up individual (target) words and activate all the nodes (documents) in the SDR that contain our target word. This will create a word fingerprint in form of SDR
+Step 5 – We will repeat the above four steps to get word fingerprints for all the words we are interested.
