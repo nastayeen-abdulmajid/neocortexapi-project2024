@@ -16,3 +16,31 @@ These regions are logically related to each other in a hierarchical structure.
 The sensory data is represented as simple ideas in the lower level and the idea gets more abstract in the higher level. 
 A parallel to this process in the deep learning space – the initial layers in neural networks detect simple ideas like edges, intermediate layers detect shapes, and final layers identify objects.
 Hebbian learning is one of the oldest learning algorithms and works on an extremely simple principle – synapse between two neurons is strengthened when the neurons on either side of the synapse (input and output) have highly correlated outputs.
+
+Commercially Tested Use Cases:-
+1. Sever Monitoring: 
+Grok was the first commercially available product from Numenta that is used for anomaly detection. 
+One of the important use cases is anomalies in server monitoring. Servers generate a lot of metrics like CPU usage, GPU usage, etc. at a high frequency. 
+Grok creates an SDR for individual metrics and feeds it into individual HTM models. 
+The HTM model then sends a trigger to the user whenever it sees an anomaly for any of the metrics.
+
+2. Stock volume anomalies:
+This application tracks the stock price and Twitter data of publicly traded companies and sends an alert whenever anomalies are detected to take timely buy/sell action.
+
+3.Rouge Human behaviour:
+Rogue human behavior is an application based on HTM that can help automate discovering security issues.Like, identifying abnormal financial trading activities or asset allocations by individual traders, 
+sending alerts when employee behaviors or actions fall outside of typical patterns, detect the installation, activation, or usage of unapproved software,
+sending alerts when employee computers or devices are used by unauthorized individuals.
+
+4. Natural language prediction:
+It refers to the task of using computational methods to anticipate or forecast aspects of human language. 
+It involves building models that can understand and generate natural language text based on input data. 
+These models aim to predict various linguistic properties or structures, such as the next word in a sentence, sentiment of a text, part-of-speech tags, semantic relationships,
+
+5. Geospatial Tracking:
+Geospatial tracking takes the input of various locations (latitude or longitude) and the velocity of a vehicle or even humans. 
+We convert these metrics into SDR and feed them into the HTM model. The model will send you a trigger if it sees any anomaly in the data. 
+This tracking can be used by any transportation or cab service to track all their vehicles. 
+initially tries to learn a route that is shown in all red. Gradually it learns each latitude, longitude and velocity with a particular sequence. 
+Any change in route or speed or direction will be tracked as an anomaly and reported back.
+
