@@ -1,1 +1,8 @@
-
+About deep Learning - 
+It is a subset of machine learning that utilizes artificial neural networks with multiple layers (hence the term "deep") to learn and extract patterns from data. 
+These neural networks are inspired by the structure and function of the human brain, consisting of interconnected nodes called neurons organized into layers. 
+Each layer of neurons processes specific features of the input data and passes them on to the next layer for further processing.
+Deep learning algorithms can automatically learn representations of data through the iterative process of forward propagation and backpropagation. 
+During forward propagation, the input data is fed through the network, and the output is compared to the actual target values to compute the error. 
+Then, during backpropagation, this error is propagated backward through the network, and the model's parameters (weights and biases) are adjusted to minimize the error, typically using optimization techniques like gradient descent.
+It includes computer vision, natural language processing, speech recognition, and reinforcement learning. Some popular deep learning architectures include convolutional neural networks (CNNs) for image processing, recurrent neural networks (RNNs) for sequential data, and transformers for natural language processing tasks. Deep learning has significantly advanced the state-of-the-art in many artificial intelligence applications and continues to be an active area of research and development.
