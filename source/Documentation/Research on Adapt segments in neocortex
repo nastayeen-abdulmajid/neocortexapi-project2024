@@ -6,3 +6,13 @@ Deep learning algorithms can automatically learn representations of data through
 During forward propagation, the input data is fed through the network, and the output is compared to the actual target values to compute the error. 
 Then, during backpropagation, this error is propagated backward through the network, and the model's parameters (weights and biases) are adjusted to minimize the error, typically using optimization techniques like gradient descent.
 It includes computer vision, natural language processing, speech recognition, and reinforcement learning. Some popular deep learning architectures include convolutional neural networks (CNNs) for image processing, recurrent neural networks (RNNs) for sequential data, and transformers for natural language processing tasks. Deep learning has significantly advanced the state-of-the-art in many artificial intelligence applications and continues to be an active area of research and development.
+
+About Neocortex:
+Neocortex is a mammalian development and is almost like a dinner napkin squeezed in our skull. 
+In general, whenever we talk about “brain” or “intelligence” in colloquial terms, we are almost always referring to the Neocortex. 
+An interesting fact about Neocortex is that the cellular structure throughout all these regions is almost the same, whether it be from the visual processing region or the audio processing region. 
+This finding is extremely important as this means that the brain is trying to solve similar problems to process any kind of sensory data – visual, audio etc. 
+These regions are logically related to each other in a hierarchical structure.
+The sensory data is represented as simple ideas in the lower level and the idea gets more abstract in the higher level. 
+A parallel to this process in the deep learning space – the initial layers in neural networks detect simple ideas like edges, intermediate layers detect shapes, and final layers identify objects.
+Hebbian learning is one of the oldest learning algorithms and works on an extremely simple principle – synapse between two neurons is strengthened when the neurons on either side of the synapse (input and output) have highly correlated outputs.
