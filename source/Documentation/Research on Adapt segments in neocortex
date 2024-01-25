@@ -27,7 +27,7 @@ The HTM model then sends a trigger to the user whenever it sees an anomaly for a
 2. Stock volume anomalies:
 This application tracks the stock price and Twitter data of publicly traded companies and sends an alert whenever anomalies are detected to take timely buy/sell action.
 
-3.Rouge Human behaviour:
+3. Rouge Human behaviour:
 Rogue human behavior is an application based on HTM that can help automate discovering security issues.Like, identifying abnormal financial trading activities or asset allocations by individual traders, 
 sending alerts when employee behaviors or actions fall outside of typical patterns, detect the installation, activation, or usage of unapproved software,
 sending alerts when employee computers or devices are used by unauthorized individuals.
@@ -41,6 +41,21 @@ These models aim to predict various linguistic properties or structures, such as
 Geospatial tracking takes the input of various locations (latitude or longitude) and the velocity of a vehicle or even humans. 
 We convert these metrics into SDR and feed them into the HTM model. The model will send you a trigger if it sees any anomaly in the data. 
 This tracking can be used by any transportation or cab service to track all their vehicles. 
+
+Working of HTM:
+Input temporal data generated from various data sources is semantically encoded as a  sparse array called as sparse distributed representation (SDR).  
+This encoded array goes through a processing called spatial pooling to normalize/standardize the  input data from various sources into a sparse output vector or mini-columns (column of pyramidal neurons) of definitive size and fixed sparsity. 
+The learning of this spatial pooling is done through Hebbian learning with the boosting of prolonged inactive cells. 
+The spatial pooling retains the context of the input data by an algorithm called temporal memory.
 initially tries to learn a route that is shown in all red. Gradually it learns each latitude, longitude and velocity with a particular sequence. 
 Any change in route or speed or direction will be tracked as an anomaly and reported back.
 
+A: SDR - Sparse Distributed Representation
+SDR is simply an array of 0’s and 1’s. If you take a snapshot of neurons in the brain, it is highly likely that you will only see less than 2% neurons in an active state. 
+SDR is a mathematical representation of these sparse signals which will likely have less than 2% ones. 
+Properties of SDR:
+a. SDR is extremely noise resistant. If you introduce noise in magnitude of say 33%, highly likely that the SDR will only match with very like objects. 
+You will realize this even for human memory. Try to remember a  name of a professor from your graduation college and try remembering his/her face. It is possible that you might not remember him/her face clearly. 
+Even then, if I show you 100 random picture which include your professor’s image, you will definitely locate your professor with high accuracy.
+b. SDR can be sub-sampled without loosing much information. Say, your SDR has 20 ones and 10000 zeros. Even if you remove 5 zeros from this SDR, we can still use the sub-sampled SDR to match with new SDRs. You will realize this even for human memory. 
+Even if we forget a lot of properties of a fruit which we tasted 10 years back, we can still classify this fruit accurately based on all other properties that we do remember.
