@@ -51,7 +51,7 @@ initially tries to learn a route that is shown in all red. Gradually it learns e
 Any change in route or speed or direction will be tracked as an anomaly and reported back.
 
 A: SDR - Sparse Distributed Representation
-SDR is simply an array of 0’s and 1’s. If you take a snapshot of neurons in the brain, it is highly likely that you will only see less than 2% neurons in an active state. 
+SDR is simply an array of 0’s and 1’s. If you take a snapshot of neurons in the brain, likely, you will only see less than 2% neurons in an active state. 
 SDR is a mathematical representation of these sparse signals which will likely have less than 2% ones. 
 Properties of SDR:
 a. SDR is extremely noise resistant. If you introduce noise in magnitude of say 33%, highly likely that the SDR will only match with very like objects. 
@@ -70,3 +70,11 @@ Step 2 – We will clean the documents and slice each document into snippets. We
 Step 3 –  We will now represent each snippet as a node in a SDR
 Step 4 – Now we pick up individual (target) words and activate all the nodes (documents) in the SDR that contain our target word. This will create a word fingerprint in form of SDR
 Step 5 – We will repeat the above four steps to get word fingerprints for all the words we are interested.
+
+C.SPATIAL POOLING -
+Spatial pooling is the process of converting the encoded SDR into a sparse array complying with two basic principles:
+a. Make sure the sparsity of the output array is constant at all times, even if the input array is a very sparse SDR or a not so sparse SDR
+b. Make sure the overlap or semantic nature of the input is maintained
+So the overlap of both input and output SDR of two similar objects need to be high. 
+The input vector had a sparsity varying from 33% to 67%, but the spatial pooling made sure the sparsity of the output array is 33%. 
+Also the semantics of the two possible inputs in the series are completely different from each other, and the same was maintained in the output vector.
