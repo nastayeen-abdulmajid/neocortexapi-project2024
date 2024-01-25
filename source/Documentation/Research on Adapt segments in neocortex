@@ -78,3 +78,29 @@ b. Make sure the overlap or semantic nature of the input is maintained
 So the overlap of both input and output SDR of two similar objects need to be high. 
 The input vector had a sparsity varying from 33% to 67%, but the spatial pooling made sure the sparsity of the output array is 33%. 
 Also the semantics of the two possible inputs in the series are completely different from each other, and the same was maintained in the output vector.
+
+D. Hebbian learning-
+Learning in HTM is based on a very simple principle. 
+The synapse between the active column in the spatially pooled output array, and active cells in encoded sequence, is strengthened. 
+The synapses between the active column in the spatially pooled output array, and inactive cells in encoded input, is weakened. 
+This process is repeated again and again to learn patterns.
+
+E. Temporal Memory-
+Spatial pooling maintains the context of the input sequence by a method called temporal memory. 
+The concept of temporal memory is based on the fact that each neuron not only gets information from lower level neurons, but also gets contextual information from neurons at the same level.  
+In the spatial pooling section, each column in the output vector by a single number. However, each column in the output column is comprised of multiple cells that can individually be in active, inactive, or predictive state.
+Step 1 : 
+HTM model gets an input “1” for the first time which activates the first column of the output sequence. 
+Because none of the cells in the first column were in predictive mode, we say column 1 goes “burst” and we assign an active value to each of the cells in column 1. 
+Step 2 :  
+HTM model gets an input “2” again for the first time in the context of “1”, and hence, none of its cells are in predictive state so column 2 goes burst.
+Same thing happens at step 3.
+Step 4 - 
+Our HTM model has seen “2” in context of “1” before, so it tries to make a prediction
+The method it uses to make this prediction is as follows: It checks with all the cells that are currently active, i.e., column 1, to tell which of the 9 cells do they predict will turn active in the next time step. 
+Say, the synapse between (2,2) cell is stronger with column 1 among (2,1),(2,2) and (2,3), so column 1 unanimously replies (2,2). 
+Now (2,2) is put into a predictive state before consuming our next element of the sequence. 
+Once our next element arrives, which is actually a “2”, the prediction goes right and none of the columns burst this time.
+Step 5 - none of the columns burst and only (1,1) is put in active state as (1,1) had a strong synapse with (2,2).
+Step 6 -  HTM model is expecting a value of “2” but it gets “1”. 
+Hence, our first column goes burst and our anomaly is detected in this sequence.
