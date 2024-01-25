@@ -89,6 +89,7 @@ E. Temporal Memory-
 Spatial pooling maintains the context of the input sequence by a method called temporal memory. 
 The concept of temporal memory is based on the fact that each neuron not only gets information from lower level neurons, but also gets contextual information from neurons at the same level.  
 In the spatial pooling section, each column in the output vector by a single number. However, each column in the output column is comprised of multiple cells that can individually be in active, inactive, or predictive state.
+
 Step 1 : 
 HTM model gets an input “1” for the first time which activates the first column of the output sequence. 
 Because none of the cells in the first column were in predictive mode, we say column 1 goes “burst” and we assign an active value to each of the cells in column 1. 
@@ -104,3 +105,25 @@ Once our next element arrives, which is actually a “2”, the prediction goes 
 Step 5 - none of the columns burst and only (1,1) is put in active state as (1,1) had a strong synapse with (2,2).
 Step 6 -  HTM model is expecting a value of “2” but it gets “1”. 
 Hence, our first column goes burst and our anomaly is detected in this sequence.
+
+Structure of HTM-
+In the human neocortex, neurons have thousands of excitatory synapses, clustered onto a set of dendrites:
+These synapses can fire together in different patterns to cause a spike (high action potential) in the cell,
+A- Proximal dendrites — 
+It receives feedforward input from the input space and other cells at lower levels. These synapses have a large effect on the action potential of the neuron and hence define the “receptive field” of the neuron.
+Co-activation of synapses contribute to the action potential of the neuron and if the inputs to the synapses are sparsely active, the neuron can recognize multiple unique feedforward patterns.
+Basal synapses — 
+These receive contextual inputs from nearby cells in the same region and recognize patterns that precede the firing of a cell. 
+These synapses depolarize the cell, contributing to the action potential but are not large enough to generate an action potential as proximal synapses do. These act as a prediction mechanism for the next feedforward input.
+Apical synapses — These provide top-down feedback (from cells in higher layers) and depolarize a cell similar to a basal synapse (these cannot generate an action potential either). 
+These can predict multiple elements at a time and act as a prediction mechanism for the entire sequence.
+
+Hence, feedforward inputs (proximal dendrites) activate cells, while basal and apical inputs (basal synapses) generate predictions.
+
+HTM Learning-
+In HTMs, learning occurs by changing the permanence values of its synapses (inputs to the cell) which in turn affects the weight of that connection. 
+This is a bit similar to how a point neuron in an artificial neural network updates its weight matrix on its incoming connections, however, it does so at a neuron level (due to the simplified dendritic mode). 
+The HTM model has 3 dendritic zones
+--Proximal — feedforward input weights
+--Basal —contextual predictive weights
+--Apical — top-down predictive weights and uses Hebbian learning to update synapses at each dendrite (at a synaptic level) and not the entire neuron.
