@@ -139,6 +139,14 @@ Cell[] activeCells = cn.GetCells(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
 Here we activate 4 columns in input space. A set of cells from 0-9 is called from GetCells method of Connections class. 
 This is stored as "active cells" in class object Cell. The cell is one neuron that is taking these inputs to run its class fully.
 
+ComputeCycle cycle = tm.Compute(activeColumns, true) as ComputeCycle;
+-ComputeCycle hold all important states calculated in a cycle
+Full calculation of Temporal memory(TM) happens here. It calculates 2 things: 
+1. Cells that get active in current cycle
+2. Dendrites that get active in current cycle
+true is a bool learn means whether the cycle should include learning or not.
+
+
 
 
 
