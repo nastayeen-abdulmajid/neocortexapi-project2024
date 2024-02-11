@@ -166,6 +166,7 @@ If yes, then it return false, else true.
 ICollection uses IEnumerable that has GetEnumerable method which is used to perform all kinds of operations on arrays.
 
 3. Current configuration of temporal memory is-
+All temporal memory parameters are defined under KEY class
 a. 5 cells per column
 b. If active connected synapses reaches activation threshold 3, then that segment is said to be active segment.
 c. Permanance value must start with 0.21
@@ -178,6 +179,10 @@ i. During learning, the amount of permanance value of synapses that was active p
 
 Defaults_temporal is a dictionary that stores temporal values with string keys and object values.
 retVal is a variable that stores this dictionary.
+
+retVal.Set(KEY.RANDOM, new ThreadSafeRandom(42));
+This line calls retVal dictionary. It sets random values inside dictionary. Thread-safe random means the random numbers generated will be accessed by one thread each time. 42 is a number to initialise the random number generator.
+
 
 
 
