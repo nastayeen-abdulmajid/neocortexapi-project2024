@@ -165,6 +165,21 @@ Array 2 is taken from Collection interface. Contains(item) is a bool, is a metho
 If yes, then it return false, else true. 
 ICollection uses IEnumerable that has GetEnumerable method which is used to perform all kinds of operations on arrays.
 
+3. Current configuration of temporal memory is-
+a. 5 cells per column
+b. If active connected synapses reaches activation threshold 3, then that segment is said to be active segment.
+c. Permanance value must start with 0.21
+d. If a permanance value of a synapse is more than 0.5, then synapse is said to be connected.
+e. If number of synapses active on a segment is 2, it is called as best matching cell in that column
+f. The maximum number of segments that can be added to a segment while learning is 3
+g. During learning, the amount of permanance value that should be incremented is 0.10
+h. During learning, the amount of permanance value that should be decremented is 0.10
+i. During learning, the amount of permanance value of synapses that was active previously  should be decremented by 0.
+
+Defaults_temporal is a dictionary that stores temporal values with string keys and object values.
+retVal is a variable that stores this dictionary.
+
+
 
 
 
