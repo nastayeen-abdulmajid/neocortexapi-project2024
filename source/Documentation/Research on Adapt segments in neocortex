@@ -127,3 +127,19 @@ The HTM model has 3 dendritic zones
 --Proximal — feedforward input weights
 --Basal —contextual predictive weights
 --Apical — top-down predictive weights and uses Hebbian learning to update synapses at each dendrite (at a synaptic level) and not the entire neuron.
+
+Working on existing Temporal memory test cases:
+I created a new class to run my test cases on temporal memory
+
+1. public TestContext TestContext
+This method give context based on information provided about the expected active cell and actual active cell. 
+
+int[] activeColumns = { 0, 1, 2, 3 };
+Cell[] activeCells = cn.GetCells(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+Here we activate 4 columns in input space. A set of cells from 0-9 is called from GetCells method of Connections class. 
+This is stored as "active cells" in class object Cell. The cell is one neuron that is taking these inputs to run its class fully.
+
+
+
+
+
