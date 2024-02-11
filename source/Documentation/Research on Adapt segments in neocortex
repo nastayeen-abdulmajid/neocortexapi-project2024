@@ -145,6 +145,25 @@ Full calculation of Temporal memory(TM) happens here. It calculates 2 things:
 1. Cells that get active in current cycle
 2. Dendrites that get active in current cycle
 true is a bool learn means whether the cycle should include learning or not.
+TM class uses the interface IHTMAlgorithm to input integer arrays and output of type Compute
+
+get { return TestContextInstance; } - It gets the input values from above methods
+set { TestContextInstance = value; }- Those input value are store in variable value
+
+2. private static bool areDisjoined<T>(ICollection<T> arr1, ICollection<T> arr2)
+{
+    foreach (var item in arr1)
+    {
+        if (arr2.Contains(item))
+            return false;
+    }
+
+    return true;
+
+This code checks if two arrays of numbers are disjointed(means they have no common elements).
+Array 2 is taken from Collection interface. Contains(item) is a bool, is a method inside this interface which checks  Each element of arr1 with each element in arr2. 
+If yes, then it return false, else true. 
+ICollection uses IEnumerable that has GetEnumerable method which is used to perform all kinds of operations on arrays.
 
 
 
