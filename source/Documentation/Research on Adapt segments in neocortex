@@ -275,3 +275,78 @@ This test ensures that when the temporal memory undergoes activity cycles, the s
 Asserting Synapse Permanence Update: It asserts that the synapse permanence of matching synapses has been updated correctly after the computation cycles. 
 It checks whether the permanence of the synapses as1 and is1 is equal to 0.3 with a tolerance of 0.01.
 
+public void TestCellsPerColumn()
+{
+    // Arrange
+    TemporalMemory tm = new TemporalMemory();
+    Connections cn = new Connections();
+    Parameters p = Parameters.getAllDefaultParameters();
+    p.Set(KEY.COLUMN_DIMENSIONS, new int[] { 64, 64 });
+    p.Set(KEY.CELLS_PER_COLUMN, 16); // Set a custom number of cells per column
+    p.apply(cn);
+    tm.Init(cn);
+
+    // Act
+    int totalCellCount = 0;
+    foreach (var column in cn.GetColumns())
+    {
+        totalCellCount += column.Cells.Length;
+    }
+
+    // Assert
+    Assert.AreEqual(64 * 64 * 16, totalCellCount);
+}
+Analysis - The purpose of this test is to ensure that the temporal memory is correctly initialized with the specified parameters, and that the total number of cells in the model matches the expected value based on these parameters. The Assert statement verifies that the actual total number of cells matches the expected number. 
+If it does, it confirms that the temporal memory has been initialized correctly according to the specified parameters.
+
+public void TestCustomDimensionsAndCells()
+{
+    // Arrange
+    TemporalMemory tm = new TemporalMemory();
+    Connections cn = new Connections();
+    Parameters p = Parameters.getAllDefaultParameters();
+    p.Set(KEY.COLUMN_DIMENSIONS, new int[] { 16, 32 }); // Set custom column dimensions
+    p.Set(KEY.CELLS_PER_COLUMN, 8); // Set custom number of cells per column
+    p.apply(cn);
+
+    // Act
+    tm.Init(cn);
+
+    // Calculate the expected total number of cells based on custom dimensions
+    int expectedTotalCells = 16 * 32 * 8;
+
+    // Sum the actual number of cells in all columns
+    int actualTotalCells = cn.GetColumns().Sum(column => column.Cells.Length);
+
+    // Assert
+    Assert.AreEqual(expectedTotalCells, actualTotalCells);
+}
+The test verifies that the temporal memory initializes correctly with the specified custom parameters and that the total number of cells in the model matches the expected value based on these parameters. 
+If the assertion passes, it confirms that the temporal memory has been initialized as expected with the custom dimensions and cells.
+
+public void TestColumnDimensions()
+{
+    // Arrange
+    // Initialize a TemporalMemory object, Connections object, and set custom column dimensions in the parameters.
+    TemporalMemory tm = new TemporalMemory();
+    Connections cn = new Connections();
+    Parameters p = Parameters.getAllDefaultParameters();
+    p.Set(KEY.COLUMN_DIMENSIONS, new int[] { 32, 64 }); // Set custom column dimensions
+    p.Set(KEY.CELLS_PER_COLUMN, 32);
+    p.apply(cn);
+    tm.Init(cn);
+
+    // Act
+    // Count the total number of cells in all columns and verify it against the expected count.
+    int totalCellCount = 0;
+    foreach (var column in cn.GetColumns())
+    {
+        totalCellCount += column.Cells.Length;
+    }
+
+    // Assert
+    // Check if the total cell count matches the expected count based on custom column dimensions.
+    Assert.AreEqual(32 * 64 * 32, totalCellCount);
+}
+It ensures that when custom column dimensions are set, the TemporalMemory instance initializes correctly with the specified number of cells per column, and the total number of cells in the model matches the expected count based on these custom dimensions. 
+If the assertion passes, it confirms that the TemporalMemory has been initialized as expected with the custom column dimensions.
