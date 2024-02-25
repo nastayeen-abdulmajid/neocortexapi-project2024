@@ -350,3 +350,111 @@ public void TestColumnDimensions()
 }
 It ensures that when custom column dimensions are set, the TemporalMemory instance initializes correctly with the specified number of cells per column, and the total number of cells in the model matches the expected count based on these custom dimensions. 
 If the assertion passes, it confirms that the TemporalMemory has been initialized as expected with the custom column dimensions.
+
+public void TestRecycleLeastRecentlyActiveSegmentToMakeRoomForNewSegment(int[] prevActiveColumns1, int[] prevActiveColumns2, int[] prevActiveColumns3, int[] activeColumns)
+{
+    // Initialize TemporalMemory and Connections objects with default parameters
+    TemporalMemory tm = new TemporalMemory();
+    Connections cn = new Connections();
+    Parameters p = GetDefaultParameters(null, KEY.CELLS_PER_COLUMN, 1);
+    p = GetDefaultParameters(p, KEY.INITIAL_PERMANENCE, 0.5);
+    p = GetDefaultParameters(p, KEY.PERMANENCE_INCREMENT, 0.02);
+    p = GetDefaultParameters(p, KEY.PERMANENCE_DECREMENT, 0.02);
+    p.Set(KEY.MAX_SEGMENTS_PER_CELL, 2);
+    p.apply(cn);
+    tm.Init(cn);
+
+    // Get a reference to a specific cell (cell9)
+    Cell cell9 = cn.GetCell(9);
+
+    // Simulate a computation cycle with the first set of previous and current active columns
+    tm.Compute(prevActiveColumns1, true);
+    tm.Compute(activeColumns, true);
+
+    // Assert that there is only one distal dendrite (segment) for cell9
+    Assert.AreEqual(1, cell9.DistalDendrites.Count);
+
+    // Get a reference to the oldest segment
+    DistalDendrite oldestSegment = cell9.DistalDendrites[0];
+
+    // Reset the temporal memory for the next set of computations
+    tm.Reset(cn);
+
+    // Simulate a computation cycle with the second set of previous and current active columns
+    tm.Compute(prevActiveColumns2, true);
+    tm.Compute(activeColumns, true);
+
+    // Assert that there are now two distal dendrites for cell9
+    Assert.AreEqual(2, cell9.DistalDendrites.Count);
+
+    // Get the presynaptic cells of the synapses in the oldest segment
+    var oldPresynaptic = oldestSegment.Synapses.Select(s => s.GetPresynapticCell()).ToList();
+
+    // Reset the temporal memory for the final set of computations
+    tm.Reset(cn);
+
+    // Simulate a computation cycle with the third set of previous and current active columns
+    tm.Compute(prevActiveColumns3, true);
+    tm.Compute(activeColumns, true);
+
+    // Assert that there are still two distal dendrites for cell9
+    Assert.AreEqual(2, cell9.DistalDendrites.Count);
+
+    // Get a reference to the newest segment
+    DistalDendrite segment = cell9.DistalDendrites[cell9.DistalDendrites.Count - 1];
+
+    // Get the presynaptic cells of the synapses in the newest segment
+    var newPresynaptic = segment.Synapses.Select(s => s.GetPresynapticCell()).ToList();
+
+    // Assert that the presynaptic cells of the oldest and newest segments are disjoint
+    Assert.IsTrue(areDisjoined<Cell>(oldPresynaptic, newPresynaptic));
+}
+Analysis - Test aims to ensure that the temporal memory correctly handles the recycling of the least recently active segment when creating new segments. 
+The assertions verify that the behavior of the temporal memory conforms to the expected behavior described in the unit test. 
+It checks whether new segments are created correctly, whether the least recently active segment is recycled, and whether the presynaptic cells of the old and new segments are disjoint.
+
+public void TestNewSegmentAddSynapsesToAllWinnerCells(int numPrevActiveCols, int numActiveCols)
+{
+    // Arrange
+    TemporalMemory tm = new TemporalMemory();
+    Connections cn = new Connections();
+    Parameters p = GetDefaultParameters(null, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
+    p.apply(cn);
+    tm.Init(cn);
+
+    // Set up previous and current active columns
+    int[] previousActiveColumns = Enumerable.Range(0, numPrevActiveCols).ToArray();
+    int[] activeColumns = Enumerable.Range(3, numActiveCols).ToArray();
+
+    // Act
+    ComputeCycle cc = tm.Compute(previousActiveColumns, true) as ComputeCycle;
+    List<Cell> prevWinnerCells = new List<Cell>(cc.WinnerCells);
+    Assert.AreEqual(numPrevActiveCols, prevWinnerCells.Count);
+
+    cc = tm.Compute(activeColumns, true) as ComputeCycle;
+
+    List<Cell> winnerCells = new List<Cell>(cc.WinnerCells);
+    Assert.AreEqual(numActiveCols, winnerCells.Count);
+
+    // Get the distal dendrites for the winner cell
+    List<DistalDendrite> segments = winnerCells[0].DistalDendrites;
+    Assert.AreEqual(1, segments.Count);
+
+    // Get all the synapses for the segment
+    List<Synapse> synapses = segments[0].Synapses;
+
+    List<Cell> presynapticCells = new List<Cell>();
+    foreach (Synapse synapse in synapses)
+    {
+        // Assert that the synapses have the expected permanence value within a tolerance
+        Assert.AreEqual(0.21, synapse.Permanence, 0.01);
+        presynapticCells.Add(synapse.GetPresynapticCell());
+    }
+
+    presynapticCells.Sort();
+
+    // Assert that the presynaptic cells are the same as the previous winner cells
+    Assert.IsTrue(prevWinnerCells.SequenceEqual(presynapticCells));
+}
+Analysis - This test ensures that when a new segment is added, synapses are correctly connected to all winner cells from the previous time step, and the properties of these synapses are as expected. 
+The assertions verify that the behavior of the temporal memory conforms to the expected behavior described in the unit test.
