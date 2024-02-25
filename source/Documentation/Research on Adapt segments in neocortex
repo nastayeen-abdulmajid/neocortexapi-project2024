@@ -235,6 +235,43 @@ This unit test seems to be testing the functionality related to growing new segm
 It sets up the scenario where two distal segments are associated with an active cell and checks whether the computation cycle grows a new segment correctly and whether this new segment meets certain criteria. 
 The Assert statements ensure that the behavior of the temporal memory class conforms to the expected behavior described in the unit test.
 
+Test 2:
+public void TestSynapsePermanenceUpdateWhenMatchingSegmentsFound()
+{
+    // Create instances of TemporalMemory, Connections, and Parameters objects.
+    TemporalMemory tm = new TemporalMemory();
+    Connections cn = new Connections();
+    Parameters p = GetDefaultParameters(null, KEY.PERMANENCE_DECREMENT, 0.08); // Uses Permanence decrement parameter 
+    p.apply(cn);
+    tm.Init(cn);
 
+    // Define previous and current active columns and cells.
+    int[] previousActiveColumns = { 0 };
+    int[] activeColumns = { 1 };
+    Cell[] previousActiveCells = { cn.GetCell(0), cn.GetCell(1), cn.GetCell(2), cn.GetCell(3) };
+    Cell[] activeCells = { cn.GetCell(4), cn.GetCell(5) };
 
+    // Create a matching segment for the first active cell.
+    DistalDendrite selectedMatchingSegment = cn.CreateDistalSegment(activeCells[0]);
+    cn.CreateSynapse(selectedMatchingSegment, previousActiveCells[0], 0.3);
+    cn.CreateSynapse(selectedMatchingSegment, previousActiveCells[1], 0.3);
+    cn.CreateSynapse(selectedMatchingSegment, previousActiveCells[2], 0.3);
+    cn.CreateSynapse(selectedMatchingSegment, cn.GetCell(81), 0.3);
+
+    // Create another matching segment for the second active cell.
+    DistalDendrite otherMatchingSegment = cn.CreateDistalSegment(activeCells[1]);
+    Synapse as1 = cn.CreateSynapse(otherMatchingSegment, previousActiveCells[0], 0.3);
+    Synapse is1 = cn.CreateSynapse(otherMatchingSegment, cn.GetCell(81), 0.3);
+
+    // Perform two cycles of activity.
+    tm.Compute(previousActiveColumns, true);
+    tm.Compute(activeColumns, true);
+
+    // Assert that the synapse permanence of matching synapses has been updated.
+    Assert.AreEqual(0.3, as1.Permanence, 0.01);
+    Assert.AreEqual(0.3, is1.Permanence, 0.01);
+}
+This test ensures that when the temporal memory undergoes activity cycles, the synapse permanence of matching synapses within matching segments is updated as expected. 
+Asserting Synapse Permanence Update: It asserts that the synapse permanence of matching synapses has been updated correctly after the computation cycles. 
+It checks whether the permanence of the synapses as1 and is1 is equal to 0.3 with a tolerance of 0.01.
 
