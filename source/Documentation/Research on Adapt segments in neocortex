@@ -539,3 +539,30 @@ Analysis - The test confirms whether the temporal memory can effectively learn a
 Test 15-
 public void TestCreateSynapseInDistalSegment()
 Analysis -These assertions ensure that the creation of synapses within distal segments behaves as expected, confirming that the synapse is correctly added to the segment and has the specified properties.
+
+Test 16 -
+public void TestNewSegmentGrowthWhenNoMatchingSegmentFound()
+Analysis - These assertions confirm that when no matching segment is found, the temporal memory algorithm correctly grows a new dendrite segment for the active cell, ensuring that the memory system can adapt and learn new patterns over time.
+
+Test 17-
+public void TestNoOverlapInActiveCells()
+Analysis - By performing this test, we ensure that the temporal memory algorithm maintains the desired property of sparse activation, where each column's set of active cells does not overlap with the active cells of other columns. 
+This property is crucial for the memory system's ability to represent and learn diverse patterns effectively.
+
+Test 18-
+public void TestTemporalMemoryComputeReturnsWinnerCells()
+Analysis - By performing this test, we ensure that the Compute method functions as expected, correctly identifying and returning the winner cells within the temporal memory based on the provided active columns. 
+This is crucial for the proper functioning of the temporal memory algorithm in learning and recalling patterns.
+
+Test 19 -
+public void TestTemporalMemoryComputeReturnsWinnerCellsWithDataRow(int[] activeColumns, int expectedWinnerCount, int[] expectedWinnerIndices)
+Analysis - This parameterized test allows for testing multiple scenarios with different sets of active columns and expected outcomes, providing a more comprehensive evaluation of the Compute method's behavior in the TemporalMemory class.
+
+Test 20 -
+public void TestGetLeastUsedCell()
+Analysis- this test ensures that the GetLeastUsedCell method correctly identifies the least used cell from a list of cells based on their usage within the temporal memory's connections. 
+
+Test 21-
+public void TestWhichCellsBecomeActive()
+Analysis - The test confirms whether the temporal memory correctly identifies the active cells based on the given set of active columns. 
+If the expected and actual sets of active cells match, the test passes, indicating that the temporal memory behaves as expected.
