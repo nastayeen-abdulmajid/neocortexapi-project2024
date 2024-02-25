@@ -275,6 +275,7 @@ This test ensures that when the temporal memory undergoes activity cycles, the s
 Asserting Synapse Permanence Update: It asserts that the synapse permanence of matching synapses has been updated correctly after the computation cycles. 
 It checks whether the permanence of the synapses as1 and is1 is equal to 0.3 with a tolerance of 0.01.
 
+Test 3-
 public void TestCellsPerColumn()
 {
     // Arrange
@@ -299,6 +300,7 @@ public void TestCellsPerColumn()
 Analysis - The purpose of this test is to ensure that the temporal memory is correctly initialized with the specified parameters, and that the total number of cells in the model matches the expected value based on these parameters. The Assert statement verifies that the actual total number of cells matches the expected number. 
 If it does, it confirms that the temporal memory has been initialized correctly according to the specified parameters.
 
+Test 4-
 public void TestCustomDimensionsAndCells()
 {
     // Arrange
@@ -324,6 +326,7 @@ public void TestCustomDimensionsAndCells()
 The test verifies that the temporal memory initializes correctly with the specified custom parameters and that the total number of cells in the model matches the expected value based on these parameters. 
 If the assertion passes, it confirms that the temporal memory has been initialized as expected with the custom dimensions and cells.
 
+Test 5-
 public void TestColumnDimensions()
 {
     // Arrange
@@ -351,6 +354,7 @@ public void TestColumnDimensions()
 It ensures that when custom column dimensions are set, the TemporalMemory instance initializes correctly with the specified number of cells per column, and the total number of cells in the model matches the expected count based on these custom dimensions. 
 If the assertion passes, it confirms that the TemporalMemory has been initialized as expected with the custom column dimensions.
 
+Test 6-
 public void TestRecycleLeastRecentlyActiveSegmentToMakeRoomForNewSegment(int[] prevActiveColumns1, int[] prevActiveColumns2, int[] prevActiveColumns3, int[] activeColumns)
 {
     // Initialize TemporalMemory and Connections objects with default parameters
@@ -413,6 +417,7 @@ Analysis - Test aims to ensure that the temporal memory correctly handles the re
 The assertions verify that the behavior of the temporal memory conforms to the expected behavior described in the unit test. 
 It checks whether new segments are created correctly, whether the least recently active segment is recycled, and whether the presynaptic cells of the old and new segments are disjoint.
 
+Test 7-
 public void TestNewSegmentAddSynapsesToAllWinnerCells(int numPrevActiveCols, int numActiveCols)
 {
     // Arrange
@@ -458,3 +463,60 @@ public void TestNewSegmentAddSynapsesToAllWinnerCells(int numPrevActiveCols, int
 }
 Analysis - This test ensures that when a new segment is added, synapses are correctly connected to all winner cells from the previous time step, and the properties of these synapses are as expected. 
 The assertions verify that the behavior of the temporal memory conforms to the expected behavior described in the unit test.
+
+Test 8-
+public void TestDestroyWeakSynapseOnWrongPrediction(Double weakSynapsePermanence)
+{
+    // Arrange
+    TemporalMemory tm = new TemporalMemory();
+    Connections cn = new Connections();
+    Parameters p = GetDefaultParameters(null, KEY.INITIAL_PERMANENCE, 0.2);
+    p = GetDefaultParameters(p, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
+    p = GetDefaultParameters(p, KEY.PREDICTED_SEGMENT_DECREMENT, 0.02);
+    p.apply(cn);
+    tm.Init(cn);
+
+    int[] previousActiveColumns = { 0 };
+    Cell[] previousActiveCells = { cn.GetCell(0), cn.GetCell(1), cn.GetCell(2), cn.GetCell(3) };
+    int[] activeColumns = { 2 };
+    Cell expectedActiveCell = cn.GetCell(5);
+
+    DistalDendrite activeSegment = cn.CreateDistalSegment(expectedActiveCell);
+
+    // Creating synapses for the active segment
+    cn.CreateSynapse(activeSegment, previousActiveCells[0], 0.5);
+    cn.CreateSynapse(activeSegment, previousActiveCells[1], 0.5);
+    cn.CreateSynapse(activeSegment, previousActiveCells[2], 0.5);
+
+    // Creating a weak synapse with a specified permanence value
+    cn.CreateSynapse(activeSegment, previousActiveCells[3], weakSynapsePermanence);
+
+    // Act
+    tm.Compute(previousActiveColumns, true);
+    tm.Compute(activeColumns, true);
+
+    // Assert
+    // Checking that the weak synapse has been destroyed, and only three synapses remain in the active segment.
+    Assert.AreEqual(3, activeSegment.Synapses.Count);
+}
+Analysis - this test ensures that when a prediction is incorrect, weak synapses are correctly identified and destroyed in the active segment. 
+The assertion verifies that the behavior of the temporal memory conforms to the expected behavior described in the unit test.
+
+Test 9-
+public void TestAddSegmentToCellWithFewestSegments(int seed, int expectedNumSegments)
+Analysis - this test ensures that when multiple cells are candidates for segment addition, the segment is added to the cell with the fewest segments, as expected. 
+The assertions verify that the behavior of the temporal memory conforms to the expected behavior described in the unit test. 
+The test is run multiple times with different seeds to account for randomization effects.
+
+Test 10 -
+public void TestAdaptSegmentToMax(double initialPermanence, double expectedPermanence)
+Analysis - this test ensures that the AdaptSegment method correctly adjusts the permanence of a segment and that it maintains the permanence at the maximum value when already at the maximum. 
+The assertions verify that the behavior of the AdaptSegment method conforms to the expected behavior described in the unit test.
+
+Test 11 - 
+public void TestDestroySegmentsWithTooFewSynapsesToBeMatching(int c1, int c2, int c3, int c4, double p1, double p2, double p3, double p4, int expectedNumSegments)
+Analysis - This test ensures that the temporal memory algorithm behaves as expected when dealing with segments that do not have enough synapses to be considered matching segments. 
+The assertion checks that the number of segments associated with the expected active cell matches the expected number after the computation cycles. 
+
+
+This helps validate the correctness of the algorithm's behavior in destroying segments with insufficient synapses.
