@@ -183,9 +183,57 @@ retVal is a variable that stores this dictionary.
 retVal.Set(KEY.RANDOM, new ThreadSafeRandom(42));
 This line calls retVal dictionary. It sets random values inside dictionary. Thread-safe random means the random numbers generated will be accessed by one thread each time. 42 is a number to initialise the random number generator.
 
+ private Parameters GetDefaultParameters(Parameters p, string key, Object value)
+ {
+     Parameters retVal = p == null ? GetDefaultParameters() : p;
+     retVal.Set(key, value);
 
+     return retVal;
+ }
+Parameters retVal = p == null ? GetDefaultParameters() : p;: This line initializes a local variable retVal of type Parameters. It checks if the parameter p is null. If it is null, it calls GetDefaultParameters() method to get default parameters. If p is not null, it assigns p to retVal.
+retVal.Set(key, value);: This line calls the Set method on the retVal object, passing in the key and value parameters. This method presumably sets the given key-value pair in the Parameters object.
+return retVal;: Finally, the method returns the retVal, which contains the updated parameters. this method is designed to either update existing parameters or create a new Parameters object with the default values if the input parameter p is null. It then sets a key-value pair in the parameters and returns the updated or newly created Parameters object.
 
+Next, we retrieve default configurations
 
+Test1: 
+public void TestNewSegmentGrowthWhenMultipleMatchingSegmentsFound()
+{
+    // Initialization
+    TemporalMemory tm = new TemporalMemory();
+    Connections cn = new Connections();
+    Parameters p = Parameters.getAllDefaultParameters();
+    p.apply(cn);
+    tm.Init(cn);
+
+    // Define active columns and corresponding active cells
+    int[] activeColumns = { 0 };
+    Cell[] activeCells = { cn.GetCell(0), cn.GetCell(1), cn.GetCell(2), cn.GetCell(3) };
+
+    // Create multiple matching segments for the active cell
+    DistalDendrite dd1 = cn.CreateDistalSegment(activeCells[0]);
+    cn.CreateSynapse(dd1, cn.GetCell(4), 0.3);
+    cn.CreateSynapse(dd1, cn.GetCell(5), 0.3);
+
+    DistalDendrite dd2 = cn.CreateDistalSegment(activeCells[0]);
+    cn.CreateSynapse(dd2, cn.GetCell(6), 0.3);
+    cn.CreateSynapse(dd2, cn.GetCell(7), 0.3);
+
+    // Execute computation cycle
+    tm.Compute(activeColumns, true);
+
+    // Verify that a new segment has been grown
+    Assert.AreEqual(2, activeCells[0].DistalDendrites.Count);
+
+    DistalDendrite newSegment = activeCells[0].DistalDendrites[0] as DistalDendrite;
+
+    // Additional assertions for the new segment
+    Assert.IsNotNull(newSegment);
+    Assert.AreEqual(2, newSegment.Synapses.Count);
+}
+This unit test seems to be testing the functionality related to growing new segments in a temporal memory model when multiple matching segments are found for an active cell. 
+It sets up the scenario where two distal segments are associated with an active cell and checks whether the computation cycle grows a new segment correctly and whether this new segment meets certain criteria. 
+The Assert statements ensure that the behavior of the temporal memory class conforms to the expected behavior described in the unit test.
 
 
 
