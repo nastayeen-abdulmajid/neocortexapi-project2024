@@ -679,7 +679,7 @@ namespace UnitTestsProject
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
-            TemporalMemory.Init(Connections); ;
+            TemporalMemory.Init(Connections);
 
             DistalDendrite distalDendrite = Connections.CreateDistalSegment(Connections.GetCell(0));
             Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(500), 0.9);
@@ -692,3 +692,17 @@ namespace UnitTestsProject
             /// But the synapse is not destroyed as permanence > HtmConfig.Epsilon
             Assert.AreEqual(0.8, synapse1.Permanence);
         }
+
+
+        /// <summary>
+        /// Test to check if the permanence of a synapse is limited within the range of 0 to 1.0.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public void TestAdaptSegment_PermanenceIsLimitedWithinRange()
+        {
+            tm TemporalMemory = new tm();
+            Connections Connections = new Connections();
+            Parameters Parameters = Parameters.getAllDefaultParameters();
+            Parameters.apply(Connections);
+            TemporalMemory.Init(Connections);
