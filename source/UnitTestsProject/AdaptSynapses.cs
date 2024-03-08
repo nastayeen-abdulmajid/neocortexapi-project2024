@@ -705,7 +705,7 @@ namespace UnitTestsProject
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
-            TemporalMemory.Init(Connections); ;
+            TemporalMemory.Init(Connections); 
 
             DistalDendrite distalDendrite = Connections.CreateDistalSegment(Connections.GetCell(0));
             Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(23), 2.5);
@@ -722,3 +722,20 @@ namespace UnitTestsProject
                 Assert.AreEqual(PERMANENCE_SHOULD_BE_IN_THE_RANGE, ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// Validate the behavior of the AdaptSegment method of the TemporalMemory class.
+        /// The test initializes a TemporalMemory object, creates a Connection object, sets the default parameters, 
+        /// and initializes the TemporalMemory. It then creates a DistalDendrite object with three synapses, each connected 
+        /// to different cells. 
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public void TestAdaptSegment_UpdatesSynapsePermanenceValues_BasedOnPreviousCycleActivity()
+        {
+            tm TemporalMemory = new tm();
+            Connections Connections = new Connections();///The connections object holds the infrastructure, and is used by both the SpatialPooler, TemporalMemory.
+            Parameters Parameters = Parameters.getAllDefaultParameters();
+            Parameters.apply(Connections);
+            TemporalMemory.Init(Connections);///use connection for specified object to build and implement algoarithm
