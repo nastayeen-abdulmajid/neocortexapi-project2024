@@ -739,3 +739,8 @@ namespace UnitTestsProject
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
             TemporalMemory.Init(Connections);///use connection for specified object to build and implement algoarithm
+
+            DistalDendrite distalDendrite = Connections.CreateDistalSegment(Connections.GetCell(0));/// Created a Distal dendrite segment of a cell0
+            Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(23), 0.5);/// Created a synapse on a distal segment of a cell index 23
+            Synapse synapse2 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(37), 0.6);/// Created a synapse on a distal segment of a cell index 37
+            Synapse synapse3 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(477), 0.9);/// Created a synapse on a distal segment of a cell index 477
