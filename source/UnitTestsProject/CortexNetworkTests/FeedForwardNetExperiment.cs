@@ -22,7 +22,7 @@ namespace UnitTestsProject.CortexNetworkTests
     {
         CortexLayer<object, object> layerL4, layerL2;
 
-        TemporalMemory tm4, tm2;
+        tm tm4, tm2;
 
         [TestMethod]
         public void FeedForwardNetTest()

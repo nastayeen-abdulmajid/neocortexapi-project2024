@@ -97,7 +97,7 @@ namespace NeoCortexApiSample
 
             CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
 
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
 
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, numInputs * 150, (isStable, numPatterns, actColAvg, seenInputs) =>
             {

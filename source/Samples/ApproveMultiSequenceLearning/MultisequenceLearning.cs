@@ -62,7 +62,7 @@ namespace MultiSequenceLearning
 
             CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
 
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
 
             Console.WriteLine("------------ START ------------");
 

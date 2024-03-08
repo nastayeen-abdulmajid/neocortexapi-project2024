@@ -13,7 +13,7 @@ namespace NeoCortexApi
     /// <summary>
     /// Implementation of Temporal Memory algorithm.
     /// </summary>
-    public class TemporalMemory : IHtmAlgorithm<int[], ComputeCycle>/*, ISerializable*///: IComputeDecorator
+    public class tm : IHtmAlgorithm<int[], ComputeCycle>/*, ISerializable*///: IComputeDecorator
     {
 
         /// <summary>
@@ -28,14 +28,14 @@ namespace NeoCortexApi
         public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <summary>
-        /// Uses the specified <see cref="Connections"/> object to Build the structural  anatomy needed by this <see cref="TemporalMemory"/> 
+        /// Uses the specified <see cref="Connections"/> object to Build the structural  anatomy needed by this <see cref="tm"/> 
         /// to implement its algorithms.<br/>
         /// 
         /// The connections object holds the <see cref="Column"/> and <see cref="Cell"/> infrastructure, and is used by both the <see cref="SpatialPooler"/>
-        /// and <see cref="TemporalMemory"/>. Either of these can be used separately, and therefore this Connections object may have its <see cref="Column"/>s 
-        /// and <see cref="Cell"/>s initialized by either the init method of the <see cref="SpatialPooler"/> or the init method of the <see cref="TemporalMemory"/>. 
+        /// and <see cref="tm"/>. Either of these can be used separately, and therefore this Connections object may have its <see cref="Column"/>s 
+        /// and <see cref="Cell"/>s initialized by either the init method of the <see cref="SpatialPooler"/> or the init method of the <see cref="tm"/>. 
         /// We check for this so that complete initialization of both <see cref="Column"/>s and <see cref="Cell"/>s occurs, without either being redundant
-        /// (initialized more than once). However, <see cref="Cell"/>s only get created when initializing a <see cref="TemporalMemory"/>, because 
+        /// (initialized more than once). However, <see cref="Cell"/>s only get created when initializing a <see cref="tm"/>, because 
         /// they are not used by the <see cref="SpatialPooler"/>.
         /// </summary>
         /// <param name="conn"><see cref="Connections"/> object</param>
@@ -622,7 +622,7 @@ namespace NeoCortexApi
         ///    weaken active synapses<br/>
         /// </para>
         /// </summary>
-        /// <param name="conn">Connections instance for the <see cref="TemporalMemory"/></param>
+        /// <param name="conn">Connections instance for the <see cref="tm"/></param>
         /// <param name="activeSegments">An iterable of <see cref="DistalDendrite"/> actives</param>
         /// <param name="matchingSegments"><see cref="DistalDendrite"/> matching for the column.</param>
         /// <param name="prevActiveCells">Active cells in `t-1`</param>
@@ -685,12 +685,12 @@ namespace NeoCortexApi
         /// Creates requiredNewSynapses synapses on the segment, choosing random cells from the previous winner cells that are
         /// not already synaptically connected to the segment.
         /// </summary>
-        /// <param name="conn">Connections instance for the <see cref="TemporalMemory"/></param>
+        /// <param name="conn">Connections instance for the <see cref="tm"/></param>
         /// <param name="prevWinnerCells">Winner cells in `t-1`</param>
         /// <param name="segment">Segment to grow synapses on. </param>
         /// <param name="initialPermanence">Initial permanence of a new synapse.</param>
         /// <param name="requiredNewSynapses">Desired number of synapses to grow</param>
-        /// <param name="random"><see cref="TemporalMemory"/> object used to generate random numbers</param>
+        /// <param name="random"><see cref="tm"/> object used to generate random numbers</param>
         public void GrowSynapses(Connections conn, ICollection<Cell> prevWinnerCells, DistalDendrite segment,
             double initialPermanence, int requiredNewSynapses, Random random)
         {
@@ -862,7 +862,7 @@ namespace NeoCortexApi
             return new DentriteComparer(nextSegmentOrdinal);
         }
 
-        public bool Equals(TemporalMemory obj)
+        public bool Equals(tm obj)
         {
             if (this == obj)
                 return true;
@@ -889,7 +889,7 @@ namespace NeoCortexApi
 
         public bool Equals(IHtmModule other)
         {
-            if (!(other is TemporalMemory tm))
+            if (!(other is tm tm))
                 return false;
             return this.Equals(tm);
         }
@@ -906,6 +906,21 @@ namespace NeoCortexApi
         public static object Deserialize<T>(StreamReader sr, string name)
         {
             return HtmSerializer.DeserializeObject<T>(sr, name);
+        }
+
+        internal string Serialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string SerializeToString()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object DeserializeFromString(string serializedData)
+        {
+            throw new NotImplementedException();
         }
     }
 }

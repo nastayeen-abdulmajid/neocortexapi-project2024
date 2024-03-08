@@ -43,8 +43,8 @@ namespace NeoCortexApi
         /// </summary>
         public void Reset()
         {
-            var tm = this.layer.HtmModules.FirstOrDefault(m => m.Value is TemporalMemory);
-            ((TemporalMemory)tm.Value).Reset(this.connections);
+            var tm = this.layer.HtmModules.FirstOrDefault(m => m.Value is tm);
+            ((tm)tm.Value).Reset(this.connections);
         }
 
 

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Net.Security;
 using System.Text;
 using System.Threading;
-using static NeoCortexApi.TemporalMemory;
+using static NeoCortexApi.tm;
 
 
 
@@ -577,7 +577,7 @@ namespace NeoCortexApi
         /// <param name="segment">Segment to grow synapses on. </param>
         /// <param name="initialPermanence">Initial permanence of a new synapse.</param>
         /// <param name="nDesiredNewSynapses">Desired number of synapses to grow</param>
-        /// <param name="random"><see cref="TemporalMemory"/> object used to generate random numbers</param>
+        /// <param name="random"><see cref="tm"/> object used to generate random numbers</param>
         /// <remarks>
         /// <b>Notes:</b> The process of writing the last value into the index in the array that was most recently changed is to ensure the same results that 
         /// we get in the c++ implementation using iter_swap with vectors.

@@ -111,7 +111,7 @@ namespace UnitTestsProject.CortexNetworkTests
 
             //Initiating components of a Cortex Layer
             SpatialPoolerMT sp1 = new SpatialPoolerMT();
-            TemporalMemory tm1 = new TemporalMemory();
+            tm tm1 = new tm();
             var mem = new Connections();
             p.apply(mem);
             sp1.Init(mem, UnitTestHelpers.GetMemory());

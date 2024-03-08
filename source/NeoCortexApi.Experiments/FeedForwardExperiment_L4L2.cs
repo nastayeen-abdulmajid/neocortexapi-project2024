@@ -29,7 +29,7 @@ namespace NeocortexApi.Experiments
         Dictionary<double, int[]> L4_ActiveCell_sdr_log = new Dictionary<double, int[]>();
         Dictionary<double, int[]> L2_ActiveCell_sdr_log = new Dictionary<double, int[]>();
 
-        TemporalMemory tm4, tm2;
+        tm tm4, tm2;
         bool isSimilar_L4_active_cell_sdr = false;
         string key;
 
@@ -131,8 +131,8 @@ namespace NeocortexApi.Experiments
             layerL2 = new CortexLayer<object, object>("L2");
             //tm4 = new TemporalMemoryMT();
             //tm2 = new TemporalMemoryMT();
-            tm4 = new TemporalMemory();
-            tm2 = new TemporalMemory();
+            tm4 = new tm();
+            tm2 = new tm();
 
             //
             // HPC for Layer 4 SP

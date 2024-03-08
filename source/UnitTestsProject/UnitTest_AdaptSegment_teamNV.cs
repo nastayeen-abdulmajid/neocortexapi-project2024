@@ -3,12 +3,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NeoCortexApi;
 using NeoCortexApi.Entities;
-using NeoCortexApi.Utility;
+using NeoCortexApi.Types;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 
 namespace UnitTestsProjectAdaptSegments_Nastayeen
@@ -36,7 +38,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         public void TestComputeMethodWithExternalPredictiveInputs1()
         {
             // Arrange
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -63,7 +65,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         public void TestComputeMethodWithExternalPredictiveInputs()
         {
             // Arrange
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -95,7 +97,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         public void ResetMethod_ClearsConnectionsData()
         {
             // Arrange
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -115,6 +117,54 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
             Assert.AreEqual(0, cn.ActiveSegments.Count); // Ensure ActiveSegments is empty after reset
             Assert.AreEqual(0, cn.MatchingSegments.Count); // Ensure MatchingSegments is empty after reset
         }
+
+        [TestMethod]
+        //Serialization allows objects to be converted into a format that can be easily stored or transmitted, such as JSON or XML. Deserialization is the process of reconstructing the object from this format. Testing this scenario ensures that data can be persisted correctly without loss or corruption
+        //Serialized data can be transmitted across different systems or components.Testing serialization and deserialization ensures that data can be transferred accurately between different parts of the application or between different applications altogether.
+        public void SerializationAndDeserialization_WithValidData()
+        {
+            // Arrange
+            tm tm = new tm();
+            Connections cn = new Connections();
+            Parameters p = Parameters.getAllDefaultParameters();
+            p.apply(cn);
+            tm.Init(cn);
+
+            var tempFilePath = Path.GetTempFileName();
+
+            try
+            {
+                // Act: Serialize the temporalMemory object
+                using (var writer = new StreamWriter(tempFilePath))
+                {
+                    tm.Serialize(tm, "TemporalMemory", writer);
+                }
+
+                // Assert: Deserialize and compare with original object
+                using (var reader = new StreamReader(tempFilePath))
+                {
+                    var deserializedObject = tm.Deserialize<tm>(reader, "TemporalMemory");
+
+                    // Assert
+                    Assert.IsNotNull(deserializedObject);
+                    // Add further assertions if needed to ensure correctness of deserialization
+                }
+            }
+            finally
+            {
+                // Clean up
+                if (File.Exists(tempFilePath))
+                {
+                    File.Delete(tempFilePath);
+                }
+            }
+
+
+        }
+
+
+
+
 
     }
 }

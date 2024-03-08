@@ -643,7 +643,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_PermanenceStrengthened_IfPresynapticCellWasActive()
         {
-            TemporalMemory TemporalMemory = new TemporalMemory();
+            tm TemporalMemory = new tm();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -655,7 +655,7 @@ namespace UnitTestsProject
             // Invoking AdaptSegments with only the cells with index 23
             /// whose presynaptic cell is considered to be Active in the
             /// previous cycle and presynaptic cell is Inactive for the cell 477
-            TemporalMemory.AdaptSegment(Connections, dd, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(Connections, dd, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
 
             //Assert
             /// permanence is incremented for presynaptie cell 23 from 
@@ -673,7 +673,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_PermanenceWekened_IfPresynapticCellWasInActive()
         {
-            TemporalMemory TemporalMemory = new TemporalMemory();
+            tm TemporalMemory = new tm();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -683,7 +683,7 @@ namespace UnitTestsProject
             Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(500), 0.9);
 
 
-            TemporalMemory.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 57 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 57 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
             //Assert
             /// /// permanence is decremented for presynaptie cell 500 from 
             /// 0.9 to 0.8 as presynaptic cell was InActive in the previous cycle
@@ -699,7 +699,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_PermanenceIsLimitedWithinRange()
         {
-            TemporalMemory TemporalMemory = new TemporalMemory();
+            tm TemporalMemory = new tm();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -708,7 +708,7 @@ namespace UnitTestsProject
             DistalDendrite distalDendrite = Connections.CreateDistalSegment(Connections.GetCell(0));
             Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(23), 2.5);
 
-            TemporalMemory.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
             try
             {
                 Assert.AreEqual(1.0, synapse1.Permanence, 0.1);
@@ -732,7 +732,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_UpdatesSynapsePermanenceValues_BasedOnPreviousCycleActivity()
         {
-            TemporalMemory TemporalMemory = new TemporalMemory();
+            tm TemporalMemory = new tm();
             Connections Connections = new Connections();///The connections object holds the infrastructure, and is used by both the SpatialPooler, TemporalMemory.
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -743,7 +743,7 @@ namespace UnitTestsProject
             Synapse synapse2 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(37), 0.6);/// Created a synapse on a distal segment of a cell index 37
             Synapse synapse3 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(477), 0.9);/// Created a synapse on a distal segment of a cell index 477
 
-            TemporalMemory.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 37 }), Connections.HtmConfig.PermanenceIncrement,
+            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 37 }), Connections.HtmConfig.PermanenceIncrement,
                 Connections.HtmConfig.PermanenceDecrement);/// Invoking AdaptSegments with only the cells with index 23 and 37
                                                   /// whose presynaptic cell is considered to be Active in the
                                                   /// previous cycle and presynaptic cell is Inactive for the cell 477
@@ -763,7 +763,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_SegmentState_WhenMaximumSynapsesPerSegment()
         {
-            TemporalMemory TemporalMemory = new TemporalMemory();
+            tm TemporalMemory = new tm();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -780,7 +780,7 @@ namespace UnitTestsProject
                 // Adapt the segment if it has reached the maximum synapses allowed per segment
                 if (numSynapses == Connections.HtmConfig.MaxSynapsesPerSegment)
                 {
-                    TemporalMemory.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 5 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+                    tm.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 5 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
                 }
             }
             var field1 = Connections.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -803,7 +803,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_MatchingSegmentAndActiveSegmentState()
         {
-            TemporalMemory TemporalMemory = new TemporalMemory();
+            tm TemporalMemory = new tm();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -820,11 +820,11 @@ namespace UnitTestsProject
             Synapse s4 = Connections.CreateSynapse(dd1, Connections.GetCell(26), -1.1);
             Synapse s5 = Connections.CreateSynapse(dd2, Connections.GetCell(27), -0.5);
 
-            TemporalMemory.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 23, 24, 25 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
-            TemporalMemory.AdaptSegment(Connections, dd2, Connections.GetCells(new int[] { 25, 24, 26 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
-            TemporalMemory.AdaptSegment(Connections, dd3, Connections.GetCells(new int[] { 27, 24, 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
-            TemporalMemory.AdaptSegment(Connections, dd4, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
-            TemporalMemory.AdaptSegment(Connections, dd5, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 23, 24, 25 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(Connections, dd2, Connections.GetCells(new int[] { 25, 24, 26 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(Connections, dd3, Connections.GetCells(new int[] { 27, 24, 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(Connections, dd4, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(Connections, dd5, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
             var field1 = Connections.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var field3 = Connections.GetType().GetField("m_SegmentForFlatIdx", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var field4 = Connections.GetType().GetField("m_ActiveSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -859,7 +859,7 @@ namespace UnitTestsProject
                                                                 ///any other exception or no exception is thrown.
         public void TestAdaptSegment_WhenMaxSynapsesPerSegmentIsReachedAndExceeded()
         {
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn1 = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn1);
@@ -879,7 +879,7 @@ namespace UnitTestsProject
                 // Adapt the segment if it has reached the maximum synapses allowed per segment
                 if (numSynapses == cn1.HtmConfig.MaxSynapsesPerSegment)
                 {
-                    TemporalMemory.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { randomCellNumber }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+                    tm.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { randomCellNumber }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
                 }
             }
             // Adapt the segment if it has crossed the maximum synapses allowed per segment by destroying any weak synapse of that segment.
@@ -904,7 +904,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_SegmentIsDestroyed_WhenNoSynapseIsPresent()
         {
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn1 = new Connections();        
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn1);
@@ -921,9 +921,9 @@ namespace UnitTestsProject
             Synapse s4 = cn1.CreateSynapse(dd4, cn1.GetCell(26), -1.1);
             Synapse s5 = cn1.CreateSynapse(dd5, cn1.GetCell(27), -0.5);
 
-            TemporalMemory.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { 23, 24, 25 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
-            TemporalMemory.AdaptSegment(cn1, dd2, cn1.GetCells(new int[] { 25, 24, 26 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
-            TemporalMemory.AdaptSegment(cn1, dd3, cn1.GetCells(new int[] { 27, 24, 23 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { 23, 24, 25 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn1, dd2, cn1.GetCells(new int[] { 25, 24, 26 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn1, dd3, cn1.GetCells(new int[] { 27, 24, 23 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
             var field1 = cn1.GetType().GetField("m_ActiveSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var field2 = cn1.GetType().GetField("m_MatchingSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var field4 = cn1.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -967,7 +967,7 @@ namespace UnitTestsProject
         public void TestAdaptSegment_DoesNotDestroySynapses_ForSmallNNegativePermanenceValues()
         {
 
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections(); ///The connections object holds the infrastructure, and is used by both the SpatialPooler, TemporalMemory.
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -980,7 +980,7 @@ namespace UnitTestsProject
             Synapse s3 = cn.CreateSynapse(dd, cn.GetCell(43), -0.00000001);
             /// Invoking AdaptSegments with only the cells with index 23 and 37
             ///whose presynaptic cell is considered to be Active in the previous cycle
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 43 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 43 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
 
             Assert.IsTrue(dd.Synapses.Contains(s2)); /// assert condition to check does DistalDendrite contains the synapse s2
@@ -1000,7 +1000,7 @@ namespace UnitTestsProject
         public void TestAdaptSegment_DestroySynapses_WithNegativePermanenceValues()
         {
             // Arrange
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1012,7 +1012,7 @@ namespace UnitTestsProject
             Synapse s2 = cn.CreateSynapse(dd, cn.GetCell(24), -0.29999);
 
 
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
 
             Assert.IsFalse(dd.Synapses.Contains(s2)); /// assert condition to check does DistalDendrite contains the synapse s2
@@ -1028,7 +1028,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_ShouldThrow_DD_ObjectShouldNotBeNUllException()
         {
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1039,7 +1039,7 @@ namespace UnitTestsProject
 
             try
             {
-                TemporalMemory.AdaptSegment(cn, null, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+                tm.AdaptSegment(cn, null, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             }
             catch (NullReferenceException ex)
             {
@@ -1056,7 +1056,7 @@ namespace UnitTestsProject
         public void TestAdaptSegment_CheckMultipleSynapseState()
         {
             // Arrange
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1073,7 +1073,7 @@ namespace UnitTestsProject
             Synapse s7 = cn.CreateSynapse(dd, cn.GetCell(35), -0.2345);
             Synapse s8 = cn.CreateSynapse(dd, cn.GetCell(38), -0.134345);
             // Act
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 25, 26, 28, 31, 35, 38 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 25, 26, 28, 31, 35, 38 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
 
             Assert.IsTrue(dd.Synapses.Contains(s2));
@@ -1095,7 +1095,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_PermanenceMaxBound()
         {
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1106,13 +1106,13 @@ namespace UnitTestsProject
                                                                    /// It results with permanence 1 of the segment's synapse if the synapse's presynaptic cell index 23 was active. 
                                                                    /// If it was not active, then it will decrement the permanence by 0.1
 
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement,
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement,
                 cn.HtmConfig.PermanenceDecrement);/// Invoking AdaptSegments with the cell 15 whose presynaptic cell is 
                                                   /// considered to be Active in the previous cycle.
             Assert.AreEqual(1.0, s1.Permanence, 0.1);/// permanence is incremented for cell 15 from 0.9 to 1 as presynaptic cell was Active in the previous cycle.
 
             /// Now permanence should be at max
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement,
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement,
                 cn.HtmConfig.PermanenceDecrement);/// Again calling AdaptSegments with the cell 15 whose presynaptic cell is 
                                                   /// considered to be Active again in the previous cycle.
             Assert.AreEqual(1.0, s1.Permanence, 0.1);/// Therefore permanence is again incremented for cell 15 from 1 to 1.1 as presynaptic cell was Active 
@@ -1128,7 +1128,7 @@ namespace UnitTestsProject
         public void GetCells_WithEmptyArray_ReturnsEmptyArray()
         {
             // Arrange
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             int[] cellIndexes = new int[0];
             Cell[] expectedCells = new Cell[0];
@@ -1171,7 +1171,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_ComplexDoublePermanenceInput()
         {
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1180,10 +1180,10 @@ namespace UnitTestsProject
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(15), 0.85484565412316);
 
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             Assert.AreEqual(0.95484565412316, s1.Permanence);
             // Now permanence should be at max
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             Assert.AreEqual(1.0, s1.Permanence, 0.1);
         }
 
@@ -1195,7 +1195,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegmentPermanenceMinBound()
         {
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1204,7 +1204,7 @@ namespace UnitTestsProject
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.1);/// create a synapse on a dital segment of a cell with index 23
 
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement,
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement,
                 cn.HtmConfig.PermanenceDecrement);/// Invoking AdaptSegments with the cell 15 whose presynaptic cell is 
                                                   /// considered to be InActive in the previous cycle.
             //Assert.IsFalse(cn.GetSynapses(dd).Contains(s1));
@@ -1224,7 +1224,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_LowPermanence_SynapseShouldbeDestroyed()
         {
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1234,7 +1234,7 @@ namespace UnitTestsProject
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(15), -1.5);
 
 
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             try
             {
                 Assert.IsFalse(dd.Synapses.Contains(s1));
@@ -1256,7 +1256,7 @@ namespace UnitTestsProject
         public void TestAdaptSegment_SynapseRetentionOnDistalDendrite()
         {
             //Arrange
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1267,7 +1267,7 @@ namespace UnitTestsProject
             Synapse s4 = cn.CreateSynapse(dd, cn.GetCell(37), -0.1);
 
             //Act
-            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             //The method adapts the permanence values of the synapses in the specified distak dendrite segment based on the specified parameter and the current input
 
             //Assert

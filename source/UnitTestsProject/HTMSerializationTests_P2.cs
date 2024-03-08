@@ -545,7 +545,7 @@ namespace UnitTestsProject
             HtmConfig htmConfig = SetupHtmConfigParameters();
             Connections mem = new Connections(htmConfig);
 
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             tm.Init(mem);
 
             using (var sw = new StreamWriter(fileName))
@@ -566,7 +566,7 @@ namespace UnitTestsProject
             HtmConfig htmConfig = SetupHtmConfigParameters();
             Connections mem = new Connections(htmConfig);
 
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
             tm.Init(mem);
 
             using (var sw = new StreamWriter(fileName))
@@ -575,7 +575,7 @@ namespace UnitTestsProject
             }
             using (var sr = new StreamReader(fileName))
             {
-                var tm1 = HtmSerializer.Deserialize<TemporalMemory>(sr);
+                var tm1 = HtmSerializer.Deserialize<tm>(sr);
                 Assert.IsTrue(tm.Equals(tm1));
             }
         }
@@ -693,7 +693,7 @@ namespace UnitTestsProject
                 //tm.Reset(mem);
             }, numOfCyclesToWaitOnChange: 50);
 
-            TemporalMemory tm = new TemporalMemory();
+            tm tm = new tm();
 
             SpatialPoolerMT sp = new SpatialPoolerMT(hpc);
             sp.Init(mem);
