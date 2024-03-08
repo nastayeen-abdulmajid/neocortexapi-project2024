@@ -162,11 +162,54 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
 
         }
 
+        [TestMethod]
+        // By testing with invalid data, you can ensure that your serialization and deserialization methods properly handle unexpected inputs or corrupt data.
+        //Testing with such data helps in identifying and addressing issues related to these edge cases.
+        //Testing with invalid data can help identify security vulnerabilities such as injection attacks or buffer overflows that may occur during deserialization if not properly handled.
+        public void TestSerializationAndDeserializationWithInvalidData()
+        {
+            // Arrange
+            tm tm = new tm();
+            Connections cn = new Connections();
+            Parameters p = Parameters.getAllDefaultParameters();
+            p.apply(cn);
+            tm.Init(cn);
 
+            // Create a temporary file path for serialization
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "temporal_memory_serialization_test.txt");
+            try
+            {
+                // Act: Serialize the object
+                using (StreamWriter writer = new StreamWriter(tempFilePath))
+                {
+                    tm.Serialize(tm, "TemporalMemory", writer);
+                }
 
+                // Assert: Check if the file exists
+                Assert.IsTrue(File.Exists(tempFilePath), "Serialized file should exist");
 
+                // Act: Deserialize the object
+                using (StreamReader reader = new StreamReader(tempFilePath))
+                {
+                    tm deserializedMemory = (tm)tm.Deserialize<tm>(reader, "TemporalMemory");
+
+                    // Assert: Check if deserialization succeeded
+                    Assert.IsNotNull(deserializedMemory, "Deserialized object should not be null");
+
+                    // You can add further assertions here to check specific properties of the deserialized object
+                }
+            }
+            finally
+            {
+                // Clean up: Delete the temporary file
+                if (File.Exists(tempFilePath))
+                {
+                    File.Delete(tempFilePath);
+                }
+            }
+        }
+        [TestMethod]
 
     }
 }
-
 
