@@ -679,4 +679,16 @@ namespace UnitTestsProject
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
-            TemporalMemory.Init(Connections);
+            TemporalMemory.Init(Connections); ;
+
+            DistalDendrite distalDendrite = Connections.CreateDistalSegment(Connections.GetCell(0));
+            Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(500), 0.9);
+
+
+            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 57 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            //Assert
+            /// /// permanence is decremented for presynaptie cell 500 from 
+            /// 0.9 to 0.8 as presynaptic cell was InActive in the previous cycle
+            /// But the synapse is not destroyed as permanence > HtmConfig.Epsilon
+            Assert.AreEqual(0.8, synapse1.Permanence);
+        }
