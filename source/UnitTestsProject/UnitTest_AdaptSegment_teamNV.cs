@@ -32,6 +32,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         }
 
         [TestMethod]
+        //Verify that the method behaves correctly with external predictive inputs.
         public void TestComputeMethodWithExternalPredictiveInputs1()
         {
             // Arrange
@@ -56,6 +57,9 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         }
 
         [TestMethod]
+        // Verify that the method behaves correctly with external predictive inputs.
+        //This is important because in real-world applications, systems often receive inputs from external sources, and it's crucial to ensure that your code handles these inputs correctly.
+
         public void TestComputeMethodWithExternalPredictiveInputs()
         {
             // Arrange
@@ -83,6 +87,36 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
             Assert.IsNotNull(result.ActiveSegments);
             Assert.IsNotNull(result.MatchingSegments);
         }
+
+        [TestMethod]
+        //This scenario is responsible for clearing internal data structures within the Connections object.
+        //It helps to prevent state leakage, maintain integrity of test suite, confirms correct behaviour,
+        //detect regressions by ensuring that the method continues to function correctly after modifications.
+        public void ResetMethod_ClearsConnectionsData()
+        {
+            // Arrange
+            TemporalMemory tm = new TemporalMemory();
+            Connections cn = new Connections();
+            Parameters p = Parameters.getAllDefaultParameters();
+            p.apply(cn);
+            tm.Init(cn);
+
+            // Add some data to connections for testing purposes
+            cn.ActiveCells.Add(new Cell());
+            cn.WinnerCells.Add(new Cell());
+            cn.ActiveSegments.Add(new DistalDendrite());
+            cn.MatchingSegments.Add(new DistalDendrite());
+
+            // Act
+            tm.Reset(cn);
+            // Assert
+            Assert.AreEqual(0, cn.ActiveCells.Count); // Ensure ActiveCells is empty after reset
+            Assert.AreEqual(0, cn.WinnerCells.Count); // Ensure WinnerCells is empty after reset
+            Assert.AreEqual(0, cn.ActiveSegments.Count); // Ensure ActiveSegments is empty after reset
+            Assert.AreEqual(0, cn.MatchingSegments.Count); // Ensure MatchingSegments is empty after reset
+        }
+
     }
 }
+
 
