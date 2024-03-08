@@ -664,3 +664,19 @@ namespace UnitTestsProject
             /// 0.1 to 0.2 as presynaptic cell was InActive in the previous cycle
             Assert.AreEqual(0.2, s1.Permanence);
         }
+
+
+        /// <summary>
+        /// Testing the scenario where a synapse's presynaptic cell was not active in the previous cycle, 
+        /// so the AdaptSegment method should decrease the permanence value of that synapse by 
+        /// permanenceDecrement amount.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Prod")]
+        public void TestAdaptSegment_PermanenceWekened_IfPresynapticCellWasInActive()
+        {
+            tm TemporalMemory = new tm();
+            Connections Connections = new Connections();
+            Parameters Parameters = Parameters.getAllDefaultParameters();
+            Parameters.apply(Connections);
+            TemporalMemory.Init(Connections);
