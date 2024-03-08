@@ -650,3 +650,11 @@ namespace UnitTestsProject
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
             TemporalMemory.Init(Connections);
+
+            DistalDendrite dd = Connections.CreateDistalSegment(Connections.GetCell(0));
+            Synapse s1 = Connections.CreateSynapse(dd, Connections.GetCell(23), 0.1);
+
+            // Invoking AdaptSegments with only the cells with index 23
+            /// whose presynaptic cell is considered to be Active in the
+            /// previous cycle and presynaptic cell is Inactive for the cell 477
+            tm.AdaptSegment(Connections, dd, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
