@@ -754,3 +754,23 @@ namespace UnitTestsProject
             Assert.AreEqual(0.7, synapse2.Permanence, 0.01);/// permanence is incremented for cell 37 from 0.6 to 0.7 as presynaptic cell was Active in the previous cycle.
             Assert.AreEqual(0.8, synapse3.Permanence, 0.01);/// permanence is decremented for cell 477 from 0.5 to 0.6 as presynaptic cell was InActive in the previous cycle.
         }
+    }
+
+    /// <summary>
+    /// This test creates a new distal dendrite segment and uses a for loop to create synapses until the 
+    /// maximum number of synapses per segment(225 synapses) is reached.Once the maximum is reached, 
+    /// the segment is adapted using the TemporalMemory.AdaptSegment method.Finally, the test asserts 
+    /// that there is only one segment and 225 synapses in the connections object.
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void TestAdaptSegment_SegmentState_WhenMaximumSynapsesPerSegment()
+    {
+        tm TemporalMemory = new tm();
+        Connections Connections = new Connections();
+        Parameters Parameters = Parameters.getAllDefaultParameters();
+        Parameters.apply(Connections);
+        TemporalMemory.Init(Connections);
+        DistalDendrite dd1 = Connections.CreateDistalSegment(Connections.GetCell(1));
+        // Create maximum synapses per segment (225 synapses)
+        int numSynapses = 0;
