@@ -744,3 +744,13 @@ namespace UnitTestsProject
             Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(23), 0.5);/// Created a synapse on a distal segment of a cell index 23
             Synapse synapse2 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(37), 0.6);/// Created a synapse on a distal segment of a cell index 37
             Synapse synapse3 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(477), 0.9);/// Created a synapse on a distal segment of a cell index 477
+
+            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 37 }), Connections.HtmConfig.PermanenceIncrement,
+                Connections.HtmConfig.PermanenceDecrement);/// Invoking AdaptSegments with only the cells with index 23 and 37
+                                                           /// whose presynaptic cell is considered to be Active in the
+                                                           /// previous cycle and presynaptic cell is Inactive for the cell 477
+
+            Assert.AreEqual(0.6, synapse1.Permanence, 0.01);/// permanence is incremented for cell 23 from 0.5 to 0.6 as presynaptic cell was Active in the previous cycle.
+            Assert.AreEqual(0.7, synapse2.Permanence, 0.01);/// permanence is incremented for cell 37 from 0.6 to 0.7 as presynaptic cell was Active in the previous cycle.
+            Assert.AreEqual(0.8, synapse3.Permanence, 0.01);/// permanence is decremented for cell 477 from 0.5 to 0.6 as presynaptic cell was InActive in the previous cycle.
+        }
