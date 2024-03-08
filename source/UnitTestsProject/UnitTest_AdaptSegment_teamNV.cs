@@ -32,7 +32,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         }
 
         [TestMethod]
-        public void TestComputeMethodWithExternalPredictiveInputs()
+        public void TestComputeMethodWithExternalPredictiveInputs1()
         {
             // Arrange
             TemporalMemory tm = new TemporalMemory();
@@ -50,18 +50,39 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
             // Act
             // Calling the Compute method with external predictive inputs
             ComputeCycle result = tm.Compute(activeColumns, learn, externalPredictiveInputsActive, externalPredictiveInputsWinners);
-         
+
             // Assert
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void TestComputeMethodWithExternalPredictiveInputs()
+        {
+            // Arrange
+            TemporalMemory tm = new TemporalMemory();
+            Connections cn = new Connections();
+            Parameters p = Parameters.getAllDefaultParameters();
+            p.apply(cn);
+            tm.Init(cn);
 
+            // Set up external predictive inputs
+            int[] externalPredictiveInputsActive = new int[] { 0, 1, 2 };
+            int[] externalPredictiveInputsWinners = new int[] { 0 };
 
+            // Act
+            var result = tm.Compute(activeColumns: new int[] { 0, 1 }, learn: true, externalPredictiveInputsActive: externalPredictiveInputsActive, externalPredictiveInputsWinners: externalPredictiveInputsWinners);
+
+            // Assert
+            Assert.IsNotNull(result);
+            // Verify that the external predictive inputs were correctly passed and used
+            //Assert.AreEqual(externalPredictiveInputsActive, result.ExternalPredictiveInputsActive);
+            //Assert.AreEqual(externalPredictiveInputsWinners, result.ExternalPredictiveInputsWinners);
+            // Verify that other properties of ComputeCycle are correctly set
+            Assert.IsNotNull(result.ActiveCells);
+            Assert.IsNotNull(result.WinnerCells);
+            Assert.IsNotNull(result.ActiveSegments);
+            Assert.IsNotNull(result.MatchingSegments);
+        }
     }
-
-
-
-
-
 }
 
