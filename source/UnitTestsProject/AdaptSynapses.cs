@@ -705,4 +705,20 @@ namespace UnitTestsProject
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
-            TemporalMemory.Init(Connections);
+            TemporalMemory.Init(Connections); ;
+
+            DistalDendrite distalDendrite = Connections.CreateDistalSegment(Connections.GetCell(0));
+            Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(23), 2.5);
+
+            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            try
+            {
+                Assert.AreEqual(1.0, synapse1.Permanence, 0.1);
+            }
+            catch (AssertFailedException ex)
+            {
+                string PERMANENCE_SHOULD_BE_IN_THE_RANGE = $"Assert.AreEqual failed. Expected a difference no greater than <0.1> " +
+                    $"between expected value <1> and actual value <{synapse1.Permanence}>. ";
+                Assert.AreEqual(PERMANENCE_SHOULD_BE_IN_THE_RANGE, ex.Message);
+            }
+        }
