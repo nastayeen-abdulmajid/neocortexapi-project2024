@@ -658,3 +658,9 @@ namespace UnitTestsProject
             /// whose presynaptic cell is considered to be Active in the
             /// previous cycle and presynaptic cell is Inactive for the cell 477
             tm.AdaptSegment(Connections, dd, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+
+            //Assert
+            /// permanence is incremented for presynaptie cell 23 from 
+            /// 0.1 to 0.2 as presynaptic cell was InActive in the previous cycle
+            Assert.AreEqual(0.2, s1.Permanence);
+        }
