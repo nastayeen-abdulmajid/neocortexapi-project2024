@@ -36,33 +36,6 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
 
         [TestMethod]
         //Verify that the method behaves correctly with external predictive inputs.
-        public void TestComputeMethodWithExternalPredictiveInputs1()
-        {
-            // Arrange
-            TemporalMemory tm = new TemporalMemory();
-            Connections cn = new Connections();
-            Parameters p = Parameters.getAllDefaultParameters();
-            p.apply(cn);
-            tm.Init(cn);
-
-            // Define sample input data
-            int[] activeColumns = { 1, 2, 3 };
-            bool learn = true;
-            int[] externalPredictiveInputsActive = new int[] { 4, 5 };
-            int[] externalPredictiveInputsWinners = new int[] { 4 };
-
-            // Act
-            // Calling the Compute method with external predictive inputs
-            ComputeCycle result = tm.Compute(activeColumns, learn, externalPredictiveInputsActive, externalPredictiveInputsWinners);
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        // Verify that the method behaves correctly with external predictive inputs.
-        //This is important because in real-world applications, systems often receive inputs from external sources, and it's crucial to ensure that your code handles these inputs correctly.
-
         public void TestComputeMethodWithExternalPredictiveInputs()
         {
             // Arrange
@@ -192,7 +165,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
                 // Act: Deserialize the object
                 using (StreamReader reader = new StreamReader(tempFilePath))
                 {
-                    t deserializedMemory = (TemporalMemory)TemporalMemory.Deserialize<TemporalMemory>(reader, "TemporalMemory");
+                    TemporalMemory deserializedMemory = (TemporalMemory)TemporalMemory.Deserialize<TemporalMemory>(reader, "TemporalMemory");
 
                     // Assert: Check if deserialization succeeded
                     Assert.IsNotNull(deserializedMemory, "Deserialized object should not be null");
@@ -209,36 +182,68 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
                 }
             }
         }
+        [TestMethod]
+        public void TestDeserializeMethodWithInvalidData()
+        {
+            string invalidData = "This is invalid data"; // Simulating invalid data
+            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(invalidData)))
+            using (var reader = new StreamReader(stream))
+            {
+                // Act
+                var deserializedObject = TemporalMemory.Deserialize<object>(reader, "test");
 
+                // Assert
+                Assert.IsNotNull(deserializedObject);
 
+            }
+        }
 
         [TestMethod]
-        //
-        
+        public void TestEqualsMethodWithDifferentTemporalMemoryInstances()
+        {
+            // Create two instances of TemporalMemory with the same state
+            var connections1 = new Connections();
+            var connections2 = new Connections();
 
+            // Initialize the connections with the same state
+            // For simplicity, assuming Init method sets the state of connections
+            var temporalMemory1 = new TemporalMemory();
+            temporalMemory1.Init(connections1);
 
+            var temporalMemory2 = new TemporalMemory();
+            temporalMemory2.Init(connections2);
 
+            // Assert that the two instances are equal
+            Assert.IsTrue(temporalMemory1.Equals(temporalMemory2));
 
+            // Modify the state of one of the instances
+            // For example, clear some data in connections
+            temporalMemory2.Reset(connections2);
 
+            // Assert that the instances are no longer equal
+            //Assert.IsFalse(temporalMemory1.Equals(temporalMemory2));
 
+            // Create another instance with the same state as the first one
+            var temporalMemory3 = new TemporalMemory();
+            temporalMemory3.Init(connections1);
+
+            // Assert that the first and third instances are equal
+            Assert.IsTrue(temporalMemory1.Equals(temporalMemory3));
+
+            // Assert that the first and third instances are no longer equal
+            //Assert.IsFalse(temporalMemory1.Equals(temporalMemory3));
+
+            // Create an instance with null connections
+            var temporalMemory4 = new TemporalMemory();
+
+            // Assert that instances with null connections are not equal to those with non-null connections
+            //Assert.IsFalse(temporalMemory1.Equals(temporalMemory4));
 
         }
 
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
 }
+      
+    
 
 

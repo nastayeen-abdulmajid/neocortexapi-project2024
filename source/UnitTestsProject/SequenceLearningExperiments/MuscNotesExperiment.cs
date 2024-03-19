@@ -164,7 +164,7 @@ namespace UnitTestsProject.SequenceLearningExperiments
 
             var numInputs = inputValues.Distinct<double>().ToList().Count;
 
-            tm tm1 = new tm();
+            TemporalMemory tm1 = new TemporalMemory();
 
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, numInputs * 55, (isStable, numPatterns, actColAvg, seenInputs) =>
             {
@@ -453,7 +453,7 @@ namespace UnitTestsProject.SequenceLearningExperiments
             SpatialPoolerMT spatialPooler = new SpatialPoolerMT(hpa);
             spatialPooler.Init(memory, UnitTestHelpers.GetMemory());
 
-            tm temporalMemory = new tm();
+            TemporalMemory temporalMemory = new TemporalMemory();
             temporalMemory.Init(memory);
 
             List<CortexRegion> regions = new List<CortexRegion>();

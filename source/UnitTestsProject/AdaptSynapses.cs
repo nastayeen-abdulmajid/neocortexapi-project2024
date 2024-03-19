@@ -21,16 +21,16 @@ namespace UnitTestsProject
         int numColumns = 1024;
         private Parameters parameters;
         private SpatialPooler SpatialPooler;
-        private Connections htmConnections;
+        private Connections hTemporalMemoryConnections;
 
         /// <summary>
-        /// Sets up default parameters for the Hierarchical Temporal Memory (HTM) configuration.
+        /// Sets up default parameters for the Hierarchical Temporal Memory (HTemporalMemory) configuration.
         /// </summary>
         /// <returns>An instance of <see cref="HtmConfig"/> with default parameters.</returns>
         private HtmConfig SetupHtmConfigDefaultParameters()
         {
             // Create a new instance of HtmConfig with specified input and column dimensions
-            var htmConfig = new HtmConfig(new int[] { 32, 32 }, new int[] { 64, 64 })
+            var HtmConfig = new HtmConfig(new int[] { 32, 32 }, new int[] { 64, 64 })
             {
                 PotentialRadius = 16,
                 PotentialPct = 0.5,
@@ -51,7 +51,7 @@ namespace UnitTestsProject
                 Random = new ThreadSafeRandom(42)
             };
 
-            return htmConfig;
+            return HtmConfig;
         }
 
         /// <summary>
@@ -63,20 +63,20 @@ namespace UnitTestsProject
         public void TestAdaptSynapsesWithMaxThreshold()
         {
             // Initialization with default parameters from HtmConfig
-            var htmConfig = SetupHtmConfigDefaultParameters();
-            htmConfig.InputDimensions = new int[] { 8 };
-            htmConfig.ColumnDimensions = new int[] { 4 };
-            htmConfig.SynPermInactiveDec = 0.01;
-            htmConfig.SynPermActiveInc = 0.1;
-            htmConfig.WrapAround = false;
+            var HtmConfig = SetupHtmConfigDefaultParameters();
+            HtmConfig.InputDimensions = new int[] { 8 };
+            HtmConfig.ColumnDimensions = new int[] { 4 };
+            HtmConfig.SynPermInactiveDec = 0.01;
+            HtmConfig.SynPermActiveInc = 0.1;
+            HtmConfig.WrapAround = false;
 
             // Creating Connections and SpatialPooler instances
-            htmConnections = new Connections(htmConfig);
+            hTemporalMemoryConnections = new Connections(HtmConfig);
             SpatialPooler = new SpatialPooler();
-            SpatialPooler.Init(htmConnections);
+            SpatialPooler.Init(hTemporalMemoryConnections);
 
             // Setting the maximum threshold value for synaptic permanence trimming
-            htmConnections.HtmConfig.SynPermTrimThreshold = .05;
+            hTemporalMemoryConnections.HtmConfig.SynPermTrimThreshold = .05;
 
             // Defining potential pools for columns
             int[][] potentialPools = new int[][] {
@@ -103,11 +103,11 @@ namespace UnitTestsProject
             };
 
             // Setting up potential pools and permanences for each column in Connections
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
                 int[] indexes = ArrayUtils.IndexWhere(potentialPools[i], (n) => (n == 1));
-                htmConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(htmConnections, indexes);
-                htmConnections.GetColumn(i).SetPermanences(htmConnections.HtmConfig, permanences[i]);
+                hTemporalMemoryConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(hTemporalMemoryConnections, indexes);
+                hTemporalMemoryConnections.GetColumn(i).SetPermanences(hTemporalMemoryConnections.HtmConfig, permanences[i]);
             }
 
             // Input vector and active columns for testing
@@ -115,12 +115,12 @@ namespace UnitTestsProject
             int[] activeColumns = new int[] { 0, 1, 2 };
 
             // Executing the AdaptSynapses method with the specified parameters 
-            SpatialPooler.AdaptSynapses(htmConnections, inputVector, activeColumns);
+            SpatialPooler.AdaptSynapses(hTemporalMemoryConnections, inputVector, activeColumns);
 
             // Asserting that the adapted permanences match the expected true permanences
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
-                double[] perms = htmConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(htmConnections.HtmConfig.NumInputs);
+                double[] perms = hTemporalMemoryConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(hTemporalMemoryConnections.HtmConfig.NumInputs);
                 for (int j = 0; j < truePermanences[i].Length; j++)
                 {
                     Assert.IsTrue(Math.Abs(truePermanences[i][j] - perms[j]) <= 0.01);
@@ -137,18 +137,18 @@ namespace UnitTestsProject
         public void TestAdaptSynapsesWithSinglePermanences()
         {
             // Initialization with HtmConfig
-            var htmConfig = SetupHtmConfigDefaultParameters();
-            htmConfig.InputDimensions = new int[] { 8 };
-            htmConfig.ColumnDimensions = new int[] { 4 };
-            htmConfig.SynPermInactiveDec = 0.01;
-            htmConfig.SynPermActiveInc = 0.1;
-            htmConfig.WrapAround = false;
-            htmConnections = new Connections(htmConfig);
+            var HtmConfig = SetupHtmConfigDefaultParameters();
+            HtmConfig.InputDimensions = new int[] { 8 };
+            HtmConfig.ColumnDimensions = new int[] { 4 };
+            HtmConfig.SynPermInactiveDec = 0.01;
+            HtmConfig.SynPermActiveInc = 0.1;
+            HtmConfig.WrapAround = false;
+            hTemporalMemoryConnections = new Connections(HtmConfig);
             SpatialPooler = new SpatialPooler();
-            SpatialPooler.Init(htmConnections);
+            SpatialPooler.Init(hTemporalMemoryConnections);
 
             // Set synapse trim threshold
-            htmConnections.HtmConfig.SynPermTrimThreshold = 0.05;
+            hTemporalMemoryConnections.HtmConfig.SynPermTrimThreshold = 0.05;
 
             // Define potential pools for columns
             int[][] potentialPools = new int[][] {
@@ -166,11 +166,11 @@ namespace UnitTestsProject
             };
 
             // Set proximal connected synapses and initial permanences for each column
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns - 4; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns - 4; i++)
             {
                 int[] indexes = ArrayUtils.IndexWhere(potentialPools[i], (n) => (n == 1));
-                htmConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(htmConnections, indexes);
-                htmConnections.GetColumn(i).SetPermanences(htmConnections.HtmConfig, permanences[i]);
+                hTemporalMemoryConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(hTemporalMemoryConnections, indexes);
+                hTemporalMemoryConnections.GetColumn(i).SetPermanences(hTemporalMemoryConnections.HtmConfig, permanences[i]);
             }
 
             // Set input vector and active columns
@@ -178,12 +178,12 @@ namespace UnitTestsProject
             int[] activeColumns = new int[] { 0 };
 
             // Execute the AdaptSynapses method with parameters 
-            SpatialPooler.AdaptSynapses(htmConnections, inputVector, activeColumns);
+            SpatialPooler.AdaptSynapses(hTemporalMemoryConnections, inputVector, activeColumns);
 
             // Validate that the actual permanences match the expected true permanences
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns - 4; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns - 4; i++)
             {
-                double[] perms = htmConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(htmConnections.HtmConfig.NumInputs);
+                double[] perms = hTemporalMemoryConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(hTemporalMemoryConnections.HtmConfig.NumInputs);
                 for (int j = 0; j < truePermanences[i].Length; j++)
                 {
                     Assert.IsTrue(Math.Abs(truePermanences[i][j] - perms[j]) <= 0.01);
@@ -201,20 +201,20 @@ namespace UnitTestsProject
         public void TestAdaptSynapsesWithTwoPermanences()
         {
             // Initialize Hyperparameter Configuration
-            var htmConfig = SetupHtmConfigDefaultParameters();
-            htmConfig.InputDimensions = new int[] { 8 };
-            htmConfig.ColumnDimensions = new int[] { 4 };
-            htmConfig.SynPermInactiveDec = 0.01;
-            htmConfig.SynPermActiveInc = 0.1;
-            htmConfig.WrapAround = false;
+            var HtmConfig = SetupHtmConfigDefaultParameters();
+            HtmConfig.InputDimensions = new int[] { 8 };
+            HtmConfig.ColumnDimensions = new int[] { 4 };
+            HtmConfig.SynPermInactiveDec = 0.01;
+            HtmConfig.SynPermActiveInc = 0.1;
+            HtmConfig.WrapAround = false;
 
-            // Create HTM Connections and Spatial Pooler instances
-            htmConnections = new Connections(htmConfig);
+            // Create HTemporalMemory Connections and Spatial Pooler instances
+            hTemporalMemoryConnections = new Connections(HtmConfig);
             SpatialPooler = new SpatialPooler();
-            SpatialPooler.Init(htmConnections);
+            SpatialPooler.Init(hTemporalMemoryConnections);
 
             // Set the Synapse Trim Threshold
-            htmConnections.HtmConfig.SynPermTrimThreshold = 0.05;
+            hTemporalMemoryConnections.HtmConfig.SynPermTrimThreshold = 0.05;
 
             // Define potential pools for columns
             int[][] potentialPools = new int[][] {
@@ -235,11 +235,11 @@ namespace UnitTestsProject
             };
 
             // Set up proximal synapses for each column
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns - 4; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns - 4; i++)
             {
                 int[] indexes = ArrayUtils.IndexWhere(potentialPools[i], (n) => (n == 1));
-                htmConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(htmConnections, indexes);
-                htmConnections.GetColumn(i).SetPermanences(htmConnections.HtmConfig, permanences[i]);
+                hTemporalMemoryConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(hTemporalMemoryConnections, indexes);
+                hTemporalMemoryConnections.GetColumn(i).SetPermanences(hTemporalMemoryConnections.HtmConfig, permanences[i]);
             }
 
             // Define input vector and active columns
@@ -247,12 +247,12 @@ namespace UnitTestsProject
             int[] activeColumns = new int[] { 0, 1 };
 
             // Execute the AdaptSynapses method with specified parameters 
-            SpatialPooler.AdaptSynapses(htmConnections, inputVector, activeColumns);
+            SpatialPooler.AdaptSynapses(hTemporalMemoryConnections, inputVector, activeColumns);
 
             // Verify that the adapted permanences match the expected true permanences
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns - 4; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns - 4; i++)
             {
-                double[] perms = htmConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(htmConnections.HtmConfig.NumInputs);
+                double[] perms = hTemporalMemoryConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(hTemporalMemoryConnections.HtmConfig.NumInputs);
                 for (int j = 0; j < truePermanences[i].Length; j++)
                 {
                     Assert.IsTrue(Math.Abs(truePermanences[i][j] - perms[j]) <= 0.01);
@@ -270,20 +270,20 @@ namespace UnitTestsProject
         public void TestAdaptSynapsesWithMinThreshold()
         {
             // Initialization with default HtmConfig parameters.
-            var htmConfig = SetupHtmConfigDefaultParameters();
-            htmConfig.InputDimensions = new int[] { 8 };
-            htmConfig.ColumnDimensions = new int[] { 4 };
-            htmConfig.SynPermInactiveDec = 0.01;
-            htmConfig.SynPermActiveInc = 0.1;
-            htmConfig.WrapAround = false;
+            var HtmConfig = SetupHtmConfigDefaultParameters();
+            HtmConfig.InputDimensions = new int[] { 8 };
+            HtmConfig.ColumnDimensions = new int[] { 4 };
+            HtmConfig.SynPermInactiveDec = 0.01;
+            HtmConfig.SynPermActiveInc = 0.1;
+            HtmConfig.WrapAround = false;
 
             // Creating Connections object and initializing SpatialPooler.
-            htmConnections = new Connections(htmConfig);
+            hTemporalMemoryConnections = new Connections(HtmConfig);
             SpatialPooler = new SpatialPooler();
-            SpatialPooler.Init(htmConnections);
+            SpatialPooler.Init(hTemporalMemoryConnections);
 
             // Setting the minimum threshold value for synaptic permanences trimming.
-            htmConnections.HtmConfig.SynPermTrimThreshold = 0.01;
+            hTemporalMemoryConnections.HtmConfig.SynPermTrimThreshold = 0.01;
 
             // Defining potential pools, initialized permanences, and true permanences.
             int[][] potentialPools = new int[][]
@@ -311,11 +311,11 @@ namespace UnitTestsProject
             };
 
             // Setting up proximal connected synapses and initial permanences for each column.
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
                 int[] indexes = ArrayUtils.IndexWhere(potentialPools[i], (n) => (n == 1));
-                htmConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(htmConnections, indexes);
-                htmConnections.GetColumn(i).SetPermanences(htmConnections.HtmConfig, permanences[i]);
+                hTemporalMemoryConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(hTemporalMemoryConnections, indexes);
+                hTemporalMemoryConnections.GetColumn(i).SetPermanences(hTemporalMemoryConnections.HtmConfig, permanences[i]);
             }
 
             // Defining input vector and active columns.
@@ -323,12 +323,12 @@ namespace UnitTestsProject
             int[] activeColumns = new int[] { 0, 1, 2 };
 
             // Executing the AdaptSynapses method with the specified parameters.
-            SpatialPooler.AdaptSynapses(htmConnections, inputVector, activeColumns);
+            SpatialPooler.AdaptSynapses(hTemporalMemoryConnections, inputVector, activeColumns);
 
             // Verifying that the resulting permanences match the expected true permanences.
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
-                double[] perms = htmConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(htmConnections.HtmConfig.NumInputs);
+                double[] perms = hTemporalMemoryConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(hTemporalMemoryConnections.HtmConfig.NumInputs);
                 for (int j = 0; j < truePermanences[i].Length; j++)
                 {
                     Assert.IsTrue(Math.Abs(truePermanences[i][j] - perms[j]) <= 0.01);
@@ -345,21 +345,21 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSynapsesWithThreePermanences()
         {
-            // Initialization with default HTM configuration parameters
-            var htmConfig = SetupHtmConfigDefaultParameters();
-            htmConfig.InputDimensions = new int[] { 8 };
-            htmConfig.ColumnDimensions = new int[] { 4 };
-            htmConfig.SynPermInactiveDec = 0.01;
-            htmConfig.SynPermActiveInc = 0.1;
-            htmConfig.WrapAround = false;
+            // Initialization with default HTemporalMemory configuration parameters
+            var HtmConfig = SetupHtmConfigDefaultParameters();
+            HtmConfig.InputDimensions = new int[] { 8 };
+            HtmConfig.ColumnDimensions = new int[] { 4 };
+            HtmConfig.SynPermInactiveDec = 0.01;
+            HtmConfig.SynPermActiveInc = 0.1;
+            HtmConfig.WrapAround = false;
 
-            // Creating HTM connections and spatial pooler instances
-            htmConnections = new Connections(htmConfig);
+            // Creating HTemporalMemory connections and spatial pooler instances
+            hTemporalMemoryConnections = new Connections(HtmConfig);
             SpatialPooler = new SpatialPooler();
-            SpatialPooler.Init(htmConnections);
+            SpatialPooler.Init(hTemporalMemoryConnections);
 
             // Setting specific threshold value for synapse trimming
-            htmConnections.HtmConfig.SynPermTrimThreshold = 0.05;
+            hTemporalMemoryConnections.HtmConfig.SynPermTrimThreshold = 0.05;
 
             // Defining potential pools for each column
             int[][] potentialPools = new int[][] {
@@ -383,11 +383,11 @@ namespace UnitTestsProject
             };
 
             // Setting up connected synapses and initial permanences for each column
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns - 4; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns - 4; i++)
             {
                 int[] indexes = ArrayUtils.IndexWhere(potentialPools[i], (n) => (n == 1));
-                htmConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(htmConnections, indexes);
-                htmConnections.GetColumn(i).SetPermanences(htmConnections.HtmConfig, permanences[i]);
+                hTemporalMemoryConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(hTemporalMemoryConnections, indexes);
+                hTemporalMemoryConnections.GetColumn(i).SetPermanences(hTemporalMemoryConnections.HtmConfig, permanences[i]);
             }
 
             // Simulating input vector and active columns
@@ -395,12 +395,12 @@ namespace UnitTestsProject
             int[] activeColumns = new int[] { 0, 1, 2 };
 
             // Executing the AdaptSynapses method with specified parameters 
-            SpatialPooler.AdaptSynapses(htmConnections, inputVector, activeColumns);
+            SpatialPooler.AdaptSynapses(hTemporalMemoryConnections, inputVector, activeColumns);
 
             // Verifying the adapted permanences match the expected true permanences
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns - 4; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns - 4; i++)
             {
-                double[] perms = htmConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(htmConnections.HtmConfig.NumInputs);
+                double[] perms = hTemporalMemoryConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(hTemporalMemoryConnections.HtmConfig.NumInputs);
                 for (int j = 0; j < truePermanences[i].Length; j++)
                 {
                     Assert.IsTrue(Math.Abs(truePermanences[i][j] - perms[j]) <= 0.01);
@@ -418,20 +418,20 @@ namespace UnitTestsProject
         public void TestAdaptSynapsesWithFourPermanences()
         {
             // Initialization with HtmConfig parameters.
-            var htmConfig = SetupHtmConfigDefaultParameters();
-            htmConfig.InputDimensions = new int[] { 8 };
-            htmConfig.ColumnDimensions = new int[] { 4 };
-            htmConfig.SynPermInactiveDec = 0.01;
-            htmConfig.SynPermActiveInc = 0.1;
-            htmConfig.WrapAround = false;
+            var HtmConfig = SetupHtmConfigDefaultParameters();
+            HtmConfig.InputDimensions = new int[] { 8 };
+            HtmConfig.ColumnDimensions = new int[] { 4 };
+            HtmConfig.SynPermInactiveDec = 0.01;
+            HtmConfig.SynPermActiveInc = 0.1;
+            HtmConfig.WrapAround = false;
 
             // Create Connections and SpatialPooler instances.
-            htmConnections = new Connections(htmConfig);
+            hTemporalMemoryConnections = new Connections(HtmConfig);
             SpatialPooler = new SpatialPooler();
-            SpatialPooler.Init(htmConnections);
+            SpatialPooler.Init(hTemporalMemoryConnections);
 
             // Set SynPermTrimThreshold value.
-            htmConnections.HtmConfig.SynPermTrimThreshold = .05;
+            hTemporalMemoryConnections.HtmConfig.SynPermTrimThreshold = .05;
 
             // Define potential pools for each column.
             int[][] potentialPools = new int[][] {
@@ -458,11 +458,11 @@ namespace UnitTestsProject
             };
 
             // Set proximal connected synapses and initial permanences for each column.
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
                 int[] indexes = ArrayUtils.IndexWhere(potentialPools[i], (n) => (n == 1));
-                htmConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(htmConnections, indexes);
-                htmConnections.GetColumn(i).SetPermanences(htmConnections.HtmConfig, permanences[i]);
+                hTemporalMemoryConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(hTemporalMemoryConnections, indexes);
+                hTemporalMemoryConnections.GetColumn(i).SetPermanences(hTemporalMemoryConnections.HtmConfig, permanences[i]);
             }
 
             // Set input vector and active columns.
@@ -470,12 +470,12 @@ namespace UnitTestsProject
             int[] activeColumns = new int[] { 0, 1, 2 };
 
             // Execute the AdaptSynapses method with parameters.
-            SpatialPooler.AdaptSynapses(htmConnections, inputVector, activeColumns);
+            SpatialPooler.AdaptSynapses(hTemporalMemoryConnections, inputVector, activeColumns);
 
             // Validate that the adapted permanences match the expected true permanences.
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
-                double[] perms = htmConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(htmConnections.HtmConfig.NumInputs);
+                double[] perms = hTemporalMemoryConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(hTemporalMemoryConnections.HtmConfig.NumInputs);
                 for (int j = 0; j < truePermanences[i].Length; j++)
                 {
                     Assert.IsTrue(Math.Abs(truePermanences[i][j] - perms[j]) <= 0.01);
@@ -493,20 +493,20 @@ namespace UnitTestsProject
         public void TestAdaptSynapsesWithNoColumns()
         {
             // Initialization with default HtmConfig parameters
-            var htmConfig = SetupHtmConfigDefaultParameters();
-            htmConfig.InputDimensions = new int[] { 8 };
-            htmConfig.ColumnDimensions = new int[] { 4 };
-            htmConfig.SynPermInactiveDec = 0.01;
-            htmConfig.SynPermActiveInc = 0.1;
-            htmConfig.WrapAround = false;
+            var HtmConfig = SetupHtmConfigDefaultParameters();
+            HtmConfig.InputDimensions = new int[] { 8 };
+            HtmConfig.ColumnDimensions = new int[] { 4 };
+            HtmConfig.SynPermInactiveDec = 0.01;
+            HtmConfig.SynPermActiveInc = 0.1;
+            HtmConfig.WrapAround = false;
 
             // Create Connections and SpatialPooler instances
-            htmConnections = new Connections(htmConfig);
+            hTemporalMemoryConnections = new Connections(HtmConfig);
             SpatialPooler = new SpatialPooler();
-            SpatialPooler.Init(htmConnections);
+            SpatialPooler.Init(hTemporalMemoryConnections);
 
             // Set the minimum threshold value for synapse trimming
-            htmConnections.HtmConfig.SynPermTrimThreshold = 0.01;
+            hTemporalMemoryConnections.HtmConfig.SynPermTrimThreshold = 0.01;
 
             // Define potential pools for each column
             int[][] potentialPools = new int[][] {
@@ -533,11 +533,11 @@ namespace UnitTestsProject
             };
 
             // Set up proximal connected synapses and initial permanences for each column
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
                 int[] indexes = ArrayUtils.IndexWhere(potentialPools[i], (n) => (n == 1));
-                htmConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(htmConnections, indexes);
-                htmConnections.GetColumn(i).SetPermanences(htmConnections.HtmConfig, permanences[i]);
+                hTemporalMemoryConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(hTemporalMemoryConnections, indexes);
+                hTemporalMemoryConnections.GetColumn(i).SetPermanences(hTemporalMemoryConnections.HtmConfig, permanences[i]);
             }
 
             // Define an input vector and an array of active columns (empty in this case)
@@ -545,12 +545,12 @@ namespace UnitTestsProject
             int[] activeColumns = new int[] { };
 
             // Execute the AdaptSynapses method with the specified parameters 
-            SpatialPooler.AdaptSynapses(htmConnections, inputVector, activeColumns);
+            SpatialPooler.AdaptSynapses(hTemporalMemoryConnections, inputVector, activeColumns);
 
             // Validate that the dense permanences have been successfully adapted
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
-                double[] perms = htmConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(htmConnections.HtmConfig.NumInputs);
+                double[] perms = hTemporalMemoryConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(hTemporalMemoryConnections.HtmConfig.NumInputs);
 
                 // Assert that the dense permanences are not null after adaptation
                 Assert.IsNotNull(perms);
@@ -567,20 +567,20 @@ namespace UnitTestsProject
         public void TestAdaptSynapsesWithNoColumnsNoInputVector()
         {
             // Initialize HtmConfig parameters
-            var htmConfig = SetupHtmConfigDefaultParameters();
-            htmConfig.InputDimensions = new int[] { 8 };
-            htmConfig.ColumnDimensions = new int[] { 4 };
-            htmConfig.SynPermInactiveDec = 0.01;
-            htmConfig.SynPermActiveInc = 0.1;
-            htmConfig.WrapAround = false;
+            var HtmConfig = SetupHtmConfigDefaultParameters();
+            HtmConfig.InputDimensions = new int[] { 8 };
+            HtmConfig.ColumnDimensions = new int[] { 4 };
+            HtmConfig.SynPermInactiveDec = 0.01;
+            HtmConfig.SynPermActiveInc = 0.1;
+            HtmConfig.WrapAround = false;
 
             // Create Connections object and SpatialPooler instance
-            htmConnections = new Connections(htmConfig);
+            hTemporalMemoryConnections = new Connections(HtmConfig);
             SpatialPooler = new SpatialPooler();
-            SpatialPooler.Init(htmConnections);
+            SpatialPooler.Init(hTemporalMemoryConnections);
 
             // Set minimum threshold value for synapse trimming
-            htmConnections.HtmConfig.SynPermTrimThreshold = 0.01;
+            hTemporalMemoryConnections.HtmConfig.SynPermTrimThreshold = 0.01;
 
             // Define potential pools for each column
             int[][] potentialPools = new int[][] {
@@ -607,11 +607,11 @@ namespace UnitTestsProject
             };
 
             // Set up potential synapses and initial permanences for each column
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
                 int[] indexes = ArrayUtils.IndexWhere(potentialPools[i], (n) => (n == 1));
-                htmConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(htmConnections, indexes);
-                htmConnections.GetColumn(i).SetPermanences(htmConnections.HtmConfig, permanences[i]);
+                hTemporalMemoryConnections.GetColumn(i).SetProximalConnectedSynapsesForTest(hTemporalMemoryConnections, indexes);
+                hTemporalMemoryConnections.GetColumn(i).SetPermanences(hTemporalMemoryConnections.HtmConfig, permanences[i]);
             }
 
             // Define input vector and active columns
@@ -619,12 +619,12 @@ namespace UnitTestsProject
             int[] activeColumns = new int[] { };
 
             // Execute the AdaptSynapses method with specified parameters 
-            SpatialPooler.AdaptSynapses(htmConnections, inputVector, activeColumns);
+            SpatialPooler.AdaptSynapses(hTemporalMemoryConnections, inputVector, activeColumns);
 
             // Assert that the resulting synapse permanences are not null for each column
-            for (int i = 0; i < htmConnections.HtmConfig.NumColumns; i++)
+            for (int i = 0; i < hTemporalMemoryConnections.HtmConfig.NumColumns; i++)
             {
-                double[] perms = htmConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(htmConnections.HtmConfig.NumInputs);
+                double[] perms = hTemporalMemoryConnections.GetColumn(i).ProximalDendrite.RFPool.GetDensePermanences(hTemporalMemoryConnections.HtmConfig.NumInputs);
                 Assert.IsNotNull(perms);
             }
         }
@@ -643,7 +643,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_PermanenceStrengthened_IfPresynapticCellWasActive()
         {
-            tm TemporalMemory = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -655,7 +655,7 @@ namespace UnitTestsProject
             // Invoking AdaptSegments with only the cells with index 23
             /// whose presynaptic cell is considered to be Active in the
             /// previous cycle and presynaptic cell is Inactive for the cell 477
-            tm.AdaptSegment(Connections, dd, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(Connections, dd, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
 
             //Assert
             /// permanence is incremented for presynaptie cell 23 from 
@@ -673,7 +673,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_PermanenceWekened_IfPresynapticCellWasInActive()
         {
-            tm TemporalMemory = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -683,7 +683,7 @@ namespace UnitTestsProject
             Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(500), 0.9);
 
 
-            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 57 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 57 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
             //Assert
             /// /// permanence is decremented for presynaptie cell 500 from 
             /// 0.9 to 0.8 as presynaptic cell was InActive in the previous cycle
@@ -699,7 +699,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_PermanenceIsLimitedWithinRange()
         {
-            tm TemporalMemory = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -708,7 +708,7 @@ namespace UnitTestsProject
             DistalDendrite distalDendrite = Connections.CreateDistalSegment(Connections.GetCell(0));
             Synapse synapse1 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(23), 2.5);
 
-            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
             try
             {
                 Assert.AreEqual(1.0, synapse1.Permanence, 0.1);
@@ -732,7 +732,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_UpdatesSynapsePermanenceValues_BasedOnPreviousCycleActivity()
         {
-            tm TemporalMemory = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections Connections = new Connections();///The connections object holds the infrastructure, and is used by both the SpatialPooler, TemporalMemory.
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -743,7 +743,7 @@ namespace UnitTestsProject
             Synapse synapse2 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(37), 0.6);/// Created a synapse on a distal segment of a cell index 37
             Synapse synapse3 = Connections.CreateSynapse(distalDendrite, Connections.GetCell(477), 0.9);/// Created a synapse on a distal segment of a cell index 477
 
-            tm.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 37 }), Connections.HtmConfig.PermanenceIncrement,
+            TemporalMemory.AdaptSegment(Connections, distalDendrite, Connections.GetCells(new int[] { 23, 37 }), Connections.HtmConfig.PermanenceIncrement,
                 Connections.HtmConfig.PermanenceDecrement);/// Invoking AdaptSegments with only the cells with index 23 and 37
                                                   /// whose presynaptic cell is considered to be Active in the
                                                   /// previous cycle and presynaptic cell is Inactive for the cell 477
@@ -763,7 +763,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_SegmentState_WhenMaximumSynapsesPerSegment()
         {
-            tm TemporalMemory = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -780,7 +780,7 @@ namespace UnitTestsProject
                 // Adapt the segment if it has reached the maximum synapses allowed per segment
                 if (numSynapses == Connections.HtmConfig.MaxSynapsesPerSegment)
                 {
-                    tm.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 5 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+                    TemporalMemory.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 5 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
                 }
             }
             var field1 = Connections.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -803,7 +803,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_MatchingSegmentAndActiveSegmentState()
         {
-            tm TemporalMemory = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections Connections = new Connections();
             Parameters Parameters = Parameters.getAllDefaultParameters();
             Parameters.apply(Connections);
@@ -820,11 +820,11 @@ namespace UnitTestsProject
             Synapse s4 = Connections.CreateSynapse(dd1, Connections.GetCell(26), -1.1);
             Synapse s5 = Connections.CreateSynapse(dd2, Connections.GetCell(27), -0.5);
 
-            tm.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 23, 24, 25 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
-            tm.AdaptSegment(Connections, dd2, Connections.GetCells(new int[] { 25, 24, 26 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
-            tm.AdaptSegment(Connections, dd3, Connections.GetCells(new int[] { 27, 24, 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
-            tm.AdaptSegment(Connections, dd4, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
-            tm.AdaptSegment(Connections, dd5, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 23, 24, 25 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(Connections, dd2, Connections.GetCells(new int[] { 25, 24, 26 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(Connections, dd3, Connections.GetCells(new int[] { 27, 24, 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(Connections, dd4, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(Connections, dd5, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
             var field1 = Connections.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var field3 = Connections.GetType().GetField("m_SegmentForFlatIdx", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var field4 = Connections.GetType().GetField("m_ActiveSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -859,11 +859,11 @@ namespace UnitTestsProject
                                                                 ///any other exception or no exception is thrown.
         public void TestAdaptSegment_WhenMaxSynapsesPerSegmentIsReachedAndExceeded()
         {
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn1 = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn1);
-            tm.Init(cn1);
+            TemporalMemory.Init(cn1);
             DistalDendrite dd1 = cn1.CreateDistalSegment(cn1.GetCell(1));
             int numSynapses = 0;/// Create maximum synapses per segment (225 synapses)
             int totalCells = cn1.Cells.Length;// Get total number of cells in cn1
@@ -879,7 +879,7 @@ namespace UnitTestsProject
                 // Adapt the segment if it has reached the maximum synapses allowed per segment
                 if (numSynapses == cn1.HtmConfig.MaxSynapsesPerSegment)
                 {
-                    tm.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { randomCellNumber }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+                    TemporalMemory.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { randomCellNumber }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
                 }
             }
             // Adapt the segment if it has crossed the maximum synapses allowed per segment by destroying any weak synapse of that segment.
@@ -904,11 +904,11 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_SegmentIsDestroyed_WhenNoSynapseIsPresent()
         {
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn1 = new Connections();        
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn1);
-            tm.Init(cn1);
+            TemporalMemory.Init(cn1);
 
             DistalDendrite dd1 = cn1.CreateDistalSegment(cn1.GetCell(0));
             DistalDendrite dd2 = cn1.CreateDistalSegment(cn1.GetCell(0));
@@ -921,9 +921,9 @@ namespace UnitTestsProject
             Synapse s4 = cn1.CreateSynapse(dd4, cn1.GetCell(26), -1.1);
             Synapse s5 = cn1.CreateSynapse(dd5, cn1.GetCell(27), -0.5);
 
-            tm.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { 23, 24, 25 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
-            tm.AdaptSegment(cn1, dd2, cn1.GetCells(new int[] { 25, 24, 26 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
-            tm.AdaptSegment(cn1, dd3, cn1.GetCells(new int[] { 27, 24, 23 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { 23, 24, 25 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn1, dd2, cn1.GetCells(new int[] { 25, 24, 26 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn1, dd3, cn1.GetCells(new int[] { 27, 24, 23 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
             var field1 = cn1.GetType().GetField("m_ActiveSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var field2 = cn1.GetType().GetField("m_MatchingSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var field4 = cn1.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -967,11 +967,11 @@ namespace UnitTestsProject
         public void TestAdaptSegment_DoesNotDestroySynapses_ForSmallNNegativePermanenceValues()
         {
 
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections(); ///The connections object holds the infrastructure, and is used by both the SpatialPooler, TemporalMemory.
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);  ///use connection for specified object to build and implement algoarithm 
+            TemporalMemory.Init(cn);  ///use connection for specified object to build and implement algoarithm 
 
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0)); /// Created a Distal dendrite segment of a cell0
@@ -980,7 +980,7 @@ namespace UnitTestsProject
             Synapse s3 = cn.CreateSynapse(dd, cn.GetCell(43), -0.00000001);
             /// Invoking AdaptSegments with only the cells with index 23 and 37
             ///whose presynaptic cell is considered to be Active in the previous cycle
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 43 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 43 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
 
             Assert.IsTrue(dd.Synapses.Contains(s2)); /// assert condition to check does DistalDendrite contains the synapse s2
@@ -1000,11 +1000,11 @@ namespace UnitTestsProject
         public void TestAdaptSegment_DestroySynapses_WithNegativePermanenceValues()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);
+            TemporalMemory.Init(cn);
 
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
@@ -1012,7 +1012,7 @@ namespace UnitTestsProject
             Synapse s2 = cn.CreateSynapse(dd, cn.GetCell(24), -0.29999);
 
 
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
 
             Assert.IsFalse(dd.Synapses.Contains(s2)); /// assert condition to check does DistalDendrite contains the synapse s2
@@ -1028,18 +1028,18 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_ShouldThrow_DD_ObjectShouldNotBeNUllException()
         {
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);
+            TemporalMemory.Init(cn);
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.1);
 
             try
             {
-                tm.AdaptSegment(cn, null, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+                TemporalMemory.AdaptSegment(cn, null, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             }
             catch (NullReferenceException ex)
             {
@@ -1056,11 +1056,11 @@ namespace UnitTestsProject
         public void TestAdaptSegment_CheckMultipleSynapseState()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);
+            TemporalMemory.Init(cn);
 
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
@@ -1073,7 +1073,7 @@ namespace UnitTestsProject
             Synapse s7 = cn.CreateSynapse(dd, cn.GetCell(35), -0.2345);
             Synapse s8 = cn.CreateSynapse(dd, cn.GetCell(38), -0.134345);
             // Act
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 25, 26, 28, 31, 35, 38 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 25, 26, 28, 31, 35, 38 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
 
             Assert.IsTrue(dd.Synapses.Contains(s2));
@@ -1095,24 +1095,24 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_PermanenceMaxBound()
         {
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);
+            TemporalMemory.Init(cn);
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0)); /// Create a distal segment of a cell index 0 to learn sequence
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(15), 1.1);/// create a synapse on a dital segment of a cell with index 15 
                                                                    /// It results with permanence 1 of the segment's synapse if the synapse's presynaptic cell index 23 was active. 
                                                                    /// If it was not active, then it will decrement the permanence by 0.1
 
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement,
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement,
                 cn.HtmConfig.PermanenceDecrement);/// Invoking AdaptSegments with the cell 15 whose presynaptic cell is 
                                                   /// considered to be Active in the previous cycle.
             Assert.AreEqual(1.0, s1.Permanence, 0.1);/// permanence is incremented for cell 15 from 0.9 to 1 as presynaptic cell was Active in the previous cycle.
 
             /// Now permanence should be at max
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement,
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement,
                 cn.HtmConfig.PermanenceDecrement);/// Again calling AdaptSegments with the cell 15 whose presynaptic cell is 
                                                   /// considered to be Active again in the previous cycle.
             Assert.AreEqual(1.0, s1.Permanence, 0.1);/// Therefore permanence is again incremented for cell 15 from 1 to 1.1 as presynaptic cell was Active 
@@ -1128,7 +1128,7 @@ namespace UnitTestsProject
         public void GetCells_WithEmptyArray_ReturnsEmptyArray()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             int[] cellIndexes = new int[0];
             Cell[] expectedCells = new Cell[0];
@@ -1171,19 +1171,19 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_ComplexDoublePermanenceInput()
         {
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);
+            TemporalMemory.Init(cn);
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(15), 0.85484565412316);
 
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             Assert.AreEqual(0.95484565412316, s1.Permanence);
             // Now permanence should be at max
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             Assert.AreEqual(1.0, s1.Permanence, 0.1);
         }
 
@@ -1195,16 +1195,16 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegmentPermanenceMinBound()
         {
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);
+            TemporalMemory.Init(cn);
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.1);/// create a synapse on a dital segment of a cell with index 23
 
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement,
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement,
                 cn.HtmConfig.PermanenceDecrement);/// Invoking AdaptSegments with the cell 15 whose presynaptic cell is 
                                                   /// considered to be InActive in the previous cycle.
             //Assert.IsFalse(cn.GetSynapses(dd).Contains(s1));
@@ -1224,17 +1224,17 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestAdaptSegment_LowPermanence_SynapseShouldbeDestroyed()
         {
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);
+            TemporalMemory.Init(cn);
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(15), -1.5);
 
 
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             try
             {
                 Assert.IsFalse(dd.Synapses.Contains(s1));
@@ -1256,18 +1256,18 @@ namespace UnitTestsProject
         public void TestAdaptSegment_SynapseRetentionOnDistalDendrite()
         {
             //Arrange
-            tm tm = new tm();
+            TemporalMemory TemporalMemory = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
-            tm.Init(cn);
+            TemporalMemory.Init(cn);
 
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0)); //instance is callled with a cell at index 0 as a parameter.
             Synapse s3 = cn.CreateSynapse(dd, cn.GetCell(23), 0.4);
             Synapse s4 = cn.CreateSynapse(dd, cn.GetCell(37), -0.1);
 
             //Act
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
             //The method adapts the permanence values of the synapses in the specified distak dendrite segment based on the specified parameter and the current input
 
             //Assert

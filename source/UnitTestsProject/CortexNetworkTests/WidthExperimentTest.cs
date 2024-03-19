@@ -62,7 +62,7 @@ namespace UnitTestsProject
                     CortexRegion region0 = new CortexRegion("1st Region");
                     regions.Add(region0);
                     SpatialPoolerMT sp1 = new SpatialPoolerMT();
-                    tm tm1 = new tm();
+                    TemporalMemory tm1 = new TemporalMemory();
                     var mem = new Connections();
                     p.apply(mem);
                     sp1.Init(mem, UnitTestHelpers.GetMemory());

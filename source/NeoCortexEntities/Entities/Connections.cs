@@ -1768,6 +1768,11 @@ namespace NeoCortexApi.Entities
             //conn.Cells = cells.ToArray();
             return conn;
         }
+
+        internal void SetHtmConfig(HtmConfig config)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
     }

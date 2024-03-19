@@ -907,15 +907,5 @@ namespace NeoCortexApi
         {
             return HtmSerializer.DeserializeObject<T>(sr, name);
         }
-
-        internal static tm Deserialize<T>(StringReader sr, string v)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void Serialize(TemporalMemory temporalMemory1, string v, StringWriter sw)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
