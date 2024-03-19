@@ -12,7 +12,7 @@ namespace NeoCortexApi
     /// <summary>
     /// Multicore implementation of the Temporal Memory algorithm
     /// </summary>
-    public class TemporalMemoryParallel : tm
+    public class TemporalMemoryParallel : TemporalMemory
     {
         /// <summary>
         /// <inheritdoc/>

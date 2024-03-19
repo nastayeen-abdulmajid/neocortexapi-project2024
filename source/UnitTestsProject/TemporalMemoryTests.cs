@@ -121,7 +121,7 @@ namespace UnitTestsProject
         public void TestNewSegmentGrowthWhenMultipleMatchingSegmentsFound()
         {
             // Initialization
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -160,7 +160,7 @@ namespace UnitTestsProject
         public void TestSynapsePermanenceUpdateWhenMatchingSegmentsFound()
         {
             // Create instances of TemporalMemory, Connections, and Parameters objects.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.PERMANENCE_DECREMENT, 0.08); // Uses Permanence decrement parameter 
             p.apply(cn);
@@ -200,7 +200,7 @@ namespace UnitTestsProject
         public void TestCellsPerColumn()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.Set(KEY.COLUMN_DIMENSIONS, new int[] { 64, 64 });
@@ -228,7 +228,7 @@ namespace UnitTestsProject
         public void TestCustomDimensionsAndCells()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.Set(KEY.COLUMN_DIMENSIONS, new int[] { 16, 32 }); // Set custom column dimensions
@@ -257,7 +257,7 @@ namespace UnitTestsProject
         {
             // Arrange
             // Initialize a TemporalMemory object, Connections object, and set custom column dimensions in the parameters.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.Set(KEY.COLUMN_DIMENSIONS, new int[] { 32, 64 }); // Set custom column dimensions
@@ -288,7 +288,7 @@ namespace UnitTestsProject
         public void TestRecycleLeastRecentlyActiveSegmentToMakeRoomForNewSegment(int[] prevActiveColumns1, int[] prevActiveColumns2, int[] prevActiveColumns3, int[] activeColumns)
         {
             // Initialize TemporalMemory and Connections objects with default parameters
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.CELLS_PER_COLUMN, 1);
             p = GetDefaultParameters(p, KEY.INITIAL_PERMANENCE, 0.5);
@@ -355,7 +355,7 @@ namespace UnitTestsProject
         public void TestNewSegmentAddSynapsesToAllWinnerCells(int numPrevActiveCols, int numActiveCols)
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
             p.apply(cn);
@@ -411,7 +411,7 @@ namespace UnitTestsProject
         public void TestDestroyWeakSynapseOnWrongPrediction(Double weakSynapsePermanence)
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.INITIAL_PERMANENCE, 0.2);
             p = GetDefaultParameters(p, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
@@ -461,7 +461,7 @@ namespace UnitTestsProject
             for (seed = 0; seed < 100; seed++)
             {
                 // Initialize TemporalMemory and Connections objects
-                tm tm = new tm();
+                TemporalMemory tm = new TemporalMemory();
                 Connections cn = new Connections();
                 Parameters p = GetDefaultParameters(null, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
                 p = GetDefaultParameters(p, KEY.PREDICTED_SEGMENT_DECREMENT, 0.02);
@@ -526,7 +526,7 @@ namespace UnitTestsProject
         public void TestAdaptSegmentToMax(double initialPermanence, double expectedPermanence)
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -538,7 +538,7 @@ namespace UnitTestsProject
 
             // Act
             // Call the AdaptSegment method to adjust the permanence
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
             // Assert
             // Verify that the permanence has been adjusted as expected
@@ -546,7 +546,7 @@ namespace UnitTestsProject
 
             // Now permanence should be at max
             // Call the AdaptSegment method again to test that the permanence remains at the maximum value
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
             // Assert again
             Assert.AreEqual(expectedPermanence, s1.Permanence, 0.1);
@@ -565,7 +565,7 @@ namespace UnitTestsProject
                                                         double p1, double p2, double p3, double p4, int expectedNumSegments)
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.INITIAL_PERMANENCE, .2);
             p = GetDefaultParameters(p, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
@@ -622,7 +622,7 @@ namespace UnitTestsProject
             double expectedIs1Permanence, double expectedIs2Permanence)
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
             p = GetDefaultParameters(p, KEY.INITIAL_PERMANENCE, 0.2);
@@ -670,7 +670,7 @@ namespace UnitTestsProject
         public void TestHighSparsitySequenceLearningAndRecall()
         {
             // Create a new instance of TemporalMemory and Connections
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
 
             // Set default parameters, specifying a column dimension of 64
@@ -706,7 +706,7 @@ namespace UnitTestsProject
         public void TestLowSparsitySequenceLearningAndRecall()
         {
             // Create instances of TemporalMemory, Connections, and set parameters
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.COLUMN_DIMENSIONS, new int[] { 64 });
             p.apply(cn);
@@ -744,7 +744,7 @@ namespace UnitTestsProject
         public void TestCreateSynapseInDistalSegment()
         {
             // Create instances of TemporalMemory, Connections, and Parameters
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -771,7 +771,7 @@ namespace UnitTestsProject
         public void TestNewSegmentGrowthWhenNoMatchingSegmentFound()
         {
             // Initialization
-            tm tm = new tm(); // Instantiate TemporalMemory class
+            TemporalMemory tm = new TemporalMemory(); // Instantiate TemporalMemory class
             Connections cn = new Connections(); // Instantiate Connections class
             Parameters p = Parameters.getAllDefaultParameters(); // Get default parameters
             p.apply(cn);
@@ -806,7 +806,7 @@ namespace UnitTestsProject
         public void TestNoOverlapInActiveCells()
         {
             // Initialization
-            tm tm = new tm(); // Instantiate TemporalMemory class
+            TemporalMemory tm = new TemporalMemory(); // Instantiate TemporalMemory class
             Connections cn = new Connections(); // Instantiate Connections class
             Parameters p = GetDefaultParameters(); // Get default parameters
             p.apply(cn);
@@ -840,7 +840,7 @@ namespace UnitTestsProject
         public void TestTemporalMemoryComputeReturnsWinnerCells()
         {
             // Initialize TemporalMemory, Connections, and set default parameters
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.CELLS_PER_COLUMN, 2);
             p = GetDefaultParameters(p, KEY.MIN_THRESHOLD, 2);
@@ -874,7 +874,7 @@ namespace UnitTestsProject
         public void TestTemporalMemoryComputeReturnsWinnerCellsWithDataRow(int[] activeColumns, int expectedWinnerCount, int[] expectedWinnerIndices)
         {
             // Initialize TemporalMemory, Connections, and set default parameters
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.CELLS_PER_COLUMN, 2);
             p = GetDefaultParameters(p, KEY.MIN_THRESHOLD, 2);
@@ -903,7 +903,7 @@ namespace UnitTestsProject
         public void TestGetLeastUsedCell()
         {
             // Create a Connections object with some Cells and Segments
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Parameters p = GetDefaultParameters();
             Connections conn = new Connections();
             p.apply(conn);
@@ -925,7 +925,7 @@ namespace UnitTestsProject
             // Get the least used Cell from a list of Cells
             List<Cell> cells = new List<Cell> { c1, c2, c3 };
             Random random = new Random(42);
-            Cell leastUsedCell = tm.GetLeastUsedCell(conn, cells, random);
+            Cell leastUsedCell = TemporalMemory.GetLeastUsedCell(conn, cells, random);
 
             // Verify that the least used Cell is c3
             Assert.AreEqual(c3.ParentColumnIndex, leastUsedCell.ParentColumnIndex);
@@ -939,7 +939,7 @@ namespace UnitTestsProject
         public void TestWhichCellsBecomeActive()
         {
             // Initialize Temporal Memory and Connections objects
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -972,7 +972,7 @@ namespace UnitTestsProject
             // Note: The test is marked as inconclusive with an exception to indicate that it's not fixed.
 
             // Initialization
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters();
             p.apply(cn);
@@ -1015,7 +1015,7 @@ namespace UnitTestsProject
         [DataRow(new int[] { 0, 1, 2, 3, 4 }, new int[] { 5 }, new int[] { 0, 1, 2, 4 }, 4)]
         public void TestActiveSegmentGrowSynapsesAccordingToPotentialOverlap(int[] previousActiveColumns, int[] activeColumns, int[] expectedPresynapticCells, int expectedCount)
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.CELLS_PER_COLUMN, 1);
             p = GetDefaultParameters(p, KEY.MIN_THRESHOLD, 1);
@@ -1064,7 +1064,7 @@ namespace UnitTestsProject
         public void TestDestroyWeakSynapseOnActiveReinforce(int prevActive, int active, int expectedSynapseCount)
         {
             // Initialize temporal memory, connections, and parameters
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.INITIAL_PERMANENCE, 0.2);
             p = GetDefaultParameters(p, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
@@ -1101,7 +1101,7 @@ namespace UnitTestsProject
         public void TestAdaptSegment_IncreasePermanence()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.CELLS_PER_COLUMN, 1);
             p.apply(cn);
@@ -1117,7 +1117,7 @@ namespace UnitTestsProject
             double permanenceDecrement = 0.05;
 
             // Act
-            tm.AdaptSegment(conn, segment, prevActiveCells, permanenceIncrement, permanenceDecrement);
+            TemporalMemory.AdaptSegment(conn, segment, prevActiveCells, permanenceIncrement, permanenceDecrement);
 
             // Assert
             Assert.AreEqual(0.45, as1.Permanence);
@@ -1132,7 +1132,7 @@ namespace UnitTestsProject
         public void TestAdaptSegment_PrevActiveCellsContainPresynapticCell_IncreasePermanence()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.CELLS_PER_COLUMN, 1);
             p.apply(cn);
@@ -1144,7 +1144,7 @@ namespace UnitTestsProject
             Synapse as1 = cn.CreateSynapse(segment, cell1, .5);
 
             // Act
-            tm.AdaptSegment(cn, segment, new List<Cell> { cell1, cell2 }, 0.2, 0.1);
+            TemporalMemory.AdaptSegment(cn, segment, new List<Cell> { cell1, cell2 }, 0.2, 0.1);
 
             // Assert
             Assert.AreEqual(0.7, as1.Permanence);
@@ -1159,7 +1159,7 @@ namespace UnitTestsProject
         public void TestAddingNewSynapseToDistalSegment()
         {
             // Initialize
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1184,7 +1184,7 @@ namespace UnitTestsProject
         public void TestRemovingSynapseFromDistalSegment()
         {
             // Initialize
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1212,7 +1212,7 @@ namespace UnitTestsProject
         public void TestUpdatingPermanenceOfSynapse()
         {
             // Initialize
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1238,7 +1238,7 @@ namespace UnitTestsProject
         public void TestAdaptSegmentToCentre_SynapseAlreadyAtCentre()
         {
             //Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1248,7 +1248,7 @@ namespace UnitTestsProject
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.6); // central 
 
             //Act
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
             //Assert
             Assert.AreEqual(0.7, s1.Permanence, 0.1);
@@ -1259,7 +1259,7 @@ namespace UnitTestsProject
         public void TestIncreasePermanenceOfActiveSynapses()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.MIN_THRESHOLD, 2);
             p.apply(cn);
@@ -1303,7 +1303,7 @@ namespace UnitTestsProject
             p = GetDefaultParameters(p, KEY.CELLS_PER_COLUMN, 3);
             p.apply(cn);
 
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             tm.Init(cn);
 
             // Create a distal segment and synapses
@@ -1312,7 +1312,7 @@ namespace UnitTestsProject
             cn.CreateSynapse(dd, cn.GetCell(2), 0.50);
 
             // Get the least used cell in column 1
-            Cell leastUsedCell = tm.GetLeastUsedCell(cn, cn.GetColumn(1).Cells, cn.HtmConfig.Random);
+            Cell leastUsedCell = TemporalMemory.GetLeastUsedCell(cn, cn.GetColumn(1).Cells, cn.HtmConfig.Random);
 
             // Verify that the least used cell is correct
             Assert.AreNotEqual(leastUsedCell, cn.GetCell(0));
@@ -1321,7 +1321,7 @@ namespace UnitTestsProject
             leastUsedCell.ParentColumnIndex++;
 
             // Get the least used cell in column 1 again
-            Cell newLeastUsedCell = tm.GetLeastUsedCell(cn, cn.GetColumn(1).Cells, cn.HtmConfig.Random);
+            Cell newLeastUsedCell = TemporalMemory.GetLeastUsedCell(cn, cn.GetColumn(1).Cells, cn.HtmConfig.Random);
 
             // Verify that the new least used cell is not the same as the original least used cell
             Assert.AreNotEqual(newLeastUsedCell, leastUsedCell);
@@ -1336,7 +1336,7 @@ namespace UnitTestsProject
         public void TestActiveCellCount()
         {
             // Initialize
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.CELLS_PER_COLUMN, 5);
             p.apply(cn);
@@ -1361,7 +1361,7 @@ namespace UnitTestsProject
              double expectedPermanence)
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -1371,7 +1371,7 @@ namespace UnitTestsProject
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), initialPermanence);
 
             // Act
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
 
             // Assert
             Assert.AreEqual(expectedPermanence, s1.Permanence, 0.1);
@@ -1388,7 +1388,7 @@ namespace UnitTestsProject
             // Arrange
             HtmConfig htmConfig = GetDefaultTMParameters();
             Connections cn = new Connections(htmConfig);
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             tm.Init(cn);
             Cell[] excludedCells = cn.GetCells(excludedCellIndices);
 
@@ -1407,7 +1407,7 @@ namespace UnitTestsProject
         [DataRow(new int[] { 3, 4 }, new int[] { 2, 3, 4, 5 })]
         public void TestBurstNotpredictedColumns(int[] activeColumns, int[] expectedBurstingCellIndexes)
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters();
             p.apply(cn);
@@ -1428,7 +1428,7 @@ namespace UnitTestsProject
         public void TestNoChangeToNoTSelectedMatchingSegmentsInBurstingColumn(int[] previousActiveColumns,
             int[] activeColumns, int[] previousActiveCellIndexes, int[] burstingCellIndexes, double as1Permanence, double is1Permanence)
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters(null, KEY.PERMANENCE_DECREMENT, 0.08);
 
@@ -1520,11 +1520,11 @@ namespace UnitTestsProject
             int[] externalPredictiveInputsWinners = new int[] { 4, 5, 6 };
 
             // Create a new instance of the TemporalMemory class using reflection
-            var myClass = (tm)Activator.CreateInstance(typeof(tm), nonPublic: true);
+            var myClass = (TemporalMemory)Activator.CreateInstance(typeof(TemporalMemory), nonPublic: true);
 
             // Act
             // Get the ActivateDendrites method of the TemporalMemory class using reflection
-            var method = typeof(tm).GetMethod("ActivateDendrites", BindingFlags.NonPublic | BindingFlags.Instance);
+            var method = typeof(TemporalMemory).GetMethod("ActivateDendrites", BindingFlags.NonPublic | BindingFlags.Instance);
 
             // Invoke the ActivateDendrites method with the specified arguments
             method.Invoke(myClass, new object[] { conn, cycle, learn, externalPredictiveInputsActive, externalPredictiveInputsWinners });
@@ -1539,7 +1539,7 @@ namespace UnitTestsProject
         {
             // Arrange
             // Create a new TemporalMemory object
-            var tm = new tm();
+            var tm = new TemporalMemory();
 
             // Create a new Connections object
             var cn = new Connections();
@@ -1571,7 +1571,7 @@ namespace UnitTestsProject
         public void TestSegmentCreationIfNotEnoughWinnerCells2()
         {
             // Create a new TemporalMemory object
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
 
             // Create a new Connections object
             Connections cn = new Connections();
@@ -1604,7 +1604,7 @@ namespace UnitTestsProject
         public void TestMatchingSegmentAddSynapsesToSubsetOfWinnerCells()
         {
             // Create a new instance of TemporalMemory and Connections, and set default parameters.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters1(null, KEY.CELLS_PER_COLUMN, 1);
             p = getDefaultParameters1(p, KEY.MIN_THRESHOLD, 1);
@@ -1650,7 +1650,7 @@ namespace UnitTestsProject
             // Arrange
             //The method creates a new instance of the TemporalMemory class and a Connections object, and sets some default parameters for the memory using the getDefaultParameters1() method.
             int implementation = 0;
-            tm tm = implementation == 0 ? new tm() : new TemporalMemoryMT();
+            TemporalMemory tm = implementation == 0 ? new TemporalMemory() : new TemporalMemoryMT();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters1();
             p.apply(cn);
@@ -1704,7 +1704,7 @@ namespace UnitTestsProject
             Connections cn = new Connections(htmConfig);
 
             // Create a new instance of TemporalMemory and initialize it with the Connections object.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             tm.Init(cn);
 
             // Set up some initial state for the memory, with one active column and five bursting cells.
@@ -1725,7 +1725,7 @@ namespace UnitTestsProject
         public void TestNoneActiveColumns()
         {
             // Create a new TemporalMemory and Connections object, and initialize them with default parameters.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters1();
             p.apply(cn);
@@ -1762,7 +1762,7 @@ namespace UnitTestsProject
         public void TestPredictedActiveCellsAreCorrect()
         {
             //The test initializes a TemporalMemory object and a Connections object with default parameters and sets up some active columns and cells.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters1();
             p.apply(cn);
@@ -1800,7 +1800,7 @@ namespace UnitTestsProject
         public void TestReinforcedSelectedMatchingSegmentInBurstingColumn1()
         {
             // The code instantiates a TemporalMemory object and a Connections object and initializes them with default parameters.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters1(null, KEY.PERMANENCE_DECREMENT, 0.8);
             p.apply(cn);
@@ -1843,7 +1843,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestReinforcedSelectedMatchingSegmentInBurstingColumn()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters1(null, KEY.PERMANENCE_DECREMENT, 0.06);
             p.apply(cn);
@@ -1882,7 +1882,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestNoNewSegmentIfNotEnoughWinnerCells1()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters1(null, KEY.MAX_NEW_SYNAPSE_COUNT, 5);
             p.apply(cn);
@@ -1908,7 +1908,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestNewSegmentAddSynapsesToSubsetOfWinnerCells()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters1(null, KEY.MAX_NEW_SYNAPSE_COUNT, 2);
             p.apply(cn);
@@ -1949,7 +1949,7 @@ namespace UnitTestsProject
         public void TestNewSegmentAddSynapsesToSubsetOfWinnerCells1()
         {
             // Arrange
-            var tm = new tm();
+            var tm = new TemporalMemory();
             var cn = new Connections();
             var p = getDefaultParameters1(null, KEY.MAX_NEW_SYNAPSE_COUNT, 2);
             p.apply(cn);
@@ -1988,7 +1988,7 @@ namespace UnitTestsProject
         public void TestMatchingSegmentAddSynapsesToSubsetOfWinnerCells1()
         {
             // Arrange
-            var tm = new tm();
+            var tm = new TemporalMemory();
             var cn = new Connections();
             var p = getDefaultParameters1(null, KEY.CELLS_PER_COLUMN, 1);
             p = getDefaultParameters1(p, KEY.MIN_THRESHOLD, 1);
@@ -2075,7 +2075,7 @@ namespace UnitTestsProject
         {
             // The TemporalMemory object is initialized with either the default implementation or a multithreaded implementation based on the input parameter.
 
-            tm tm = tmImplementation == 0 ? new tm() : new TemporalMemoryMT();
+            TemporalMemory tm = tmImplementation == 0 ? new TemporalMemory() : new TemporalMemoryMT();
             // The Connections object is created and the default parameters are applied to it.
             // The TemporalMemory is initialized with the Connections object.
             Connections cn = new Connections();
@@ -2121,7 +2121,7 @@ namespace UnitTestsProject
         public void TestNumberOfColumns()
         {
             // The method creates a new TemporalMemory object, a Connections object and sets the column dimensions to 62x62 and cells per column to 30 using parameters
-            var tm = new tm();
+            var tm = new TemporalMemory();
             var cn = new Connections();
             var p = Parameters.getAllDefaultParameters();
             p.Set(KEY.COLUMN_DIMENSIONS, new int[] { 62, 62 });
@@ -2143,7 +2143,7 @@ namespace UnitTestsProject
         public void TestWithTwoActiveColumns()
         {
             // The test creates a TemporalMemory object, a Connections object, and sets the default parameters.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters2();
             p.apply(cn);
@@ -2182,7 +2182,7 @@ namespace UnitTestsProject
         [TestMethod]
         public void TestBurstUnpredictedColumnsforSixCells()
         {
-            var tm = new tm();
+            var tm = new TemporalMemory();
             var cn = new Connections();
             var p = getDefaultParameters2();
             p.apply(cn);
@@ -2207,7 +2207,7 @@ namespace UnitTestsProject
         public void TestDestroyWeakSynapseOnActiveReinforce()
         {
             // It creates a temporal memory and connections object and initializes them with default parameters
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters2(null, KEY.INITIAL_PERMANENCE, 0.3);
             p = GetDefaultParameters2(p, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
@@ -2242,7 +2242,7 @@ namespace UnitTestsProject
         public void TestNoNewSegmentIfNotEnoughWinnerCells()
         {
             // Arrange
-            var tm = new tm();
+            var tm = new TemporalMemory();
             var cn = new Connections();
             var p = GetDefaultParameters2(null, KEY.MAX_NEW_SYNAPSE_COUNT, 5);
             p.apply(cn);
@@ -2264,7 +2264,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestNewSegmentAddSynapsesToSubsetOfWinnerCells2()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters2(null, KEY.MAX_NEW_SYNAPSE_COUNT, 2);
             p.apply(cn);
@@ -2305,7 +2305,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestNewSegmentAddSynapsesToAllWinnerCells()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters2(null, KEY.MAX_NEW_SYNAPSE_COUNT, 5);
             p.apply(cn);
@@ -2348,7 +2348,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestMatchingSegmentAddSynapsesToAllWinnerCells()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters2(null, KEY.CELLS_PER_COLUMN, 1);
             p = GetDefaultParameters2(p, KEY.MIN_THRESHOLD, 1);
@@ -2386,7 +2386,7 @@ namespace UnitTestsProject
         [TestMethod]
         public void TestActiveSegmentGrowSynapsesAccordingToPotentialOverlap()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters2(null, KEY.CELLS_PER_COLUMN, 1);
             p = GetDefaultParameters2(p, KEY.MIN_THRESHOLD, 1);
@@ -2427,7 +2427,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestDestroyWeakSynapseOnWrongPrediction()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters2(null, KEY.INITIAL_PERMANENCE, 0.3);
             p = GetDefaultParameters2(p, KEY.MAX_NEW_SYNAPSE_COUNT, 4);
@@ -2460,7 +2460,7 @@ namespace UnitTestsProject
         {
             // Arrange
             // The method tests if there are no active columns in the temporal memory, by creating a distal segment on a cell and adding synapses to it
-            var tm = new tm();
+            var tm = new TemporalMemory();
             var cn = new Connections();
             getDefaultParameters2().apply(cn);
             tm.Init(cn);
@@ -2494,7 +2494,7 @@ namespace UnitTestsProject
         public void TestAdaptSegmentToCentre()
         {
             // The method initializes a TemporalMemory object, Connections object and Parameters object with default values and creates a DistalDendrite and Synapse.
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters2();
             p.apply(cn);
@@ -2503,13 +2503,13 @@ namespace UnitTestsProject
             DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
             Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(6), 0.8); // set initial permanence to 0.8
             // The Assert.AreEqual method checks that the permanence value of the Synapse has been adjusted correctly.
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 6 }), 0.1, 0.1); // adjust permanence by 0.1 increment and decrement
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 6 }), 0.1, 0.1); // adjust permanence by 0.1 increment and decrement
             // The method then calls the AdaptSegment method again to test that the permanence value is at the mean.
             Assert.AreEqual(0.9, s1.Permanence, 0.1);
 
             // Now permanence should be at mean
             // Another Assert.AreEqual method checks that the permanence value of the Synapse is equal to 1.0 within a tolerance of 0.1.
-            tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 6 }), 0.1, 0.1); // adjust permanence by 0.1 increment and decrement
+            TemporalMemory.AdaptSegment(cn, dd, cn.GetCells(new int[] { 6 }), 0.1, 0.1); // adjust permanence by 0.1 increment and decrement
             Assert.AreEqual(1.0, s1.Permanence, 0.1);
         }
 
@@ -2522,7 +2522,7 @@ namespace UnitTestsProject
 
             HtmConfig htmConfig = GetDefaultTMParameters2();
             Connections cn = new Connections(htmConfig);
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             tm.Init(cn);
 
             // An array of active columns is defined, as well as an array of cells to be used as bursting cells.
@@ -2548,7 +2548,7 @@ namespace UnitTestsProject
         public void TestDestroySegmentsWithTooFewSynapsesToBeMatching()
         {
             // Create TemporalMemory and Connections objects
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             // Set Parameters for Connections
             Parameters p = GetDefaultParameters2(null, KEY.INITIAL_PERMANENCE, .2);
@@ -2592,7 +2592,7 @@ namespace UnitTestsProject
         public void TestNewSegmentAddSynapsesToAllWinnerCells1()
         {
             // Create a new TemporalMemory and Connections object
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
 
             // Set parameters for the connections
@@ -2649,7 +2649,7 @@ namespace UnitTestsProject
         public void TestActivateCorrectlyPredictiveCells1(int tmImplementation)
         {
             // Arrange
-            tm tm = tmImplementation == 0 ? new tm() : new TemporalMemoryMT();
+            TemporalMemory tm = tmImplementation == 0 ? new TemporalMemory() : new TemporalMemoryMT();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters2();
             p.apply(cn);
@@ -2683,7 +2683,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestNoNewSegmentIfNotEnoughWinnerCells3()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters2(null, KEY.MAX_NEW_SYNAPSE_COUNT, 6);
             p.apply(cn);
@@ -2702,7 +2702,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestDestroyWeakSynapseOnActiveReinforce1()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = GetDefaultParameters2(null, KEY.INITIAL_PERMANENCE, 0.3);
             p = GetDefaultParameters2(p, KEY.MAX_NEW_SYNAPSE_COUNT, 6);
@@ -2733,7 +2733,7 @@ namespace UnitTestsProject
         [TestCategory("Prod")]
         public void TestBurstNotpredictedColumns()
         {
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = getDefaultParameters2();
             p.apply(cn);

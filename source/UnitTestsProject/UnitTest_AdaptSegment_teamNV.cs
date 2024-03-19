@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 
 
 namespace UnitTestsProjectAdaptSegments_Nastayeen
@@ -38,7 +39,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         public void TestComputeMethodWithExternalPredictiveInputs1()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -65,7 +66,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         public void TestComputeMethodWithExternalPredictiveInputs()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -97,7 +98,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         public void ResetMethod_ClearsConnectionsData()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -124,7 +125,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         public void SerializationAndDeserialization_WithValidData()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -143,7 +144,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
                 // Assert: Deserialize and compare with original object
                 using (var reader = new StreamReader(tempFilePath))
                 {
-                    var deserializedObject = tm.Deserialize<tm>(reader, "TemporalMemory");
+                    var deserializedObject = TemporalMemory.Deserialize<TemporalMemory>(reader, "TemporalMemory");
 
                     // Assert
                     Assert.IsNotNull(deserializedObject);
@@ -169,7 +170,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         public void TestSerializationAndDeserializationWithInvalidData()
         {
             // Arrange
-            tm tm = new tm();
+            TemporalMemory tm = new TemporalMemory();
             Connections cn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(cn);
@@ -191,7 +192,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
                 // Act: Deserialize the object
                 using (StreamReader reader = new StreamReader(tempFilePath))
                 {
-                    tm deserializedMemory = (tm)tm.Deserialize<tm>(reader, "TemporalMemory");
+                    t deserializedMemory = (TemporalMemory)TemporalMemory.Deserialize<TemporalMemory>(reader, "TemporalMemory");
 
                     // Assert: Check if deserialization succeeded
                     Assert.IsNotNull(deserializedMemory, "Deserialized object should not be null");
@@ -208,8 +209,36 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
                 }
             }
         }
+
+
+
         [TestMethod]
+        //
+        
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
 
     }
+
+
+
+
+
+
 }
+
 

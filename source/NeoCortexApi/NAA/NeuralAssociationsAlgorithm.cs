@@ -8,7 +8,7 @@ using System.Linq;
 using System.Net.Security;
 using System.Text;
 using System.Threading;
-using static NeoCortexApi.tm;
+using static NeoCortexApi.TemporalMemory;
 
 
 
