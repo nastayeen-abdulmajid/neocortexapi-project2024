@@ -137,7 +137,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         }
 
         [TestMethod]
-        // By testing with invalid data, you can ensure that your serialization and deserialization methods properly handle unexpected inputs or corrupt data.
+        // By testing with invalid data, ensure that your serialization and deserialization methods properly handle unexpected inputs or corrupt data.
         //Testing with such data helps in identifying and addressing issues related to these edge cases.
         //Testing with invalid data can help identify security vulnerabilities such as injection attacks or buffer overflows that may occur during deserialization if not properly handled.
         public void TestSerializationAndDeserializationWithInvalidData()
@@ -240,6 +240,41 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
             //Assert.IsFalse(temporalMemory1.Equals(temporalMemory4));
 
         }
+        //We verify that the result of the Equals method is false, indicating that the temporalMemory object is not equal to null.
+        [TestMethod]
+        public void TestEqualsMethodWithNullTemporalMemoryInstance()
+        {
+
+            var temporalMemory = new TemporalMemory();
+
+            // Act
+            bool result = temporalMemory.Equals(null);
+
+            // Assert
+            Assert.IsFalse(result, "Equals method should return false when comparing with null instance.");
+        }
+
+        [TestMethod]
+        public void TestEqualsMethodWithEqualTemporalMemoryInstances()
+        {
+
+            var connections = new Connections(); // Create your Connections instance here
+            var tm1 = new TemporalMemory();
+            var tm2 = new TemporalMemory();
+
+            // Set up TemporalMemory instances to be equal
+            tm1.LastActivity = new SegmentActivity(); // Set any required properties
+            tm2.LastActivity = new SegmentActivity(); // Set the same properties as tempMem1
+
+            // Assuming other properties are also set identically for both instances
+
+            // Act
+            bool areEqual = tm1.Equals(tm2);
+
+            // Assert
+            Assert.IsTrue(areEqual);
+        }
+
 
     }
 }
