@@ -907,5 +907,10 @@ namespace NeoCortexApi
         {
             return HtmSerializer.DeserializeObject<T>(sr, name);
         }
+
+        internal void Serialize(object value, string v, object @object)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

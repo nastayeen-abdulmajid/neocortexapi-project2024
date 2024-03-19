@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Utilities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace UnitTestsProjectAdaptSegments_Nastayeen
@@ -121,7 +123,6 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
 
                     // Assert
                     Assert.IsNotNull(deserializedObject);
-                    // Add further assertions if needed to ensure correctness of deserialization
                 }
             }
             finally
@@ -255,6 +256,7 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
         }
 
         [TestMethod]
+        //This test ensures that the Equals method correctly identifies equal instances of TemporalMemory.
         public void TestEqualsMethodWithEqualTemporalMemoryInstances()
         {
 
@@ -273,6 +275,25 @@ namespace UnitTestsProjectAdaptSegments_Nastayeen
 
             // Assert
             Assert.IsTrue(areEqual);
+        }
+        [TestMethod]
+        //We create a dummy StreamWriter using a MemoryStream. This dummy StreamWriter won't actually write anything, but it satisfies the method signature of Serialize.
+        //We call the Serialize method of TemporalMemory with a null object and the dummy StreamWriter.
+        //Since we're using a dummy StreamWriter, we don't need to verify anything.We simply want to ensure that the method does not throw any exceptions when a null object is provided.
+        public void TestSerializeMethodWithNullObject()
+        {
+            // Arrange
+            var tm = new TemporalMemory();
+
+            // Create a dummy StreamWriter, we won't actually use it
+            var dummyStreamWriter = new StreamWriter(new MemoryStream());
+
+            // Act
+            tm.Serialize(null, "TestObject", dummyStreamWriter);
+
+            // Assert
+            // Since we're using a dummy StreamWriter, we don't need to verify anything
+            // We just want to ensure that the method does not throw any exceptions
         }
 
 
