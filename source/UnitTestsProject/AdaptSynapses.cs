@@ -1240,4 +1240,15 @@ namespace UnitTestsProject
     [TestMethod]
     [TestCategory("Prod")]
 
+    public void TestAdaptSegment_SynapseRetentionOnDistalDendrite()
+    {
+        //Arrange
+        tm tm = new tm();
+        Connections cn = new Connections();
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn);
+        tm.Init(cn);
+
+
+
 
