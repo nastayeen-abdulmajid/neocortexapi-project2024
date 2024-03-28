@@ -1280,3 +1280,6 @@ namespace UnitTestsProject
     [ExpectedException(typeof(IndexOutOfRangeException))]///This attribute is used to specify the expected 
                                                          ///exception. Therefore, the test will pass if the expected exception 
                                                          ///of type IndexOutOfRangeException is thrown, and it will fail if 
+                                                         ///any other exception or no exception is thrown.
+    public void GetCells_WithInvalidArray_ThrowsIndexOutOfRangeException()
+    {
