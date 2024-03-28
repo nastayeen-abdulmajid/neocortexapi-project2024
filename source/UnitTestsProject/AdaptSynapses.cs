@@ -892,3 +892,16 @@ namespace UnitTestsProject
             throw new ArgumentOutOfRangeException("The Maximum Synapse per segment  was exceeded.");
         }
     }
+
+    /// <summary>
+    /// The test checks that the segment is destroyed when all its synapses are destroyed.
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void TestAdaptSegment_SegmentIsDestroyed_WhenNoSynapseIsPresent()
+    {
+        tm tm = new tm();
+        Connections cn1 = new Connections();
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn1);
+        tm.Init(cn1);
