@@ -797,3 +797,39 @@ namespace UnitTestsProject
         Assert.AreEqual(1, NoOfSegments);
         Assert.AreEqual(225, NoOfSynapses);
     }
+
+    /// <summary>
+    /// The test is checking whether the AdaptSegment method correctly adjusts the state of the matching 
+    /// and active segments in the network, and whether segments that have no remaining synapses are 
+    /// properly destroyed.
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void TestAdaptSegment_MatchingSegmentAndActiveSegmentState()
+    {
+        tm TemporalMemory = new tm();
+        Connections Connections = new Connections();
+        Parameters Parameters = Parameters.getAllDefaultParameters();
+        Parameters.apply(Connections);
+        TemporalMemory.Init(Connections);
+
+        DistalDendrite dd1 = Connections.CreateDistalSegment(Connections.GetCell(1));
+        DistalDendrite dd2 = Connections.CreateDistalSegment(Connections.GetCell(2));
+        DistalDendrite dd3 = Connections.CreateDistalSegment(Connections.GetCell(3));
+        DistalDendrite dd4 = Connections.CreateDistalSegment(Connections.GetCell(4));
+        DistalDendrite dd5 = Connections.CreateDistalSegment(Connections.GetCell(5));
+        Synapse s1 = Connections.CreateSynapse(dd1, Connections.GetCell(23), -1.5);
+        Synapse s2 = Connections.CreateSynapse(dd2, Connections.GetCell(24), 1.5);
+        Synapse s3 = Connections.CreateSynapse(dd3, Connections.GetCell(25), 0.1);
+        Synapse s4 = Connections.CreateSynapse(dd1, Connections.GetCell(26), -1.1);
+        Synapse s5 = Connections.CreateSynapse(dd2, Connections.GetCell(27), -0.5);
+
+        tm.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 23, 24, 25 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+        tm.AdaptSegment(Connections, dd2, Connections.GetCells(new int[] { 25, 24, 26 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+        tm.AdaptSegment(Connections, dd3, Connections.GetCells(new int[] { 27, 24, 23 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+        tm.AdaptSegment(Connections, dd4, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+        tm.AdaptSegment(Connections, dd5, Connections.GetCells(new int[] { }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+        var field1 = Connections.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field3 = Connections.GetType().GetField("m_SegmentForFlatIdx", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field4 = Connections.GetType().GetField("m_ActiveSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field5 = Connections.GetType().GetField("m_MatchingSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
