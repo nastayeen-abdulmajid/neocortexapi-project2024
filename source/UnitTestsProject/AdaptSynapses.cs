@@ -948,3 +948,39 @@ namespace UnitTestsProject
         Assert.AreEqual(1, Convert.ToInt32(field5.GetValue(cn1)));
         Assert.AreEqual(5, Convert.ToInt32(field4.GetValue(cn1)));
     }
+    /// <summary>
+    /// These test methods will test if the AdaptSegment method correctly destroys synapses
+    /// with permanence less/greater than  HtmConfig.EPSILON
+    /// </summary>
+
+    ///TestAdaptSegment_DoesNotDestroySynapses_ForSmallNNegativePermanenceValues
+    ///here permanence comes greater than  HtmConfig.EPSILON
+    ///hence it won´t destroys synapses
+    ///take count of the synapses inside DistalDendrite
+
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void TestAdaptSegment_DoesNotDestroySynapses_ForSmallNNegativePermanenceValues()
+    {
+
+        tm tm = new tm();
+        Connections cn = new Connections(); ///The connections object holds the infrastructure, and is used by both the SpatialPooler, TemporalMemory.
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn);
+        tm.Init(cn);  ///use connection for specified object to build and implement algoarithm
+
+
+        DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0)); /// Created a Distal dendrite segment of a cell0
+        Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.0000000967); /// Created a synapse on a distal segment of a cell index 23
+        Synapse s2 = cn.CreateSynapse(dd, cn.GetCell(24), 0.0000001);/// Created a synapse on a distal segment of a cell index 24
+        Synapse s3 = cn.CreateSynapse(dd, cn.GetCell(43), -0.00000001);
+        /// Invoking AdaptSegments with only the cells with index 23 and 37
+        ///whose presynaptic cell is considered to be Active in the previous cycle
+        tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 43 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+
+
+        Assert.IsTrue(dd.Synapses.Contains(s2)); /// assert condition to check does DistalDendrite contains the synapse s2
+        Assert.IsTrue(dd.Synapses.Contains(s1));/// assert condition to check does DistalDendrite contains the synapse s1
+        Assert.IsTrue(dd.Synapses.Contains(s3));/// assert condition to check does DistalDendrite contains the synapse s1
+        Assert.AreEqual(3, dd.Synapses.Count);  /// synapses count check in DistalDendrite
+    }
