@@ -1133,5 +1133,15 @@ namespace UnitTestsProject
         CollectionAssert.AreEqual(expectedCells, result);
     }
 
+    /// <summary>
+    /// Test case to check if cellIndexes is a valid array:
+    /// This test sets up a Connections object, initializes cellIndexes with the values [0, 2, 4], and initializes 
+    /// expectedCells with an array containing the 1st, 3rd, and 5th elements of the Cells array in the Connections
+    /// object. The GetCells method is then called with cellIndexes, and the result is compared to expectedCells 
+    /// using CollectionAssert.AreEqual.
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void GetCells_WithValidArray_ReturnsExpectedCells()
 
 
