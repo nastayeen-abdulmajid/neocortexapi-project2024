@@ -1266,3 +1266,12 @@ namespace UnitTestsProject
         Assert.IsFalse(dd.Synapses.Contains(s4)); //Checks whether the synapse creater earlier is no longer present in the segment
 
     }
+
+
+
+        /// <summary>
+        /// Test with invalid cellIndexes array.
+        /// In this test case, an IndexOutOfRangeException is expected to be thrown because the index 10 is out of range 
+        /// for the Cells array. The [ExpectedException(typeof(IndexOutOfRangeException))] attribute is used to specify 
+        /// the expected exception.
+        /// </summary>
