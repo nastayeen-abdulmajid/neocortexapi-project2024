@@ -1156,5 +1156,27 @@ namespace UnitTestsProject
         // Assert
         CollectionAssert.AreEqual(expectedCells, result);
     }
+    /// <summary>
+    /// Test how the AdaptSegment works when complex double inputs are given to it
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void TestAdaptSegment_ComplexDoublePermanenceInput()
+    {
+        tm tm = new tm();
+        Connections cn = new Connections();
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn);
+        tm.Init(cn);
+
+        DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
+        Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(15), 0.85484565412316);
+
+        tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+        Assert.AreEqual(0.95484565412316, s1.Permanence);
+        // Now permanence should be at max
+        tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+        Assert.AreEqual(1.0, s1.Permanence, 0.1);
+    }
 
 
