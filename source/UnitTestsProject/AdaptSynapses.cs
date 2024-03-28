@@ -1015,4 +1015,29 @@ namespace UnitTestsProject
         Assert.AreEqual(0, dd.Synapses.Count);  /// synapses count check in DistalDendrite
     }
 
+    /// <summary>
+    /// The below test checks for exception throwing in case of connections, DistalDendrites object is null. 
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void TestAdaptSegment_ShouldThrow_DD_ObjectShouldNotBeNUllException()
+    {
+        tm tm = new tm();
+        Connections cn = new Connections();
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn);
+        tm.Init(cn);
+
+        DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
+        Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.1);
+
+        try
+        {
+            tm.AdaptSegment(cn, null, cn.GetCells(new int[] { 23 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+        }
+        catch (NullReferenceException ex)
+        {
+            Assert.AreEqual(DISTALDENDRITE_CANNOT_BE_NULL, ex.Message);
+        }
+    }
 
