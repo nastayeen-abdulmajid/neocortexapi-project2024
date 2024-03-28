@@ -1195,4 +1195,13 @@ namespace UnitTestsProject
         DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
         Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.1);/// create a synapse on a dital segment of a cell with index 23
 
+        tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement,
+            cn.HtmConfig.PermanenceDecrement);/// Invoking AdaptSegments with the cell 15 whose presynaptic cell is 
+                                              /// considered to be InActive in the previous cycle.
+        //Assert.IsFalse(cn.GetSynapses(dd).Contains(s1));
+        Assert.IsFalse(dd.Synapses.Contains(s1));/// permanence is decremented for presynaptie cell 477 from 
+                                                 /// 0.1 to 0 as presynaptic cell was InActive in the previous cycle
+                                                 /// There the synapse is destroyed as permanence < HtmConfig.Epsilon
+    }
+
 
