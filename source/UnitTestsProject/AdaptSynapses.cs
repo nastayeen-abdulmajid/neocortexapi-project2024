@@ -1219,5 +1219,7 @@ namespace UnitTestsProject
         Parameters p = Parameters.getAllDefaultParameters();
         p.apply(cn);
         tm.Init(cn);
+        DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
+        Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(15), -1.5);
 
 
