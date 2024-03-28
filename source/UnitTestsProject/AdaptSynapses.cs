@@ -1304,3 +1304,7 @@ namespace UnitTestsProject
                                                        ///any other exception or no exception is thrown.
     public void GetCells_WithNullArray_ThrowsException()
     {
+        // Arrange
+        Connections cn = new Connections();
+        cn.Cells = null;
+        int[] cellIndexes = null;
