@@ -1221,5 +1221,11 @@ namespace UnitTestsProject
         tm.Init(cn);
         DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
         Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(15), -1.5);
+        tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+        try
+        {
+            Assert.IsFalse(dd.Synapses.Contains(s1));
+                //The Assert condition checks whether the synapse s1 has been destroyed or not, which should
+                //be true(Assert Passed).
 
 
