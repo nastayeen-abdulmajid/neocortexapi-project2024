@@ -1287,3 +1287,4 @@ namespace UnitTestsProject
         Connections cn = new Connections();
         cn.Cells = new Cell[5];
         int[] cellIndexes = new int[] { 1, 3, 10 }; // index 10 is out of range
+        Cell[] expectedCells = new Cell[] { cn.Cells[1], cn.Cells[3], cn.Cells[10] };
