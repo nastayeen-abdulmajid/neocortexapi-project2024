@@ -856,3 +856,39 @@ namespace UnitTestsProject
                                                             ///exception. Therefore, the test will pass if the expected exception 
                                                             ///of type ArgumentOutOfRangeException is thrown, and it will fail if 
                                                             ///any other exception or no exception is thrown.
+    public void TestAdaptSegment_WhenMaxSynapsesPerSegmentIsReachedAndExceeded()
+    {
+        tm tm = new tm();
+        Connections cn1 = new Connections();
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn1);
+        tm.Init(cn1);
+        DistalDendrite dd1 = cn1.CreateDistalSegment(cn1.GetCell(1));
+        int numSynapses = 0;/// Create maximum synapses per segment (225 synapses)
+        int totalCells = cn1.Cells.Length;// Get total number of cells in cn1
+                                          // Generate a random integer between 1 and totalCells
+        Random random = new Random();
+        int randomCellNumber = random.Next(1, totalCells + 1);
+        for (int i = 0; i < cn1.HtmConfig.MaxSegmentsPerCell; i++)
+        {
+            // Create synapse connected to a random cell
+            Synapse s = cn1.CreateSynapse(dd1, cn1.GetCell(randomCellNumber), 0.5);
+            numSynapses++;
+
+            // Adapt the segment if it has reached the maximum synapses allowed per segment
+            if (numSynapses == cn1.HtmConfig.MaxSynapsesPerSegment)
+            {
+                tm.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { randomCellNumber }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+            }
+        }
+        // Adapt the segment if it has crossed the maximum synapses allowed per segment by destroying any weak synapse of that segment.
+        // Create one more synapse to exceed the maximum number of synapses per segment
+        Synapse s226 = cn1.CreateSynapse(dd1, cn1.GetCell(randomCellNumber), 0.6);
+        numSynapses++;
+        if (numSynapses >= cn1.HtmConfig.MaxSynapsesPerSegment)
+        {
+            //226th cell of the segment does not contains anything. Therefore trying to access the 226th throws an ArgumentOutofRangeException.
+            Synapse Syn226 = dd1.Synapses[226];
+            throw new ArgumentOutOfRangeException("The Maximum Synapse per segment  was exceeded.");
+        }
+    }
