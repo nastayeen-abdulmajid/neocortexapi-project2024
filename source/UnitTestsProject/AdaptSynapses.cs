@@ -905,3 +905,31 @@ namespace UnitTestsProject
         Parameters p = Parameters.getAllDefaultParameters();
         p.apply(cn1);
         tm.Init(cn1);
+
+        DistalDendrite dd1 = cn1.CreateDistalSegment(cn1.GetCell(0));
+        DistalDendrite dd2 = cn1.CreateDistalSegment(cn1.GetCell(0));
+        DistalDendrite dd3 = cn1.CreateDistalSegment(cn1.GetCell(0));
+        DistalDendrite dd4 = cn1.CreateDistalSegment(cn1.GetCell(0));
+        DistalDendrite dd5 = cn1.CreateDistalSegment(cn1.GetCell(0));
+        Synapse s1 = cn1.CreateSynapse(dd1, cn1.GetCell(23), -1.5);
+        Synapse s2 = cn1.CreateSynapse(dd2, cn1.GetCell(24), 1.5);
+        Synapse s3 = cn1.CreateSynapse(dd3, cn1.GetCell(25), 0.1);
+        Synapse s4 = cn1.CreateSynapse(dd4, cn1.GetCell(26), -1.1);
+        Synapse s5 = cn1.CreateSynapse(dd5, cn1.GetCell(27), -0.5);
+
+        tm.AdaptSegment(cn1, dd1, cn1.GetCells(new int[] { 23, 24, 25 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+        tm.AdaptSegment(cn1, dd2, cn1.GetCells(new int[] { 25, 24, 26 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+        tm.AdaptSegment(cn1, dd3, cn1.GetCells(new int[] { 27, 24, 23 }), cn1.HtmConfig.PermanenceIncrement, cn1.HtmConfig.PermanenceDecrement);
+        var field1 = cn1.GetType().GetField("m_ActiveSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field2 = cn1.GetType().GetField("m_MatchingSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field4 = cn1.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field5 = cn1.GetType().GetField("m_NumSynapses", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field9 = cn1.GetType().GetField("nextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field6 = cn1.GetType().GetField("m_SegmentForFlatIdx", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        MethodInfo destroyDistalDendriteMethod = typeof(Connections).GetMethod("DestroyDistalDendrite", BindingFlags.Public
+            | BindingFlags.Instance | BindingFlags.NonPublic);
+        var m_ASegment = field1.GetValue(cn1);
+        var m_MSegment = field2.GetValue(cn1);
+
+
