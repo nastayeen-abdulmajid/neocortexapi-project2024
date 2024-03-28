@@ -1269,9 +1269,14 @@ namespace UnitTestsProject
 
 
 
-        /// <summary>
-        /// Test with invalid cellIndexes array.
-        /// In this test case, an IndexOutOfRangeException is expected to be thrown because the index 10 is out of range 
-        /// for the Cells array. The [ExpectedException(typeof(IndexOutOfRangeException))] attribute is used to specify 
-        /// the expected exception.
-        /// </summary>
+    /// <summary>
+    /// Test with invalid cellIndexes array.
+    /// In this test case, an IndexOutOfRangeException is expected to be thrown because the index 10 is out of range 
+    /// for the Cells array. The [ExpectedException(typeof(IndexOutOfRangeException))] attribute is used to specify 
+    /// the expected exception.
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    [ExpectedException(typeof(IndexOutOfRangeException))]///This attribute is used to specify the expected 
+                                                         ///exception. Therefore, the test will pass if the expected exception 
+                                                         ///of type IndexOutOfRangeException is thrown, and it will fail if 
