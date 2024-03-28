@@ -1298,3 +1298,6 @@ namespace UnitTestsProject
     [TestMethod]
     [TestCategory("Prod")]
     [ExpectedException(typeof(NullReferenceException))]///This attribute is used to specify the expected 
+
+                                                       ///exception. Therefore, the test will pass if the expected exception 
+                                                       ///of type ArgumentNullException is thrown, and it will fail if 
