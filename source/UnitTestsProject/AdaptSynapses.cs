@@ -937,3 +937,9 @@ namespace UnitTestsProject
         ///Assert the segment and synapse status before the DestroyDistalDendrite method is explicitly called.
         Assert.AreEqual(5, Convert.ToInt32(field4.GetValue(cn1)));
         Assert.AreEqual(3, Convert.ToInt32(field5.GetValue(cn1)));
+
+        ///DestroyDistalDendrite is invoked for dd1,dd2,dd3,dd4.
+        destroyDistalDendriteMethod.Invoke(cn1, new object[] { dd1 });
+        destroyDistalDendriteMethod.Invoke(cn1, new object[] { dd2 });
+        destroyDistalDendriteMethod.Invoke(cn1, new object[] { dd3 });
+        destroyDistalDendriteMethod.Invoke(cn1, new object[] { dd4 });
