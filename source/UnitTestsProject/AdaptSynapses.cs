@@ -1041,3 +1041,42 @@ namespace UnitTestsProject
         }
     }
 
+    /// <summary>
+    /// TestAdaptSegmentCheckMultipleSynapse
+    ///Checking the destroyes of synapses and the count of synapses at the end
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void TestAdaptSegment_CheckMultipleSynapseState()
+    {
+        // Arrange
+        tm tm = new tm();
+        Connections cn = new Connections();
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn);
+        tm.Init(cn);
+
+
+        DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
+        Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.2656);
+        Synapse s2 = cn.CreateSynapse(dd, cn.GetCell(24), 0.0124);
+        Synapse s3 = cn.CreateSynapse(dd, cn.GetCell(25), 0.7656);
+        Synapse s4 = cn.CreateSynapse(dd, cn.GetCell(26), 0.0547);
+        Synapse s5 = cn.CreateSynapse(dd, cn.GetCell(28), 0.001);
+        Synapse s6 = cn.CreateSynapse(dd, cn.GetCell(31), 0.002);
+        Synapse s7 = cn.CreateSynapse(dd, cn.GetCell(35), -0.2345);
+        Synapse s8 = cn.CreateSynapse(dd, cn.GetCell(38), -0.134345);
+        // Act
+        tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 23, 24, 25, 26, 28, 31, 35, 38 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+
+
+        Assert.IsTrue(dd.Synapses.Contains(s2));
+        Assert.IsTrue(dd.Synapses.Contains(s1));
+        Assert.IsTrue(dd.Synapses.Contains(s3));
+        Assert.IsTrue(dd.Synapses.Contains(s4));
+        Assert.IsTrue(dd.Synapses.Contains(s5));
+        Assert.IsTrue(dd.Synapses.Contains(s6));
+        Assert.IsFalse(dd.Synapses.Contains(s7));
+        Assert.IsFalse(dd.Synapses.Contains(s8));
+        Assert.AreEqual(6, dd.Synapses.Count);
+    }
