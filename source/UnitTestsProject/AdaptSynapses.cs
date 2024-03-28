@@ -833,3 +833,16 @@ namespace UnitTestsProject
         var field3 = Connections.GetType().GetField("m_SegmentForFlatIdx", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         var field4 = Connections.GetType().GetField("m_ActiveSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         var field5 = Connections.GetType().GetField("m_MatchingSegments", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var dictionary = (ConcurrentDictionary<int, DistalDendrite>)field3.GetValue(Connections);
+        var field2 = Connections.GetType().GetField("m_NumSynapses", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var NoOfSegments = Convert.ToInt32(field1.GetValue(Connections));
+        var activeSegments = ((List<DistalDendrite>)field4.GetValue(Connections)).Count;
+        var matchingSegments = ((List<DistalDendrite>)field5.GetValue(Connections)).Count;
+        var NoOfSynapses = Convert.ToInt32(field2.GetValue(Connections));
+
+        //Assert
+        Assert.AreEqual(5, NoOfSegments);
+        Assert.AreEqual(1, NoOfSynapses);
+        Assert.AreEqual(0, activeSegments);
+        Assert.AreEqual(0, matchingSegments);
+    }
