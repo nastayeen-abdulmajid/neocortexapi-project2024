@@ -1257,6 +1257,9 @@ namespace UnitTestsProject
 
         //Act
         tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
-            //The method adapts the permanence values of the synapses in the specified distak dendrite segment based on the specified parameter and the current input
+        //The method adapts the permanence values of the synapses in the specified distak dendrite segment based on the specified parameter and the current input
 
 
+
+        //Assert
+        Assert.IsTrue(dd.Synapses.Contains(s3)); //Checks whether the synapse created earlier is still present in the segment
