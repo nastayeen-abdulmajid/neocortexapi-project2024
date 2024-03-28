@@ -1293,3 +1293,8 @@ namespace UnitTestsProject
         Cell[] result = cn.GetCells(cellIndexes);
 
     }
+
+
+    [TestMethod]
+    [TestCategory("Prod")]
+    [ExpectedException(typeof(NullReferenceException))]///This attribute is used to specify the expected 
