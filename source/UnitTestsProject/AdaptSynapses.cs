@@ -1283,3 +1283,6 @@ namespace UnitTestsProject
                                                          ///any other exception or no exception is thrown.
     public void GetCells_WithInvalidArray_ThrowsIndexOutOfRangeException()
     {
+        // Arrange
+        Connections cn = new Connections();
+        cn.Cells = new Cell[5];
