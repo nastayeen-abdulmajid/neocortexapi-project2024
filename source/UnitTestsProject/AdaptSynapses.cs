@@ -1203,5 +1203,21 @@ namespace UnitTestsProject
                                                  /// 0.1 to 0 as presynaptic cell was InActive in the previous cycle
                                                  /// There the synapse is destroyed as permanence < HtmConfig.Epsilon
     }
+    /// <summary>
+    /// Test how the AdaptSegment works when a low Permanence value is passed
+    /// Permanence is supposed to be set to 0 as the range should vary between 0 and 1 and when a negative permanence < 0 
+    /// is passed to AdaptSegments, The Synapse is destroyed. 
+    /// ********But this Testcase doesn't provide the expected results and permanence is not getting set to the minimum 
+    /// bound for the negative permanence value.***********
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    public void TestAdaptSegment_LowPermanence_SynapseShouldbeDestroyed()
+    {
+        tm tm = new tm();
+        Connections cn = new Connections();
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn);
+        tm.Init(cn);
 
 
