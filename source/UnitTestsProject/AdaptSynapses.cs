@@ -1184,5 +1184,15 @@ namespace UnitTestsProject
     /// </summary>
     [TestMethod]
     [TestCategory("Prod")]
+    public void TestAdaptSegmentPermanenceMinBound()
+    {
+        tm tm = new tm();
+        Connections cn = new Connections();
+        Parameters p = Parameters.getAllDefaultParameters();
+        p.apply(cn);
+        tm.Init(cn);
+
+        DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0));
+        Synapse s1 = cn.CreateSynapse(dd, cn.GetCell(23), 0.1);/// create a synapse on a dital segment of a cell with index 23
 
 
