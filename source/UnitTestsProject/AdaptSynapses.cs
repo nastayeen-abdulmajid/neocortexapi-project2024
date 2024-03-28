@@ -1178,5 +1178,11 @@ namespace UnitTestsProject
         tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { 15 }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
         Assert.AreEqual(1.0, s1.Permanence, 0.1);
     }
+    /// <summary>
+    /// This unit test is testing the minimum permanence bound value set by the AdaptSegment method. 
+    /// For the permanece value < 0, AdaptSegments will set permanence to minimum bound 0.
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
 
 
