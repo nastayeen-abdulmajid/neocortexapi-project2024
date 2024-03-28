@@ -1263,3 +1263,6 @@ namespace UnitTestsProject
 
         //Assert
         Assert.IsTrue(dd.Synapses.Contains(s3)); //Checks whether the synapse created earlier is still present in the segment
+        Assert.IsFalse(dd.Synapses.Contains(s4)); //Checks whether the synapse creater earlier is no longer present in the segment
+
+    }
