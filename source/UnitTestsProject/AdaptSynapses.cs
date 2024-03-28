@@ -1251,4 +1251,8 @@ namespace UnitTestsProject
 
 
 
+        DistalDendrite dd = cn.CreateDistalSegment(cn.GetCell(0)); //instance is callled with a cell at index 0 as a parameter.
+        Synapse s3 = cn.CreateSynapse(dd, cn.GetCell(23), 0.4);
+        Synapse s4 = cn.CreateSynapse(dd, cn.GetCell(37), -0.1);
+
 
