@@ -772,5 +772,28 @@ namespace UnitTestsProject
         Parameters.apply(Connections);
         TemporalMemory.Init(Connections);
         DistalDendrite dd1 = Connections.CreateDistalSegment(Connections.GetCell(1));
-        // Create maximum synapses per segment (225 synapses)
+
+
+        // Create maximum synapses per segment (225 synapses).
         int numSynapses = 0;
+        for (int i = 0; i < Connections.HtmConfig.MaxSegmentsPerCell; i++)
+        {
+            // Create synapse connected to a random cell
+            Synapse s = Connections.CreateSynapse(dd1, Connections.GetCell(5), 0.5);
+            numSynapses++;
+
+            // Adapt the segment if it has reached the maximum synapses allowed per segment
+            if (numSynapses == Connections.HtmConfig.MaxSynapsesPerSegment)
+            {
+                tm.AdaptSegment(Connections, dd1, Connections.GetCells(new int[] { 5 }), Connections.HtmConfig.PermanenceIncrement, Connections.HtmConfig.PermanenceDecrement);
+            }
+        }
+        var field1 = Connections.GetType().GetField("m_NextSegmentOrdinal", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var field2 = Connections.GetType().GetField("m_NumSynapses", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var NoOfSegments = Convert.ToInt32(field1.GetValue(Connections));
+        var NoOfSynapses = Convert.ToInt32(field2.GetValue(Connections));
+
+        //Assert
+        Assert.AreEqual(1, NoOfSegments);
+        Assert.AreEqual(225, NoOfSynapses);
+    }
