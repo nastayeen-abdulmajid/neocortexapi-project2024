@@ -1225,7 +1225,14 @@ namespace UnitTestsProject
         try
         {
             Assert.IsFalse(dd.Synapses.Contains(s1));
-                //The Assert condition checks whether the synapse s1 has been destroyed or not, which should
-                //be true(Assert Passed).
+            //The Assert condition checks whether the synapse s1 has been destroyed or not, which should
+            //be true(Assert Passed).
+        }
+        catch (AssertFailedException ex)
+        {
+            // In the above try block, the synapse is expected to be destroyed otherwise it is caught in this catch block.
+            throw new AssertFailedException("The synapse was not destroyed as expected.", ex);
+        }
+    }
 
 
