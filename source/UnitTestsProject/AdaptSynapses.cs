@@ -846,3 +846,13 @@ namespace UnitTestsProject
         Assert.AreEqual(0, activeSegments);
         Assert.AreEqual(0, matchingSegments);
     }
+    /// <summary>
+    /// Here's an example implementation of a unit test that creates more than 225 synapses using a for 
+    /// loop associated with one distal dendrite segment which is going to result in ArgumentOutOfRangeException:
+    /// </summary>
+    [TestMethod]
+    [TestCategory("Prod")]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]///This attribute is used to specify the expected 
+                                                            ///exception. Therefore, the test will pass if the expected exception 
+                                                            ///of type ArgumentOutOfRangeException is thrown, and it will fail if 
+                                                            ///any other exception or no exception is thrown.
