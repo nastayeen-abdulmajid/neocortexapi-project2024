@@ -1310,3 +1310,8 @@ namespace UnitTestsProject
         int[] cellIndexes = null;
         // Act & Assert
         Cell[] result = cn.GetCells(cellIndexes);
+        //Assert.ThrowsException<ArgumentNullException>(() => cn.GetCells());
+
+    }
+}
+}
