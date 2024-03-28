@@ -1255,4 +1255,8 @@ namespace UnitTestsProject
         Synapse s3 = cn.CreateSynapse(dd, cn.GetCell(23), 0.4);
         Synapse s4 = cn.CreateSynapse(dd, cn.GetCell(37), -0.1);
 
+        //Act
+        tm.AdaptSegment(cn, dd, cn.GetCells(new int[] { }), cn.HtmConfig.PermanenceIncrement, cn.HtmConfig.PermanenceDecrement);
+            //The method adapts the permanence values of the synapses in the specified distak dendrite segment based on the specified parameter and the current input
+
 
