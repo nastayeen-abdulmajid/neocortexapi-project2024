@@ -1301,3 +1301,6 @@ namespace UnitTestsProject
 
                                                        ///exception. Therefore, the test will pass if the expected exception 
                                                        ///of type ArgumentNullException is thrown, and it will fail if 
+                                                       ///any other exception or no exception is thrown.
+    public void GetCells_WithNullArray_ThrowsException()
+    {
