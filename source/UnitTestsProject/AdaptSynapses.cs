@@ -1235,4 +1235,9 @@ namespace UnitTestsProject
         }
     }
 
+    //These test procedures will determine whether the AdaptSegment technique
+    // effectively eliminates synapses with permanence below Epsilon havign different inputs.
+    [TestMethod]
+    [TestCategory("Prod")]
+
 
