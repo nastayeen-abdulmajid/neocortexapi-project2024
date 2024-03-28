@@ -1308,3 +1308,5 @@ namespace UnitTestsProject
         Connections cn = new Connections();
         cn.Cells = null;
         int[] cellIndexes = null;
+        // Act & Assert
+        Cell[] result = cn.GetCells(cellIndexes);
