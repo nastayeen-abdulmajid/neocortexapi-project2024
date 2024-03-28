@@ -943,3 +943,8 @@ namespace UnitTestsProject
         destroyDistalDendriteMethod.Invoke(cn1, new object[] { dd2 });
         destroyDistalDendriteMethod.Invoke(cn1, new object[] { dd3 });
         destroyDistalDendriteMethod.Invoke(cn1, new object[] { dd4 });
+
+        ///Now checking the segment and synapse status after the DestroyDistalDendrite method is explicitly called.
+        Assert.AreEqual(1, Convert.ToInt32(field5.GetValue(cn1)));
+        Assert.AreEqual(5, Convert.ToInt32(field4.GetValue(cn1)));
+    }
