@@ -933,3 +933,7 @@ namespace UnitTestsProject
         var m_MSegment = field2.GetValue(cn1);
 
 
+
+        ///Assert the segment and synapse status before the DestroyDistalDendrite method is explicitly called.
+        Assert.AreEqual(5, Convert.ToInt32(field4.GetValue(cn1)));
+        Assert.AreEqual(3, Convert.ToInt32(field5.GetValue(cn1)));
