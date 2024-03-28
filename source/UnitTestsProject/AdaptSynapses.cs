@@ -1143,5 +1143,18 @@ namespace UnitTestsProject
     [TestMethod]
     [TestCategory("Prod")]
     public void GetCells_WithValidArray_ReturnsExpectedCells()
+    {
+        // Arrange
+        Connections cn = new Connections();
+        int[] cellIndexes = new int[] { 0, 2, 4 };
+        cn.Cells = new Cell[5];
+        Cell[] expectedCells = new Cell[] { cn.Cells[0], cn.Cells[2], cn.Cells[4] };
+
+        // Act
+        Cell[] result = cn.GetCells(cellIndexes);
+
+        // Assert
+        CollectionAssert.AreEqual(expectedCells, result);
+    }
 
 
