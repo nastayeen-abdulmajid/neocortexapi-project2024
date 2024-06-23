@@ -1,4 +1,4 @@
-Overview understanding of cloud computing :
+I. Overview understanding of cloud computing :
 1. The user can store or access data in internet rather than local computer or server.
 2. One can pay only for the services that is needed, and only as long as one needs.(Pay-as-you-go model)
 
@@ -13,3 +13,28 @@ Overview understanding of cloud computing :
   C. Hybrid cloud: It is combination of public and private clouds.
 
 5. Use cases:
+  A. For data storage and backup. Eg. Google drive
+  B. Data analysis in business intelligence. Eg. Google BigQuery
+  C. Hosting websites & application over internet. 
+  D. Build and deploy AI models
+
+II. Summary of project deployment in cloud:
+
+A. Prerequisites
+1. Azure student subscription
+2. Visual Studio with Azure development packages
+
+B. Setting up Azure environment:
+1. Creating resource group
+2. Create storage account
+3. Create a queue
+4. Get a Storage account connection string
+
+C. Developing C# application in visual studio
+1. Using neocortex api source code
+2. Adding Azure.storage.queues package
+3. Configure connection string directly in the code
+
+D. Adding Docker 
+
+E. Deployment in Azure
