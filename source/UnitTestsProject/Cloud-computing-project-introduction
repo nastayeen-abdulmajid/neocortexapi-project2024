@@ -1,0 +1,15 @@
+Overview understanding of cloud computing :
+1. The user can store or access data in internet rather than local computer or server.
+2. One can pay only for the services that is needed, and only as long as one needs.(Pay-as-you-go model)
+
+3. There are 3 types of "service" models:
+  A. Infrastructure as a service (Iaas): It is virtual computing resource. Eg. MS Azure
+  B. Platform as a service (Paas): Hardware & Software tools over internet for application development. Eg. MS Azure Paas 
+  C. Software as a service (Saas): Using software applications over internet based on subscription. Eg. MS 365
+
+4. There are 3 types of "deployment" models:
+  A. Public cloud: Here the services are publically available & can be shared across organisations
+  B. Private cloud: Here the service is give to a single organisation. It gives more privacy & security of information.
+  C. Hybrid cloud: It is combination of public and private clouds.
+
+5. Use cases:
