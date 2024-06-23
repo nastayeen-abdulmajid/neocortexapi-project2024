@@ -34,12 +34,77 @@ C. Developing C# application in visual studio
 1. Using neocortex api source code
 2. Adding Azure.storage.queues package
 3. Configure connection string directly in the code
+{
+  "ConnectionStrings": {
+    "AzureStorage": "your_connection_string_here"
+  }
+}
+4. Queue operation:
+using Azure.Storage.Queues; // Namespace for Queue storage types
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string connectionString = "your_connection_string_here";
+        string queueName = "your_queue_name_here";
+
+        // Create a QueueClient
+        QueueClient queueClient = new QueueClient(connectionString, queueName);
+
+        // Create the queue if it doesn't already exist
+        queueClient.CreateIfNotExists();
+
+        // Send a message to the queue
+        queueClient.SendMessage("Hello, Azure Queue!");
+
+        // Receive messages from the queue
+        var message = queueClient.ReceiveMessage();
+
+        if (message != null)
+        {
+            Console.WriteLine($"Received message: {message.Value.MessageText}");
+
+            // Delete the message
+            queueClient.DeleteMessage(message.Value.MessageId, message.Value.PopReceipt);
+        }
+    }
+}
+
 
 D. Adding Docker 
+# Use the official .NET Core SDK image
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+
+ENTRYPOINT ["dotnet", "your_application.dll"]
+
 
 E. Deployment in Azure
 1. Create container registry in azure portal
+az acr login --name your_registry_name
+
+Build docker image
+docker build -t your_registry_name.azurecr.io/your_image_name:tag .
+
+
 2. Pushing docker image to Azure container registry
+docker push your_registry_name.azurecr.io/your_image_name:tag
+
 3. Creating Azure app services - select docker container as publish option
 
 F. Test, monitor & manage
