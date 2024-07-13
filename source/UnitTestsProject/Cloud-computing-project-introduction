@@ -121,7 +121,7 @@ Number of test cases : more than 25
 2. READING DATASET
 3. WRITING RESULT ON AZURE WEB APPLICATION
 ---------------------------------PROJECT PLANNING--------------------------------------------------------------------------
-We have created the outline for project plan which is structured in phases and includes essential tasks for each phase:
+We have created the outline for project plan which is structured in phases and includes essential tasks for each phases:
 Phase 1: Planning and Requirements Gathering
 1. Scope and Objectives
 a. Identifying the purpose of the software program.
@@ -131,3 +131,20 @@ b. Defining the project objectives and deliverables.
 a. Determining of the technical requirements (e.g., OS, database, compute, storage).
 b. Identifying any compliance and security requirements.
 c. Understanding of the software architecture and its dependencies.
+
+3. Resource allocation:
+a. Separation of task roles among team members
+b. Time allocation to each role
+c. Knowing the required Azure services (VMs, databases, storage, etc.)
+
+4. Risk assessment:
+a. Identifying potential risks (e.g., data loss, downtime).
+b. Planning mitigation strategies for each risk.
+
+Phase 2: Design and Architecture
+1. Azure structure designing:
+Usage of azure services
+
+2. Create architectural diagram
+Visualization of system working architecture
+Documentation of azure services interactions between components
