@@ -197,3 +197,9 @@ Decoupling application components, building asynchronous workflows, and implemen
 Azure Table Storage is a NoSQL key-value store for storing structured data, such as user data or application metadata.
  No predefined structure, allowing flexibility in data storage.
 Storing large volumes of structured, non-relational data, user profiles, and other metadata.
+*Comparison:
+Blob Storage: Best for unstructured data like files and media.
+Containers: Logical grouping for blobs within a storage account.
+File Shares: Managed file shares for SMB/NFS-based access.
+Queues: Messaging system for decoupling and asynchronous workflows.
+Tables: NoSQL storage for structured, schema-less data.
