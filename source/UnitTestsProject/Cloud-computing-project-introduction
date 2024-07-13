@@ -148,3 +148,16 @@ Usage of azure services
 2. Create architectural diagram
 Visualization of system working architecture
 Documentation of azure services interactions between components
+
+Phase 3: Implementation
+1. Setting up azure environment
+a. Continue using azure student subscription
+b. Configure resource groups for logical grouping of resources.
+c. Set up VMs, storage accounts, databases, and all other services.
+d. Using deployment scripts for integration & deployment of neocortex api software code into azure cloud
+
+2. Data migration
+a. Upload software code to Azure repositories
+b. Migrate existing data to Azure databases or storage
+c. Ensure data consistency and integrity during migration.
+
