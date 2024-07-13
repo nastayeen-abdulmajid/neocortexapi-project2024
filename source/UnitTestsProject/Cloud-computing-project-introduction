@@ -151,13 +151,30 @@ Documentation of azure services interactions between components
 
 Phase 3: Implementation
 1. Setting up azure environment
-a. Continue using azure student subscription
-b. Configure resource groups for logical grouping of resources.
-c. Set up VMs, storage accounts, databases, and all other services.
-d. Using deployment scripts for integration & deployment of neocortex api software code into azure cloud
+a. Continue to using azure student subscription
+b. Configuring resource groups for logical grouping of resources.
+c. Setting up VMs, storage accounts, databases, and all other services.
+d. Using of deployment scripts for integration & deployment of neocortex api software code into azure cloud
 
 2. Data migration
-a. Upload software code to Azure repositories
-b. Migrate existing data to Azure databases or storage
-c. Ensure data consistency and integrity during migration.
+a. Uploading software code to Azure repositories
+b. Migrating existing data to Azure databases or storage
+c. Ensuring data consistency and integrity during migration.
 
+Phase 4: Testing & Validation
+1. Functional testing: Testing of our software functionalities to ensure they work as expected. Integration testing that verify interaction between components.
+2. Performance testing: Optimizing performance based on test results.
+
+Phase 5: 
+Deployment
+1. Reviewing all configurations and settings.
+2. Ensuring all team members are prepared with their work.
+3. Deploying the software to the production environment using CI/CD pipelines.
+4. Monitoring the deployment process for any issues.
+5. Monitoring application performance and usage.
+6. Addressing any post-deployment issues 
+
+Maintenance, Continuous improvement & Documentation:
+Identifying areas of improvement
+Implementing enhancements and optimizations based on feedback.
+Creating comprehensive documentation for the deployed software.
