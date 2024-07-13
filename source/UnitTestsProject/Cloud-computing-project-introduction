@@ -120,3 +120,14 @@ Number of test cases : more than 25
 
 2. READING DATASET
 3. WRITING RESULT ON AZURE WEB APPLICATION
+---------------------------------PROJECT PLANNING--------------------------------------------------------------------------
+We have created the outline for project plan which is structured in phases and includes essential tasks for each phase:
+Phase 1: Planning and Requirements Gathering
+1. Scope and Objectives
+a. Identifying the purpose of the software program.
+b. Defining the project objectives and deliverables.
+
+2. Requirement gathering:
+a. Determining of the technical requirements (e.g., OS, database, compute, storage).
+b. Identifying any compliance and security requirements.
+c. Understanding of the software architecture and its dependencies.
