@@ -178,3 +178,22 @@ Maintenance, Continuous improvement & Documentation:
 Identifying areas of improvement
 Implementing enhancements and optimizations based on feedback.
 Creating comprehensive documentation for the deployed software.
+--------------------------Azure Blob storage ----------------------------------------------------------------------
+Blobs (Binary Large Objects) are objects for storing unstructured data such as text or binary data. It can store images, videos, documents, backups, and logs.
+
+--------------------------Azure container ----------------------------------------------------------------------
+Containers are used to organize blobs within a storage account. Each blob must reside inside a container. Logical grouping of blobs to manage them more efficiently, such as separating logs, media files, and backups.
+
+--------------------------Azure file shares ----------------------------------------------------------------------
+Azure Files offers fully managed file shares in the cloud accessible via the Server Message Block (SMB) protocol or Network File System (NFS) protocol.
+Migrating legacy applications that rely on SMB/NFS, sharing files across different virtual machines, and storing application configuration files.
+
+--------------------------Azure Queues ----------------------------------------------------------------------
+Azure Queue Storage is a service for storing large numbers of messages that can be accessed from anywhere via authenticated calls.
+FIFO (First In, First Out): Ensures the order of messages is preserved.
+Decoupling application components, building asynchronous workflows, and implementing reliable messaging between services.
+
+--------------------------Azure Tables ----------------------------------------------------------------------
+Azure Table Storage is a NoSQL key-value store for storing structured data, such as user data or application metadata.
+ No predefined structure, allowing flexibility in data storage.
+Storing large volumes of structured, non-relational data, user profiles, and other metadata.
