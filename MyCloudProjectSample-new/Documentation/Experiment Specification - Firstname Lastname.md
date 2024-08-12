@@ -22,7 +22,7 @@ Describe here what your experiment is doing. Provide a reference to your SE proj
 
 2. What is the **output**?
 
-3. What your algorithmas does? How ?
+3. What your algorithmas does? How ?...
 
 ## How to run experiment
 
