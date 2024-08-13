@@ -43,6 +43,13 @@ namespace MyCloudProject
 
             IStorageProvider storageProvider = new AzureStorageProvider(cfgSec);
             IExperiment experiment = new Experiment(cfgSec, storageProvider, logger);
+
+            //
+            // Implements the step 3 in the architecture picture.
+            while (!tokeSrc.Token.IsCancellationRequested)
+            {
+                // Placeholder for experiment request handling
+            }
         }
     }
 }
