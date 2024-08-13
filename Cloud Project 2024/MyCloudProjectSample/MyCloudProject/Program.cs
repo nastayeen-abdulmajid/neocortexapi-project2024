@@ -34,6 +34,12 @@ namespace MyCloudProject
             // Init configuration
             var cfgRoot = Common.InitHelpers.InitConfiguration(args);
             var cfgSec = cfgRoot.GetSection("MyConfig");
+
+            // InitLogging
+            var logFactory = InitHelpers.InitLogging(cfgRoot);
+            var logger = logFactory.CreateLogger("Train.Console");
+
+            logger?.LogInformation($"{DateTime.Now} - Started experiment: {_projectName}");
         }
     }
 }
