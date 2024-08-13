@@ -75,7 +75,9 @@ namespace MyCloudProject
 
                         logger.LogInformation($"{DateTime.Now} - Results uploaded successfully.");
 
-                        // Placeholder for committing the request
+                        await storageProvider.CommitRequestAsync(request);
+
+                        logger.LogInformation($"{DateTime.Now} - Experiment request committed successfully.");
                     }
                     catch (Exception ex)
                     {
