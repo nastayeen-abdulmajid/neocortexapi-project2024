@@ -21,7 +21,15 @@ namespace MyCloudProject
 
         static async Task Main(string[] args)
         {
-            // Placeholder for initialization code
+            CancellationTokenSource tokeSrc = new CancellationTokenSource();
+
+            Console.CancelKeyPress += (sender, e) =>
+            {
+                e.Cancel = true;
+                tokeSrc.Cancel();
+            };
+
+            Console.WriteLine($"Started experiment: {_projectName}");
         }
     }
 }
