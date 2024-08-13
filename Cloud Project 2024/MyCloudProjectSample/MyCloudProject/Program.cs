@@ -57,7 +57,14 @@ namespace MyCloudProject
                     try
                     {
                         logger.LogInformation($"{DateTime.Now} - Received experiment request: {JsonSerializer.Serialize(request)}");
-                        // Placeholder for processing the experiment request
+
+                        // Step 4.
+                        logger.LogInformation($"{DateTime.Now} - Downloading input files: DecrementPermanence_InputFile = {request.DecrementPermanence_InputFile}, VerifyPermanence_InputFile = {request.VerifyPermanence_InputFile}");
+                        var localFileWithInputArgs = await storageProvider.DownloadInputAsync(request.DecrementPermanence_InputFile, request.VerifyPermanence_InputFile);
+
+                        logger.LogInformation($"{DateTime.Now} - Download complete. Files saved locally.");
+
+                        // Placeholder for running the experiment
                     }
                     catch (Exception ex)
                     {
