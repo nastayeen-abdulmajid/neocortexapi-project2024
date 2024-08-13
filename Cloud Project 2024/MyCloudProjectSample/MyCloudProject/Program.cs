@@ -30,6 +30,10 @@ namespace MyCloudProject
             };
 
             Console.WriteLine($"Started experiment: {_projectName}");
+
+            // Init configuration
+            var cfgRoot = Common.InitHelpers.InitConfiguration(args);
+            var cfgSec = cfgRoot.GetSection("MyConfig");
         }
     }
 }
