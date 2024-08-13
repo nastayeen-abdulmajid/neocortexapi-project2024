@@ -28,6 +28,32 @@ namespace MyCloudProject.Common
             });
         }
 
-        // Placeholder for configuration initialization
+        /// <summary>
+        /// Look into appconfig.json and initialize configurations for the Training Workload
+        /// </summary>
+        /// <returns></returns>
+        public static IConfigurationRoot InitConfiguration(string[] args)
+        {
+            var environmentName = Environment.GetEnvironmentVariable("MYCLOUDPROJECT_ENVIRONMENT");
+
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            if (string.IsNullOrEmpty(environmentName))
+            {
+                builder.AddJsonFile(System.IO.Path.Combine(AppContext.BaseDirectory, "appsettings.json"), false, true);
+            }
+            else
+            {
+                builder.AddJsonFile(System.IO.Path.Combine(AppContext.BaseDirectory, $"appsettings.{environmentName}.json"), false, true);
+            }
+
+            if (args != null)
+                builder.AddCommandLine(args);
+
+            builder.AddEnvironmentVariables();
+
+            var configRoot = builder.Build();
+
+            return configRoot;
+        }
     }
 }
