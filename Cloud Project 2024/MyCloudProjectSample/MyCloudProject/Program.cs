@@ -64,7 +64,13 @@ namespace MyCloudProject
 
                         logger.LogInformation($"{DateTime.Now} - Download complete. Files saved locally.");
 
-                        // Placeholder for running the experiment
+                        // Here is your SE Project code started.(Between steps 4 and 5).
+                        logger.LogInformation($"{DateTime.Now} - Running experiment...");
+                        IExperimentResult result = await experiment.RunAsync(localFileWithInputArgs, request.DecrementPermanence_InputFile, request.VerifyPermanence_InputFile);
+
+                        logger.LogInformation($"{DateTime.Now} - Experiment run complete. Preparing to upload results.");
+
+                        // Placeholder for uploading results
                     }
                     catch (Exception ex)
                     {
