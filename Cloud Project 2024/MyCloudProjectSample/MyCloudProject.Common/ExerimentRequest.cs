@@ -31,6 +31,28 @@ namespace MyCloudProject.Common
         /// </summary>
         public string Name { get; set; }
 
-        // Placeholder for additional properties
+        /// <summary>
+        /// Gets or sets the description of the experiment request.
+        /// This property provides additional details or context about the experiment.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unique identifier for the message associated with the experiment request.
+        /// This ID is typically used for tracking the message in a queue or messaging system.
+        /// </summary>
+        public string MessageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the receipt handle for the message associated with the experiment request.
+        /// This handle is used to identify and process the message in a queue or messaging system.
+        /// </summary>
+        public string MessageReceipt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the receipt handle used to pop the message from the queue.
+        /// This property is used to acknowledge and manage the message retrieval process.
+        /// </summary>
+        string PopReceipt { get; set; }
     }
 }
