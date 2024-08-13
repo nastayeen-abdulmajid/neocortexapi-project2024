@@ -70,7 +70,12 @@ namespace MyCloudProject
 
                         logger.LogInformation($"{DateTime.Now} - Experiment run complete. Preparing to upload results.");
 
-                        // Placeholder for uploading results
+                        // Step 5.
+                        await storageProvider.UploadResultAsync("outputfile", result);
+
+                        logger.LogInformation($"{DateTime.Now} - Results uploaded successfully.");
+
+                        // Placeholder for committing the request
                     }
                     catch (Exception ex)
                     {
