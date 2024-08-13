@@ -87,9 +87,11 @@ namespace MyCloudProject
                 else
                 {
                     await Task.Delay(500);
-                    logger.LogTrace($"{DateTime.Now} -  Queue empty...");
+                    logger.LogTrace($"{DateTime.Now} - Queue empty...");
                 }
             }
+
+            logger.LogInformation($"{DateTime.Now} - Experiment exit: {_projectName}");
         }
     }
 }
