@@ -40,6 +40,9 @@ namespace MyCloudProject
             var logger = logFactory.CreateLogger("Train.Console");
 
             logger?.LogInformation($"{DateTime.Now} - Started experiment: {_projectName}");
+
+            IStorageProvider storageProvider = new AzureStorageProvider(cfgSec);
+            IExperiment experiment = new Experiment(cfgSec, storageProvider, logger);
         }
     }
 }
