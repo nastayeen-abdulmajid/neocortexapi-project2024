@@ -52,7 +52,23 @@ namespace MyCloudProject
                 logger.LogInformation($"{DateTime.Now} - Waiting for experiment request...");
                 IExerimentRequest request = await storageProvider.ReceiveExperimentRequestAsync(tokeSrc.Token);
 
-                // Placeholder for processing the experiment request
+                if (request != null)
+                {
+                    try
+                    {
+                        logger.LogInformation($"{DateTime.Now} - Received experiment request: {JsonSerializer.Serialize(request)}");
+                        // Placeholder for processing the experiment request
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, $"{DateTime.Now} - Error occurred during experiment processing: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    await Task.Delay(500);
+                    logger.LogTrace($"{DateTime.Now} - Queue empty...");
+                }
             }
         }
     }
