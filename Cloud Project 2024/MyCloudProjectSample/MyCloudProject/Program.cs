@@ -48,7 +48,11 @@ namespace MyCloudProject
             // Implements the step 3 in the architecture picture.
             while (!tokeSrc.Token.IsCancellationRequested)
             {
-                // Placeholder for experiment request handling
+                // Step 3
+                logger.LogInformation($"{DateTime.Now} - Waiting for experiment request...");
+                IExerimentRequest request = await storageProvider.ReceiveExperimentRequestAsync(tokeSrc.Token);
+
+                // Placeholder for processing the experiment request
             }
         }
     }
