@@ -1,4 +1,34 @@
-# Title of your SE Project - Azure Cloud Implementation
+# Project : ML 22/23 - 7 Implement Unit Tests  for Adapt Segmants Method - Azure Cloud Implementation
+
+# Table of contents
+ 
+1. Introduction
+2. Prerequisites
+3. Project Structure
+4. Configuration
+5. Logging
+6. Program Flow
+7. Azure  integration
+8. Processing
+9. Testing
+10. Deployment
+
+# Introduction
+Our project is a cloud-based system designed to execute experiments by processing tasks from Azure Storage Queues. It integrates with Azure Storage for handling experiment requests, downloading necessary input files, running the experiment, uploading the results, and managing the entire lifecycle of an experiment. The purpose of project was developed to automate the process of running experiments, particularly those related to machine learning. The goal is to make the experiment lifecycle efficient, scalable, and manageable in a cloud environment. 
+
+# Project Architecture
+
+The key components of the flow are as follows:
+1. Github repository : A collaborative platform for version control, facilitating project source code management.
+2. Visual Studio 2022 : A comprehensive IDE designed for coding, debugging, and testing software.
+3. Docker desktop : A containerization tool that encapsulates the application within a Docker image for deployment on Azure.
+4. Docker Image : A lightweight, portable package that includes all dependencies required to run the application.
+5. Azure Container Registry : A service for storing and managing Docker images within Azure.
+6. Azure Container Instances :  A service for running containerized applications on Azure, eliminating the need for infrastructure management.
+7. Azure Storage : 
+  b. Queue : A message queue that triggers the application's processing workflow upon receiving a queue message.
+  c. Table : A storage solution for logging experiment execution data as part of the output.
+
 
 Use this file to describe your experiment.
 This file is the whole documentation you need.
@@ -19,7 +49,6 @@ public voiud MyFunction()
 Describe here what your experiment is doing. Provide a reference to your SE project documentation (PDF)*)
 
 1. What is the **input**?
-
 2. What is the **output**?
 
 3. What your algorithmas does? How ?...
