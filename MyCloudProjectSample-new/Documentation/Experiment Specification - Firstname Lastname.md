@@ -2,8 +2,8 @@
 
 ## Table of contents
 
-1. [Introduction](##1.-introduction)
-2. Technologies Used
+1. [Introduction](##-1.-introduction)
+2. [Technologies Used](##-2.-Technologies-used)
 3. Our Objective
 4. Project Architecture
 5. Prerequisites
