@@ -3,15 +3,18 @@
 ## Table of contents
 
 1. Introduction
-2. Prerequisites
-3. Project Structure
-4. Configuration
-5. Logging
-6. Program Flow
-7. Azure  integration
-8. Processing
-9. Testing
-10. Deployment
+2. Technologies Used
+3. Our Objective
+4. Project Architecture
+5. Prerequisites
+6. Project Structure
+7. Configuration
+8. Logging
+9. Program Flow
+10. Azure  integration
+11. Processing
+12. Testing
+13. Deployment
 
 ## Introduction
 Our project is a cloud-based system designed to execute experiments by processing tasks from Azure Storage Queues. It integrates with Azure Storage to handle experiment requests, download necessary input files, run the experiment, upload the results, and manage the entire lifecycle of an experiment. The purpose of project was developed to automate the process of running experiments, particularly those related to machine learning. The goal is to make the experiment lifecycle efficient, scalable, and manageable in a cloud environment. 
@@ -67,30 +70,30 @@ Our research is focused on evaluating the AdaptSynapses method's effectiveness.
 * **Output Blob Storage**: This is used to store the results of processing or operations performed by an application or service. For example, generated reports, processed images, or log files are stored as output blobs.
 
  ## Prerequisites
-1. Visual Studio 2022: We installed on your machine with the necessary workloads (ASP.NET, Azure, etc.). 
+1. Visual Studio 2022: We installed it on our machine with the necessary workloads (ASP.NET, Azure, etc.). 
 2. Azure Student Subscription: Active Azure account. 
-3. Docker Desktop: Installed and running on your machine.
+3. Docker Desktop: Installed and running on our machine.
 
 # Step 1: Setting Up Docker in our Adapt segments project
 
 - Opening our existing project in Visual Studio 2022.
 - Right-click on your project in the Solution Explorer. Select Add > Docker Support.
 - Choosing the target OS (Linux is commonly used).
-- Visual Studio will generated a Dockerfile in our project, which describes how your application will be containerized.
+- Visual Studio will generate a Dockerfile in our project, which describes how your application will be containerized.
 
-# Step 2: Build and Run Your Docker Container Locally
-Building the Docker Image:
+# Step 2: Build and Run our Docker Container Locally
+To building the Docker Image:
 
 - Right-click the project in Solution Explorer. Choose Build or Rebuild to create the Docker image locally.
 - Run the Docker Container Locally:
 - Press F5 or click on the Run button to start the container.
 This ensures everything is working fine locally before deploying to Azure.
 
-# Step 3: Deploy to Azure
+# Step 3: Deploying to Azure
 
-- In the Azure Portal, create a new Azure Container Registry(ACR)
-- Log in to your Azure Container Registry.
-- Tag and Push Docker Image to ACR.
+- In the Azure Portal, we created a new Azure Container Registry(ACR)
+- We Logged in to Azure Container Registry.
+- Push Docker Image to ACR.
 - In the Azure Portal, create a new Web App with Docker support or use the Azure CLI
 - Set the container settings to point to your image in ACR.
 
@@ -698,19 +701,24 @@ This method and related functions ensure that segments and synapses are dynamica
 
 # Azure Implementation
 1. Resource Group:
-2. Storage account:
-3. Container registry:
-4. Container Instance:
-5. Docker Image:
-6. Blob type:
+
+![RG](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/RG.png)
+
+3. Storage account:
+4. Container registry:
+![Container registry](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20registry.png)
+6. Container Instance:
+![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
+8. Docker Image:
+9. Blob type:
 
 # How to run the experiment
 1. Click on "Start" to initiate "teamnv" container instance on Azure.
-2. Adding trigger messages ot the queue by accessing the storage account "trigger-queue". The message is placed in the queue to trigger the execution of the experiment. The container instance will read this message, process the input files as specified, and run the experiment accordingly.
+2. Adding trigger messages to the queue by accessing the storage account "trigger-queue". The message is placed in the queue to trigger the execution of the experiment. The container instance will read this message, process the input files as specified, and run the experiment accordingly.
 3. Logs monitoring by regularly checking the logs to track the experiment's progress and current status.
 4. After the experiment completes, you can navigate to blob container within storage account to access "result-files"
 
-**_Describe the Result Table_**
+**Describing our Result excel**
 The result excel columns reperesents the following:
 1. Timestamp : It shows when the experiment time starts.
 2. Endtimetc : It shows when the experiment time ends.
@@ -720,7 +728,7 @@ The result excel columns reperesents the following:
 6. TestCase : It shows the result of all test cases.
 7. Comments : It represents additional information for each test case.
 
-# Consolidated Information of our resources
+## Consolidated Information of our resources
 | Types of cloud components | Name in our experiment | 
 | ---------------           | ---------------        | 
 | Container instance        | teamnv                 | 
