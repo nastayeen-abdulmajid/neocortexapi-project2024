@@ -700,23 +700,29 @@ It ensures permanence values stay within the range [0, 1]. Values below 0 are se
 This method and related functions ensure that segments and synapses are dynamically managed based on their activity, maintaining the efficiency and adaptability of the HTM model.
 
 # Azure Implementation
-1. Resource Group:
-
+1. Resource Group: 
 ![RG](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/RG.png)
-
 3. Storage account:
 4. Container registry:
 ![Container registry](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20registry.png)
 6. Container Instance:
 ![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
 8. Docker Image:
-9. Blob type:
+![Docker image](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/docker%20image.png)
+10. Blob type: A Block Blob in Azure Blob Storage is designed to store large amounts of unstructured data, such as text or binary data. Block blobs are the most commonly used type of blobs in Azure and are optimized for streaming and storing files.
 
 # How to run the experiment
 1. Click on "Start" to initiate "teamnv" container instance on Azure.
+![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
 2. Adding trigger messages to the queue by accessing the storage account "trigger-queue". The message is placed in the queue to trigger the execution of the experiment. The container instance will read this message, process the input files as specified, and run the experiment accordingly.
-3. Logs monitoring by regularly checking the logs to track the experiment's progress and current status.
-4. After the experiment completes, you can navigate to blob container within storage account to access "result-files"
+![queue message](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Queues.png)
+3. Check input file in storage
+![input container](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Input%20container.png)
+4.  Logs monitoring by regularly checking the logs to track the experiment's progress and current status.
+![logs](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/logs.png)
+5. After the experiment completes, you can navigate to blob container within storage account to access "result-files".
+![result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Output%20file.png)
+   
 
 **Describing our Result excel**
 The result excel columns reperesents the following:
