@@ -1,4 +1,3 @@
-# Title of your SE Project - Azure Cloud Implementation
 
 # Project : ML 22/23 - 7 Implement Unit Tests  for Adapt Segmants Method - Azure Cloud Implementation
 
@@ -24,6 +23,7 @@ Our project is a cloud-based system designed to execute experiments by processin
 3. Azure Cloud
 
 # Project Architecture
+![alt text](<Cloud project architecture.png>)
 
 The key components of the flow are as follows:
 1. Github repository : A collaborative platform for version control, facilitating project source code management.
@@ -362,6 +362,7 @@ The `AzureStorageProvider` class in the `MyExperiment` namespace is a concrete i
 
 5. **`UploadResultAsync(string experimentName, IExperimentResult result)`**: It uploads a result file to Azure Blob Storage. Also, optionally deletes existing blobs in the container and logs the successful upload.
 
+## Run Experiment
 
 Queue Message
 ~~~
@@ -501,7 +502,6 @@ namespace MyExperiment
 }
 
 ~~~
-
 The `ExperimentResult` class represents the result of an experiment and is designed to work with Azure Table Storage. The class encapsulates both metadata and results of an experiment, including timing, file references, and performance metrics, and is tailored for use with Azure Table Storage. It implements the `ITableEntity` and `IExperimentResult` interfaces, providing a structure for storing and managing experiment data.
 
 - **`PartitionKey`**: Identifies the partition within Azure Table Storage for this entity.
@@ -521,6 +521,182 @@ The `ExperimentResult` class represents the result of an experiment and is desig
 - **`PopReceipt`**: Receipt used to confirm that the result has been processed.
 - **`testcase`**: Identifier for the test case associated with the experiment.
 
+
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using MyCloudProject.Common;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft;
+using NeoCortexApi.Entities;
+using System.Xml;
+
+namespace MyExperiment
+{
+    /// <summary>
+    /// This class implements the ML experiment that will run in the cloud. This is refactored code from my SE project.
+    /// </summary>
+    public class Experiment : IExperiment
+    {
+        private IStorageProvider storageProvider; // Interface for storage operations
+        private ILogger logger; // Logger for recording events
+        private MyConfig config; // Configuration settings for the experiment
+        Excel Excel = new Excel(); // Instance of Excel class for handling Excel operations
+
+        /// <summary>
+        /// Constructor to initialize the experiment with configuration, storage provider, and logger.
+        /// </summary>
+        /// <param name="configSection">Configuration section for the experiment.</param>
+        /// <param name="storageProvider">Provider for storage operations.</param>
+        /// <param name="log">Logger for the experiment.</param>
+        public Experiment(IConfigurationSection configSection, IStorageProvider storageProvider, ILogger log)
+        {
+            this.storageProvider = storageProvider;
+            this.logger = log;
+
+            config = new MyConfig();
+            configSection.Bind(config); // Bind configuration section to MyConfig instance
+        }
+
+        /// <summary>
+        /// Runs the experiment asynchronously using the specified input files and folder.
+        /// </summary>
+        /// <param name="inputDataFolder">Folder containing input data files.</param>
+        /// <param name="DecrementPermanence_InputFile">File for decrementing permanence input.</param>
+        /// <param name="VerifyPermanence_InputFile">File for verifying permanence input.</param>
+        /// <returns>Returns the result of the experiment as an IExperimentResult.</returns>
+        public async Task<IExperimentResult> RunAsync(string inputDataFolder, string DecrementPermanence_InputFile, string VerifyPermanence_InputFile)
+        {
+            string excelName = "table_Result.xlsx"; // Name of the Excel file to be created
+            string excelFilePath = Path.Combine(Directory.GetCurrentDirectory(), excelName); // Full path to the Excel file
+
+            try
+            {
+                // Attempt to delete the existing Excel file if it exists
+                if (File.Exists(excelFilePath))
+                {
+                    File.Delete(excelFilePath);
+                    Console.WriteLine($"File {excelName} deleted successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"File {excelName} does not exist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error deleting Excel file: {ex.Message}");
+                logger?.LogError(ex, "Error deleting Excel file");
+            }
+
+            // Create an instance of testcases to run various unit tests
+            var testcases = new testcases();
+
+            // Create an ExperimentResult instance to store the output
+            var res = new ExperimentResult(this.config.GroupId, null);
+
+            // Run various unit tests and adapt segments as needed
+            try
+            {
+                testcases.testcaseAdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(DecrementPermanence_InputFile);
+                testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceChangeForPreviousCycle();
+                testcases.testcaseAdaptSegments_UnitTest_VerifySegmentStateAfterMaxSynapsesPerSegment();
+                testcases.testcaseAdaptSegments_UnitTest_VerifySegmentAndActiveSegmentStateAfterAdaptation();
+                testcases.testcaseAdaptSegments_UnitTest_VerifyAdaptationWhenMaxSynapsesPerSegmentIsReachedAndExceeded();
+                testcases.testcaseAdaptSegments_UnitTest_VerifySegmentDestructionWhenNoSynapseIsPresent();
+                testcases.testcaseAdaptSegments_UnitTest_PreservesSynapses_ForSmallNegativePermanenceValues();
+                testcases.testcaseAdaptSegments_UnitTest_VerifySynapseDestructionWithNegativePermanenceValuesAfterAdaptation();
+                testcases.testcaseAdaptSegments_UnitTest_EnsureAdaptSegmentThrowsExceptionWhenDistalDendriteIsNull();
+                testcases.testcaseAdaptSegments_UnitTest_CheckSynapseStateAfterAdaptatione();
+                testcases.testcaseAdaptSegments_UnitTest_TestPermanenceIncrement_BoundaryConstraint();
+                testcases.testcaseAdaptSegments_UnitTest_TestGetCells_ReturnsEmptyArrayForEmptyInput();
+                testcases.testcaseAdaptSegments_UnitTest_TestGetCells_ValidInput_ReturnsExpectedCellArray();
+                testcases.testcaseAdaptSegments_UnitTest_ComplexDoublePermanenceInput_MaxPermanenceReached();
+                testcases.testcaseAdaptSegments_UnitTest_VerifySynapseRemovalOnMinimumPermanenceAdaptation();
+                testcases.testcaseAdaptSegments_UnitTest_VerifySynapseDestructionOnLowPermanenceAdaptation();
+                testcases.testcaseAdaptSegments_UnitTest_VerifyStayOfSynapseAfterSegmentAdaptation();
+                testcases.testcaseAdaptSegments_UnitTest_TestInvalidArrayCells_WithInvalidArray_ThrowsIndexOutOfRangeException();
+                testcases.testcaseAdaptSegments_UnitTest_TestNullArrayCells_ThrowsException();
+                testcases.testcaseAdaptSegments_UnitTest_PreservesSynapses_ForVerySmallPermanenceValues();
+                testcases.testcaseAdaptSegments_UnitTest_PreservesSynapses_ForVeryLargePermanenceValues();
+                testcases.testcaseAdjustsSynapsePermanenceBasedOnPreviousActiveCells();
+                testcases.testcasePreservesSynapses_ForVeryLargeNegativePermanenceValues();
+                testcases.testcasePreservesSynapses_ForZeroPermanenceValues();
+                testcases.testcaseVerify_Emptysegement();
+                testcases.testcaseAdaptSegments_UnitTest_KillSegmentEvenIfOnlyoneSynapse_is_left();
+                testcases.testcaseAdaptSegments_UnitTest_CheckIfSegmentSurvives();
+                testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation(VerifyPermanence_InputFile);
+
+                // Set the path of the output file in the result
+                res.OutputFiles = excelFilePath;
+                return res;
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex, "Error occurred during experiment execution");
+                throw;
+            }
+        }
+    }
+}
+The `Experiment` class, which implements the `IExperiment` interface, is designed to run machine learning experiments in the cloud. It interacts with Azure services and uses configuration, storage, and logging facilities to manage and execute experiments. It initializes with configuration, a storage provider, and a logger.
+- **RunAsync Method**: It deletes any existing Excel result file from the current directory.It runs a series of unit tests related to segment adaptation and permanence in an experimental setup using the provided input files. It creates an `ExperimentResult` object with the path to the generated Excel file, which contains the experiment results. 
+
+The method captures and logs any errors encountered during execution, ensuring robust error handling and logging throughout the experiment.
+
+# About Adapt segments method
+
+In the Hierarchical Temporal Memory (HTM) algorithm, the `AdaptSegments` method is crucial for updating synaptic permanence values in a distal dendrite segment based on the activity of presynaptic cells. The method starts by creating an empty list, `synapsesToDestroy`, to track synapses that need removal. It iterates over each synapse in the segment. Retrieves the current permanence value of each synapse. Checks if the corresponding presynaptic cell was active in the previous cycle:
+     - **Active**: Increases the permanence by `permanenceIncrement`.
+     - **Inactive**: Decreases the permanence by `permanenceDecrement`.
+It ensures permanence values stay within the range [0, 1]. Values below 0 are set to 0, and those above 1 are capped at 1.
+
+3. **Destruction**: It compares permanence values to a threshold, `EPSILON`. Synapses with values below this threshold are added to `synapsesToDestroy`.It updates the permanence values of remaining synapses. It removes synapses in the `synapsesToDestroy` list. If a segment ends up with no synapses, it is deleted.
+ 
+- CreateDistalSegment: It creates a new segment for a cell if it hasn't reached the maximum number of segments. If the maximum is reached, it removes the least recently used segment.
+- DestroyDistalDendrite : It Deletes a specific segment and its synapses.
+- LeastRecentlyUsedSegment : Finds the least recently used segment for a cell.
+- NumSegments : Returns the number of distal dendrite segments for a cell or across cells.
+This method and related functions ensure that segments and synapses are dynamically managed based on their activity, maintaining the efficiency and adaptability of the HTM model.
+
+# Azure Implementation
+1. Resource Group:
+2. Storage account:
+3. Container registry:
+4. Container Instance:
+5. Docker Image:
+6. Blob type:
+
+# How to run the experiment
+1. Click on "Start" to initiate "teamnv" container instance on Azure.
+2. Adding trigger messages ot the queue by accessing the storage account "trigger-queue". The message is placed in the queue to trigger the execution of the experiment. The container instance will read this message, process the input files as specified, and run the experiment accordingly.
+3. Logs monitoring by regularly checking the logs to track the experiment's progress and current status.
+4. After the experiment completes, you can navigate to blob container within storage account to access "result-files"
+
+**_Describe the Result Table_**
+The result excel columns reperesents the following:
+1. Timestamp : It shows when the experiment time starts.
+2. Endtimetc : It shows when the experiment time ends.
+3. ExperimentId : It represents the type of cases with Adapt segments of unit testing
+4. DurationSec : It represents the amount of time taken to run the test cases
+5. InputFileUrl : It respresents the path of external files used. Example: excel, json, etc.
+6. TestCase : It shows the result of all test cases.
+7. Comments : It represents additional information for each test case.
+
+# Consolidated Information of our resources
+| Types of cloud components | Name in our experiment | 
+| ---------------           | ---------------        | 
+| Container instance        | teamnv                 | 
+| Queue storage             | trigger-queue          | 
+| Input Blob container      | training-files         | 
+| Output Blob container     | result-files           | 
 
 
 ## What is your experiment about
@@ -577,3 +753,8 @@ what are the blob containers you used e.g.:
  - Column2 : ...
 Some columns are obligatory to the ITableEntities and don't need Explaination e.g. ETag, ...
  
+# References:
+1. https://www.researchgate.net/publication/261381455_An_overview_of_Hierarchical_Temporal_Memory_A_new_neocortex_algorithm
+2. http://numenta.org/resources/HTM_CorticalLearningAlgorithms.pdf
+3. https://www.tutorialspoint.com/software_testing_dictionary/failover_testing.htm
+4. https://www.numenta.com/assets/pdf/whitepapers/hierarchical-temporal-memory-cortical-learning-algorithm-0.2.1-en.pdf
