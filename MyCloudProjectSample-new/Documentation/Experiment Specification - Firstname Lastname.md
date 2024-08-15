@@ -7,16 +7,15 @@
 3. Our Objective
 4. Project Architecture
 5. Prerequisites
-6. Project Structure
-7. Configuration
-8. Logging
-9. Program Flow
-10. Azure  integration
-11. Processing
-12. Testing
-13. Deployment
+6. Our input to the experiment
+7. Run Experiment
+8. Our output to the experiment
+9. About adapt segments method
+10. Azure implementation
+11. How to run the experiment
+12. Describing our result
 
-## Introduction
+## 1. Introduction
 Our project is a cloud-based system designed to execute experiments by processing tasks from Azure Storage Queues. It integrates with Azure Storage to handle experiment requests, download necessary input files, run the experiment, upload the results, and manage the entire lifecycle of an experiment. The purpose of project was developed to automate the process of running experiments, particularly those related to machine learning. The goal is to make the experiment lifecycle efficient, scalable, and manageable in a cloud environment. 
 
 HTM is a machine-learning framework inspired by the structure and function of the neocortex in the human brain. It focuses on time-based patterns, sequence learning, and anomaly detection. HTM models aim to replicate the brain's ability to learn and recognize temporal sequences continuously. In HTM, a "segment" is a group of synapses, which are connections between neurons. These segments can be thought of as small sub-patterns that neurons use to predict future activity. There are two primary types of segments in HTM:
@@ -29,7 +28,7 @@ The adaptation of segments is crucial for HTM's ability to learn sequences and m
 * **Decrement Permanence**: In cases where predictions are incorrect, the permanence of synapses is decremented, potentially leading to their removal if they become too weak.
 * **Increment Permanence**: When predictions are correct, the permanence of the associated synapses is incremented, strengthening the connections and reinforcing the correct prediction pathway.
 
-## Technologies used
+## 2. Technologies used
 1. Github
 2. Visual Studio 2022
 3. C# Programming language
@@ -38,7 +37,7 @@ The adaptation of segments is crucial for HTM's ability to learn sequences and m
 6. Microsoft Azure Cloud
 7. Output in excel file
 
-## Our Objective
+## 3. Our Objective
 Our research is focused on evaluating the AdaptSynapses method's effectiveness.
 - We created unit test cases specifically designed to verify the functionality of the AdaptSynapses method.
 - We developed a cloud-based system for automated test management, ensuring regular initiation, tracking, and evaluation of AdaptSegment unit tests.
@@ -46,10 +45,10 @@ Our research is focused on evaluating the AdaptSynapses method's effectiveness.
 - Designed and implemented a scalable cloud infrastructure to perform thorough unit testing of the HTM algorithm's AdaptSegment method.
 - Successfully deployed the project as a Docker image to a cloud environment via a container registry, enabling the entire project to run in a container instance.
 
-# Project Architecture
+## 4. Project Architecture
 ![Architecture](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Cloud%20project%20architecture.png)
 
-## Explanation of project architecture
+### Explanation of project architecture
 **Step 1**: 
 * **GitHub repository**: A collaborative platform for version control, facilitating project source code management.
 * **Visual Studio 2022**: A comprehensive IDE designed for coding, debugging, and testing software.
@@ -69,19 +68,19 @@ Our research is focused on evaluating the AdaptSynapses method's effectiveness.
 * **Input Blob Storage**: It refer to blobs used to store data that will be consumed or processed by an application or service. For example, files or datasets that need to be read or analyzed are stored here.
 * **Output Blob Storage**: This is used to store the results of processing or operations performed by an application or service. For example, generated reports, processed images, or log files are stored as output blobs.
 
- ## Prerequisites
+## 5. Prerequisites
 1. Visual Studio 2022: We installed it on our machine with the necessary workloads (ASP.NET, Azure, etc.). 
 2. Azure Student Subscription: Active Azure account. 
 3. Docker Desktop: Installed and running on our machine.
 
-# Step 1: Setting Up Docker in our Adapt segments project
+### Step 1: Setting Up Docker in our Adapt segments project
 
 - Opening our existing project in Visual Studio 2022.
 - Right-click on your project in the Solution Explorer. Select Add > Docker Support.
 - Choosing the target OS (Linux is commonly used).
 - Visual Studio will generate a Dockerfile in our project, which describes how your application will be containerized.
 
-# Step 2: Build and Run our Docker Container Locally
+### Step 2: Build and Run our Docker Container Locally
 To building the Docker Image:
 
 - Right-click the project in Solution Explorer. Choose Build or Rebuild to create the Docker image locally.
@@ -89,7 +88,7 @@ To building the Docker Image:
 - Press F5 or click on the Run button to start the container.
 This ensures everything is working fine locally before deploying to Azure.
 
-# Step 3: Deploying to Azure
+### Step 3: Deploying to Azure
 
 - In the Azure Portal, we created a new Azure Container Registry(ACR)
 - We Logged in to Azure Container Registry.
@@ -97,8 +96,8 @@ This ensures everything is working fine locally before deploying to Azure.
 - In the Azure Portal, create a new Web App with Docker support or use the Azure CLI
 - Set the container settings to point to your image in ACR.
 
+## 6. Our input to the experiment
 
-# Our input to the experiment
 ~~~ExperimentRequestMessage.cs
   using MyCloudProject.Common;
   using System;
@@ -164,7 +163,8 @@ This ensures everything is working fine locally before deploying to Azure.
   }
 
 ~~~
-The code defines an internal class named `ExerimentRequestMessage` within the `MyExperiment` namespace. This class is designed to represent a request for an experiment and implements the `IExerimentRequest` interface. The class includes several properties that hold information relevant to the experiment:
+
+This defines an internal class named `ExerimentRequestMessage` within the `MyExperiment` namespace. This class is designed to represent a request for an experiment and implements the `IExerimentRequest` interface. The class includes several properties that hold information relevant to the experiment:
 
 - **PopReceipt** : A string that helps manage the message in a queue, particularly for visibility and deletion.
 - **ExperimentId** : A unique identifier for the experiment.
@@ -395,7 +395,7 @@ The `AzureStorageProvider` class in the `MyExperiment` namespace is a concrete i
 
 5. **`UploadResultAsync(string experimentName, IExperimentResult result)`**: It uploads a result file to Azure Blob Storage. Also, optionally deletes existing blobs in the container and logs the successful upload.
 
-## Run Experiment
+## 7. Run Experiment
 
 Queue Message
 ~~~
@@ -415,7 +415,7 @@ The JSON snippet represents a message format for an experiment request in a queu
 - **`DecrementPermanence_InputFile`**: `"json.json"` - The file name of the input data used for the "decrement permanence" aspect of the experiment.
 - **`VerifyPermanence_InputFile`**: `"testcases.json"` - The file name of the input data used for verifying permanence in the experiment.
 
-# Our output of the experiment
+## 8. Our output of the experiment
 
 ~~~
 using Azure;
@@ -684,7 +684,7 @@ The `Experiment` class, which implements the `IExperiment` interface, is designe
 
 The method captures and logs any errors encountered during execution, ensuring robust error handling and logging throughout the experiment.
 
-# About Adapt segments method
+## 9. About Adapt segments method
 
 In the Hierarchical Temporal Memory (HTM) algorithm, the `AdaptSegments` method is crucial for updating synaptic permanence values in a distal dendrite segment based on the activity of presynaptic cells. The method starts by creating an empty list, `synapsesToDestroy`, to track synapses that need removal. It iterates over each synapse in the segment. Retrieves the current permanence value of each synapse. Checks if the corresponding presynaptic cell was active in the previous cycle:
      - **Active**: Increases the permanence by `permanenceIncrement`.
@@ -699,7 +699,7 @@ It ensures permanence values stay within the range [0, 1]. Values below 0 are se
 - NumSegments : Returns the number of distal dendrite segments for a cell or across cells.
 This method and related functions ensure that segments and synapses are dynamically managed based on their activity, maintaining the efficiency and adaptability of the HTM model.
 
-# Azure Implementation
+## 10. Azure Implementation
 1. Resource Group: 
 ![RG](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/RG.png)
 3. Storage account:
@@ -711,7 +711,7 @@ This method and related functions ensure that segments and synapses are dynamica
 ![Docker image](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/docker%20image.png)
 10. Blob type: A Block Blob in Azure Blob Storage is designed to store large amounts of unstructured data, such as text or binary data. Block blobs are the most commonly used type of blobs in Azure and are optimized for streaming and storing files.
 
-# How to run the experiment
+## 11. How to run the experiment
 1. Click on "Start" to initiate "teamnv" container instance on Azure.
 ![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
 2. Adding trigger messages to the queue by accessing the storage account "trigger-queue". The message is placed in the queue to trigger the execution of the experiment. The container instance will read this message, process the input files as specified, and run the experiment accordingly.
@@ -724,7 +724,7 @@ This method and related functions ensure that segments and synapses are dynamica
 ![result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Output%20file.png)
    
 
-**Describing our Result excel**
+## 12. Describing our Result
 The result excel columns reperesents the following:
 1. Timestamp : It shows when the experiment time starts.
 2. Endtimetc : It shows when the experiment time ends.
