@@ -26,7 +26,7 @@ The adaptation of segments is crucial for HTM's ability to learn sequences and m
 * **Decrement Permanence**: In cases where predictions are incorrect, the permanence of synapses is decremented, potentially leading to their removal if they become too weak.
 * **Increment Permanence**: When predictions are correct, the permanence of the associated synapses is incremented, strengthening the connections and reinforcing the correct prediction pathway.
 
-# Technologies used
+## Technologies used
 1. Github
 2. Visual Studio 2022
 3. C# Programming language
@@ -35,20 +35,25 @@ The adaptation of segments is crucial for HTM's ability to learn sequences and m
 6. Microsoft Azure Cloud
 7. Output in excel file
 
+## Our Objective
+Our research is focused on evaluating the AdaptSynapses method's effectiveness.
+- We created unit test cases specifically designed to verify the functionality of the AdaptSynapses method.
+- We developed a cloud-based system for automated test management, ensuring regular initiation, tracking, and evaluation of AdaptSegment unit tests.
+- We built methods that allow test cases to be executed either with input files or predefined settings, enhancing flexibility.
+- Designed and implemented a scalable cloud infrastructure to perform thorough unit testing of the HTM algorithm's AdaptSegment method.
+- Successfully deployed the project as a Docker image to a cloud environment via a container registry, enabling the entire project to run in a container instance.
+
 # Project Architecture
-![alt text](<Cloud project architecture.png>)
 
-The key components of the flow are as follows:
-1. Github repository : A collaborative platform for version control, facilitating project source code management.
-2. Visual Studio 2022 : A comprehensive IDE designed for coding, debugging, and testing software.
-3. Docker desktop : A containerization tool that encapsulates the application within a Docker image for deployment on Azure.
-4. Docker Image : A lightweight, portable package that includes all dependencies required to run the application.
-5. Azure Container Registry : A service for storing and managing Docker images within Azure.
-6. Azure Container Instances :  A service for running containerized applications on Azure, eliminating the need for infrastructure management.
+The key components of our project architecture are as follows:
+1. Github repository: A collaborative platform for version control, facilitating project source code management.
+2. Visual Studio 2022: A comprehensive IDE designed for coding, debugging, and testing software.
+3. Docker desktop: A containerization tool that encapsulates the application within a Docker image for deployment on Azure.
+4. Docker Image: A lightweight, portable package that includes all dependencies required to run the application.
+5. Azure Container Registry: A service for storing and managing Docker images within Azure.
+6. Azure Container Instances:  A service for running containerized applications on Azure, eliminating the need for infrastructure management.
 7. Azure Storage : 
-  b. Queue : A message queue that triggers the application's processing workflow upon receiving a queue message.
-  c. Table : A storage solution for logging experiment execution data as part of the output.
-
+   a. Queue: A message queue that triggers the application's processing workflow upon receiving a queue message.
  ## Prerequisites
 1. Visual Studio 2022: We installed on your machine with the necessary workloads (ASP.NET, Azure, etc.). 
 2. Azure Student Subscription: Active Azure account. 
