@@ -44,16 +44,28 @@ Our research is focused on evaluating the AdaptSynapses method's effectiveness.
 - Successfully deployed the project as a Docker image to a cloud environment via a container registry, enabling the entire project to run in a container instance.
 
 # Project Architecture
+![Architecture](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Cloud%20project%20architecture.png)
 
-The key components of our project architecture are as follows:
-1. Github repository: A collaborative platform for version control, facilitating project source code management.
-2. Visual Studio 2022: A comprehensive IDE designed for coding, debugging, and testing software.
-3. Docker desktop: A containerization tool that encapsulates the application within a Docker image for deployment on Azure.
-4. Docker Image: A lightweight, portable package that includes all dependencies required to run the application.
-5. Azure Container Registry: A service for storing and managing Docker images within Azure.
-6. Azure Container Instances:  A service for running containerized applications on Azure, eliminating the need for infrastructure management.
-7. Azure Storage : 
-   a. Queue: A message queue that triggers the application's processing workflow upon receiving a queue message.
+## Explanation of project architecture
+**Step 1**: 
+* **GitHub repository**: A collaborative platform for version control, facilitating project source code management.
+* **Visual Studio 2022**: A comprehensive IDE designed for coding, debugging, and testing software.
+* **Docker desktop**: A containerization tool that encapsulates the application within a Docker image for deployment on Azure.
+  
+**Step 2**:   
+* **Docker Image**: A lightweight, portable package that includes all dependencies required to run the application.
+* **Azure Container Registry**: A service for storing and managing Docker images within Azure.
+
+**Step 3**:  
+* **Azure Container Instances**:  A service for running containerized applications on Azure, eliminating the need for infrastructure management.
+
+**Step 4**: 
+* **Azure Storage Queue**: A message queue that triggers the application's processing workflow upon receiving a queue message.
+
+**Step 5,6,7,8**: 
+* **Input Blob Storage**: It refer to blobs used to store data that will be consumed or processed by an application or service. For example, files or datasets that need to be read or analyzed are stored here.
+* **Output Blob Storage**: This is used to store the results of processing or operations performed by an application or service. For example, generated reports, processed images, or log files are stored as output blobs.
+
  ## Prerequisites
 1. Visual Studio 2022: We installed on your machine with the necessary workloads (ASP.NET, Azure, etc.). 
 2. Azure Student Subscription: Active Azure account. 
