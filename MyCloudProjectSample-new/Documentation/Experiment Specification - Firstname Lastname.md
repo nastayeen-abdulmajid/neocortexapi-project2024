@@ -27,9 +27,13 @@ The adaptation of segments is crucial for HTM's ability to learn sequences and m
 * **Increment Permanence**: When predictions are correct, the permanence of the associated synapses is incremented, strengthening the connections and reinforcing the correct prediction pathway.
 
 # Technologies used
-1. C# Programming language
-2. Docker Desktop
-3. Azure Cloud
+1. Github
+2. Visual Studio 2022
+3. C# Programming language
+4. Docker Desktop
+5. JSON input file
+6. Microsoft Azure Cloud
+7. Output in excel file
 
 # Project Architecture
 ![alt text](<Cloud project architecture.png>)
