@@ -67,7 +67,7 @@ Our research is focused on evaluating the AdaptSynapses method's effectiveness.
 
 **Step 5,6,7,8**: 
 * **Input Blob Storage**: It refer to blobs used to store data that will be consumed or processed by an application or service. For example, files or datasets that need to be read or analyzed are stored here.
-* **Output Blob Storage**: This is used to store the results of processing or operations performed by an application or service. For example, generated reports, processed images, or log files are stored as output blobs.
+* **Output Blob Storage**: This is used to store the results of processing or operations performed by an application or service. For example, generated reports or log files are stored as output blobs.
 
 ## 5. Prerequisites
 1. Visual Studio 2022: We installed it on our machine with the necessary workloads (ASP.NET, Azure, etc.). 
@@ -415,6 +415,10 @@ The JSON snippet represents a message format for an experiment request in a queu
 - **`VerifyPermanence_InputFile`**: `"testcases.json"` - The file name of the input data used for verifying permanence in the experiment.
 
 ## 8. Our output of the experiment
+
+| **Name of Unit test case** | **Number of samples** | **Duration** |
+|     DecrementPermanence    |     1700              |     15       |
+|     VerifyPermanence       |      5356             |     340      |
 
 ~~~
 using Azure;
