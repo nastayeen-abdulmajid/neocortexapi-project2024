@@ -382,7 +382,7 @@ This class is intended for use within a system that manages experiment requests,
 The `AzureStorageProvider` class in the `MyExperiment` namespace is a concrete implementation of the `IStorageProvider` interface, designed to interact with Azure Storage services. The class provides methods for interacting with Azure Storage services, including deleting messages from queues, downloading files from blobs, and uploading results. It handles various exceptions and includes optional logging for operations.
 
 - **`AzureStorageProvider(IConfigurationSection configSection)`**: Initializes the provider with configuration settings from an `IConfigurationSection`.
-- 
+
 1. **`CommitRequestAsync(IExerimentRequest request)`**: It deletes a message from an Azure Storage Queue using the `MessageId` and `PopReceipt` from the `IExerimentRequest`. It handles exceptions for argument errors and Azure SDK request failures.
 
 2. **`DownloadInputAsync(string fileName, string fileName1)`**: It downloads two files from Azure Blob Storage to a local directory. It creates a new directory for the downloaded files, deleting any existing directory with the same name.
@@ -552,7 +552,7 @@ The `ExperimentResult` class represents the result of an experiment and is desig
 - **`PopReceipt`**: Receipt used to confirm that the result has been processed.
 - **`testcase`**: Identifier for the test case associated with the experiment.
 
-
+~~~csharp
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Extensions.Configuration;
@@ -677,6 +677,7 @@ namespace MyExperiment
         }
     }
 }
+~~~
 The `Experiment` class, which implements the `IExperiment` interface, is designed to run machine learning experiments in the cloud. It interacts with Azure services and uses configuration, storage, and logging facilities to manage and execute experiments. It initializes with configuration, a storage provider, and a logger.
 - **RunAsync Method**: It deletes any existing Excel result file from the current directory.It runs a series of unit tests related to segment adaptation and permanence in an experimental setup using the provided input files. It creates an `ExperimentResult` object with the path to the generated Excel file, which contains the experiment results. 
 
