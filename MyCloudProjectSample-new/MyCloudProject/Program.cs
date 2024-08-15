@@ -17,9 +17,7 @@ namespace MyCloudProject
         /// <summary>
         /// Your project ID from the last semester.
         /// </summary>
-        private static string _projectName = "ML 22/23-6";
-
-        string test;
+        private static string _projectName = "ML 22/23-7 Implement UnitTests for AdaptSegments";
 
         static async Task Main(string[] args)
         {
@@ -35,67 +33,65 @@ namespace MyCloudProject
 
             // Init configuration
             var cfgRoot = Common.InitHelpers.InitConfiguration(args);
-
             var cfgSec = cfgRoot.GetSection("MyConfig");
 
             // InitLogging
             var logFactory = InitHelpers.InitLogging(cfgRoot);
-          
             var logger = logFactory.CreateLogger("Train.Console");
 
-            logger?.LogInformation($"{DateTime.Now} -  Started experiment: {_projectName}");
+            logger?.LogInformation($"{DateTime.Now} - Started experiment: {_projectName}");
 
             IStorageProvider storageProvider = new AzureStorageProvider(cfgSec);
-
-            IExperiment experiment = new Experiment(cfgSec, storageProvider, logger/* put some additional config here */);
+            IExperiment experiment = new Experiment(cfgSec, storageProvider, logger);
 
             //
             // Implements the step 3 in the architecture picture.
-            while (tokeSrc.Token.IsCancellationRequested == false)
+            while (!tokeSrc.Token.IsCancellationRequested)
             {
                 // Step 3
-                IExerimentRequest request = storageProvider.ReceiveExperimentRequestAsync(tokeSrc.Token);
+                logger.LogInformation($"{DateTime.Now} - Waiting for experiment request...");
+                IExerimentRequest request = await storageProvider.ReceiveExperimentRequestAsync(tokeSrc.Token);
 
                 if (request != null)
                 {
                     try
                     {
-                        // logging
+                        logger.LogInformation($"{DateTime.Now} - Received experiment request: {JsonSerializer.Serialize(request)}");
 
                         // Step 4.
-                        var localFileWithInputArgs = await storageProvider.DownloadInputAsync(request.InputFile);
+                        logger.LogInformation($"{DateTime.Now} - Downloading input files: DecrementPermanence_InputFile = {request.DecrementPermanence_InputFile}, VerifyPermanence_InputFile = {request.VerifyPermanence_InputFile}");
+                        var localFileWithInputArgs = await storageProvider.DownloadInputAsync(request.DecrementPermanence_InputFile, request.VerifyPermanence_InputFile);
 
-                        // logging
+                        logger.LogInformation($"{DateTime.Now} - Download complete. Files saved locally.");
 
                         // Here is your SE Project code started.(Between steps 4 and 5).
-                        IExperimentResult result = await experiment.RunAsync(localFileWithInputArgs);
+                        logger.LogInformation($"{DateTime.Now} - Running experiment...");
+                        IExperimentResult result = await experiment.RunAsync(localFileWithInputArgs, request.DecrementPermanence_InputFile, request.VerifyPermanence_InputFile);
 
-                        // logging
+                        logger.LogInformation($"{DateTime.Now} - Experiment run complete. Preparing to upload results.");
 
                         // Step 5.
                         await storageProvider.UploadResultAsync("outputfile", result);
 
-                        // logging
+                        logger.LogInformation($"{DateTime.Now} - Results uploaded successfully.");
 
                         await storageProvider.CommitRequestAsync(request);
 
-                        // loggingx
+                        logger.LogInformation($"{DateTime.Now} - Experiment request committed successfully.");
                     }
                     catch (Exception ex)
                     {
-                        // logging
+                        logger.LogError(ex, $"{DateTime.Now} - Error occurred during experiment processing: {ex.Message}");
                     }
                 }
                 else
                 {
                     await Task.Delay(500);
-                    logger?.LogTrace("Queue empty...");
+                    logger.LogTrace($"{DateTime.Now} - Queue empty...");
                 }
             }
 
-            logger?.LogInformation($"{DateTime.Now} -  Experiment exit: {_projectName}");
+            logger.LogInformation($"{DateTime.Now} - Experiment exit: {_projectName}");
         }
-
-
     }
 }
