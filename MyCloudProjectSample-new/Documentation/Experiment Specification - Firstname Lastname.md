@@ -405,6 +405,7 @@ Queue Message
     "VerifyPermanence_InputFile": "testcases.json"
 }
 ~~~
+
 The JSON snippet represents a message format for an experiment request in a queue. It is used to serialize and deserialize experiment requests when interacting with an Azure Storage Queue. It contains:
 
 - **`ExperimentId`**: `"001"` - A unique identifier for the experiment.
@@ -533,6 +534,7 @@ namespace MyExperiment
 }
 
 ~~~
+
 The `ExperimentResult` class represents the result of an experiment and is designed to work with Azure Table Storage. The class encapsulates both metadata and results of an experiment, including timing, file references, and performance metrics, and is tailored for use with Azure Table Storage. It implements the `ITableEntity` and `IExperimentResult` interfaces, providing a structure for storing and managing experiment data.
 
 - **`PartitionKey`**: Identifies the partition within Azure Table Storage for this entity.
@@ -678,6 +680,7 @@ namespace MyExperiment
     }
 }
 ~~~
+
 The `Experiment` class, which implements the `IExperiment` interface, is designed to run machine learning experiments in the cloud. It interacts with Azure services and uses configuration, storage, and logging facilities to manage and execute experiments. It initializes with configuration, a storage provider, and a logger.
 - **RunAsync Method**: It deletes any existing Excel result file from the current directory.It runs a series of unit tests related to segment adaptation and permanence in an experimental setup using the provided input files. It creates an `ExperimentResult` object with the path to the generated Excel file, which contains the experiment results. 
 
@@ -690,7 +693,7 @@ In the Hierarchical Temporal Memory (HTM) algorithm, the `AdaptSegments` method 
      - **Inactive**: Decreases the permanence by `permanenceDecrement`.
 It ensures permanence values stay within the range [0, 1]. Values below 0 are set to 0, and those above 1 are capped at 1.
 
-3. **Destruction**: It compares permanence values to a threshold, `EPSILON`. Synapses with values below this threshold are added to `synapsesToDestroy`.It updates the permanence values of remaining synapses. It removes synapses in the `synapsesToDestroy` list. If a segment ends up with no synapses, it is deleted.
+ **Destruction**: It compares permanence values to a threshold, `EPSILON`. Synapses with values below this threshold are added to `synapsesToDestroy`.It updates the permanence values of remaining synapses. It removes synapses in the `synapsesToDestroy` list. If a segment ends up with no synapses, it is deleted.
  
 - CreateDistalSegment: It creates a new segment for a cell if it hasn't reached the maximum number of segments. If the maximum is reached, it removes the least recently used segment.
 - DestroyDistalDendrite : It Deletes a specific segment and its synapses.
@@ -699,31 +702,51 @@ It ensures permanence values stay within the range [0, 1]. Values below 0 are se
 This method and related functions ensure that segments and synapses are dynamically managed based on their activity, maintaining the efficiency and adaptability of the HTM model.
 
 ## 10. Azure Implementation
+
 1. Resource Group (RG): The name of RG is 'RG-Team_NV'
+   
 ![RG](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/RG.png)
-3. Storage account: It is named as 'teamnv2024'.
-4. Container registry: Named as 'teamnv'
+
+2. Storage account: It is named as 'teamnv2024'.
+3. Container registry: Named as 'teamnv'.
+   
 ![Container registry](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20registry.png)
-6. Container Instance: Named as 'teamnv'
+
+4. Container Instance: Named as 'teamnv'.
+   
 ![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
-8. Docker Image: 'teamnv.azurecr.io/mycloudproject:v4'
+
+5. Docker Image: 'teamnv.azurecr.io/mycloudproject:v4'
+   
 ![Docker image](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/docker%20image.png)
-10. Blob type: A Block Blob in Azure Blob Storage is designed to store large amounts of unstructured data, such as text or binary data. Block blobs are the most commonly used type of blobs in Azure and are optimized for streaming and storing files.
+
+6. Blob type: A Block Blob in Azure Blob Storage is designed to store large amounts of unstructured data, such as text or binary data. Block blobs are the most commonly used type of blobs in Azure and are optimized for streaming and storing files.
 
 ## 11. How to run the experiment
+
 1. Click on "Start" to initiate "teamnv" container instance on Azure.
+
 ![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
+
 2. Adding trigger messages to the queue by accessing the storage account "trigger-queue". The message is placed in the queue to trigger the execution of the experiment. The container instance will read this message, process the input files as specified, and run the experiment accordingly.
+   
 ![queue message](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Queues.png)
+
 3. Check input file in storage
+   
 ![input container](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Input%20container.png)
+
 4.  Logs monitoring by regularly checking the logs to track the experiment's progress and current status.
+   
 ![logs](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/logs.png)
+
 5. After the experiment completes, you can navigate to blob container within storage account to access "result-files".
+   
 ![result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Output%20file.png)
    
 
 ## 12. Describing our Result
+
 The result excel columns reperesents the following:
 1. Timestamp : It shows when the experiment time starts.
 2. Endtimetc : It shows when the experiment time ends.
@@ -734,6 +757,7 @@ The result excel columns reperesents the following:
 7. Comments : It represents additional information for each test case.
 
 ## 13. Consolidated Information of our components
+
 | Types of cloud components | Name in our experiment | 
 | ---------------           | ---------------        | 
 | Container instance        | teamnv                 | 
