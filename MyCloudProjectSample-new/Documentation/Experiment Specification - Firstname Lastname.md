@@ -4,7 +4,7 @@
 
 1. [Introduction](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#1-introduction)
 2. [Technologies Used](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#2-technologies-used)
-3. [Our Objective](#-3.-Our-Objective)
+3. [Our Objective](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#3-our-objective)
 4. [Project Architecture](#-4.-Project-Architecture)
 5. [Prerequisites](#-5.-Prerequisites)
 6. [Our input to the experiment](#-6.-Our-input-to-the-experiment)
