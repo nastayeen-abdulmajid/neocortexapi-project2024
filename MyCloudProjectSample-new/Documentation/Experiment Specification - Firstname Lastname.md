@@ -1,7 +1,6 @@
+# Project : ML 22/23 - 7 Implement UnitTests  for AdaptSegments - Azure Cloud Implementation
 
-# Project : ML 22/23 - 7 Implement Unit Tests  for Adapt Segmants Method - Azure Cloud Implementation
-
-# Table of contents
+## Table of contents
 
 1. Introduction
 2. Prerequisites
@@ -15,7 +14,17 @@
 10. Deployment
 
 ## Introduction
-Our project is a cloud-based system designed to execute experiments by processing tasks from Azure Storage Queues. It integrates with Azure Storage for handling experiment requests, downloading necessary input files, running the experiment, uploading the results, and managing the entire lifecycle of an experiment. The purpose of project was developed to automate the process of running experiments, particularly those related to machine learning. The goal is to make the experiment lifecycle efficient, scalable, and manageable in a cloud environment. 
+Our project is a cloud-based system designed to execute experiments by processing tasks from Azure Storage Queues. It integrates with Azure Storage to handle experiment requests, download necessary input files, run the experiment, upload the results, and manage the entire lifecycle of an experiment. The purpose of project was developed to automate the process of running experiments, particularly those related to machine learning. The goal is to make the experiment lifecycle efficient, scalable, and manageable in a cloud environment. 
+
+HTM is a machine-learning framework inspired by the structure and function of the neocortex in the human brain. It focuses on time-based patterns, sequence learning, and anomaly detection. HTM models aim to replicate the brain's ability to learn and recognize temporal sequences continuously. In HTM, a "segment" is a group of synapses, which are connections between neurons. These segments can be thought of as small sub-patterns that neurons use to predict future activity. There are two primary types of segments in HTM:
+* **Proximal Segments**: Used in the Spatial Pooler to form connections between the input and a neuron's dendrites, determining the neuron's activation.
+* **Distal Segments**: Used in Temporal Memory to form connections between neurons and to predict future inputs based on previous patterns.
+
+Adapt Segments refers to modifying the synapses on a segment based on the neuron's activity. This is how HTM systems learn from experience. The adaptation of segments occurs during both the learning and inference phases. In the learning phase, When a neuron is active, HTM adapts the segments by reinforcing or weakening the synapses on those segments. If a neuron correctly predicted its activation, the synapses that contributed to the correct prediction are strengthened (increasing permanence). Conversely, if the prediction was incorrect, those synapses might be weakened or even removed (decreasing permanence). During inference, HTM uses the segments to predict future inputs. As new data is received, the HTM system checks if the predictions are correct and adapts the segments accordingly. This continuous adaptation allows the model to improve its predictions over time.
+
+The adaptation of segments is crucial for HTM's ability to learn sequences and make predictions. This process mimics how biological neurons adjust their synaptic connections based on experience, which is fundamental to learning in the brain.
+* **Decrement Permanence**: In cases where predictions are incorrect, the permanence of synapses is decremented, potentially leading to their removal if they become too weak.
+* **Increment Permanence**: When predictions are correct, the permanence of the associated synapses is incremented, strengthening the connections and reinforcing the correct prediction pathway.
 
 # Technologies used
 1. C# Programming language
