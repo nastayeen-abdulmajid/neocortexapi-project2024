@@ -5,16 +5,16 @@
 1. [Introduction](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#1-introduction)
 2. [Technologies Used](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#2-technologies-used)
 3. [Our Objective](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#3-our-objective)
-4. [Project Architecture](#-4.-Project-Architecture)
-5. [Prerequisites](#-5.-Prerequisites)
-6. [Our input to the experiment](#-6.-Our-input-to-the-experiment)
-7. [Run Experiment](#-7.-Run-Experiment)
-8. [Our output to the experiment](#-8.-Our-output-of-the-experiment)
-9. [About adapt segments method](#-9.-About-Adapt-segments-method)
-10. [Azure implementation](#-10.-Azure-Implementation)
-11. [How to run the experiment](#-11.-How-to-run-the-experiment)
-12. [Describing our result](#-12.-Describing-our-Result)
-13. [Consolidated information of our components](#-13.-Consolidated-Information-of-our-components)
+4. [Project Architecture](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#4-project-architecture)
+5. [Prerequisites](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#5-prerequisites)
+6. [Our input to the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#6-our-input-to-the-experiment)
+7. [Run Experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#7-run-experiment)
+8. [Our output to the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#8-our-output-of-the-experiment)
+9. [About adapt segments method](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#9-about-adapt-segments-method)
+10. [Azure implementation](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#10-azure-implementation)
+11. [How to run the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#11-how-to-run-the-experiment)
+12. [Describing our result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#12-describing-our-result)
+13. [Consolidated information of our components](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/edit/master/MyCloudProjectSample-new/Documentation/Experiment%20Specification%20-%20Firstname%20Lastname.md#13-consolidated-information-of-our-components)
 
 ## 1. Introduction
 Our project is a cloud-based system designed to execute experiments by processing tasks from Azure Storage Queues. It integrates with Azure Storage to handle experiment requests, download necessary input files, run the experiment, upload the results, and manage the entire lifecycle of an experiment. The purpose of project was developed to automate the process of running experiments, particularly those related to machine learning. The goal is to make the experiment lifecycle efficient, scalable, and manageable in a cloud environment. 
@@ -417,6 +417,7 @@ The JSON snippet represents a message format for an experiment request in a queu
 ## 8. Our output of the experiment
 
 | **Name of Unit test case** | **Number of samples** | **Duration** |
+|   ---------------          | ---------------       | ------------ |
 |     DecrementPermanence    |     1700              |     15       |
 |     VerifyPermanence       |      5356             |     340      |
 
@@ -770,59 +771,7 @@ The result excel columns reperesents the following:
 | Output Blob container     | result-files           | 
 
 
-## What is your experiment about
 
-Describe here what your experiment is doing. Provide a reference to your SE project documentation (PDF)*)
-
-1. What is the **input**?
-
-2. What is the **output**?
-
-3. What your algorithmas does? How ?
-
-## How to run experiment
-
-Describe Your Cloud Experiment based on the Input/Output you gave in the Previous Section.
-
-**_Describe the Queue Json Message you used to trigger the experiment:_**  
-
-~~~json
-{
-     ExperimentId = "123",
-     InputFile = "https://beststudents2.blob.core.windows.net/documents2/daenet.mp4",
-     .. // see project sample for more information 
-};
-~~~
-
-- ExperimentId : Id of the experiment which is run  
-- InputFile: The video file used for trainign process  
-
-**_Describe your blob container registry:**  
-
-what are the blob containers you used e.g.:  
-- 'training_container' : for saving training dataset  
-  - the file provided for training:  
-  - zip, images, configs, ...  
-- 'result_container' : saving output written file  
-  - The file inside are result from the experiment, for example:  
-  - **file Example** screenshot, file, code  
-
-
-**_Describe the Result Table_**
-
- What is expected ?
- 
- How many tables are there ? 
- 
- How are they arranged ?
- 
- What do the columns of the table mean ?
- 
- Include a screenshot of your table from the portal or ASX (Azure Storage Explorer) in case the entity is too long, cut it in half or use another format
- 
- - Column1 : explaination
- - Column2 : ...
-Some columns are obligatory to the ITableEntities and don't need Explaination e.g. ETag, ...
  
 # References:
 1. https://www.researchgate.net/publication/261381455_An_overview_of_Hierarchical_Temporal_Memory_A_new_neocortex_algorithm
