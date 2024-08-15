@@ -14,6 +14,7 @@
 10. Azure implementation
 11. How to run the experiment
 12. Describing our result
+13. Consolidated information of our components
 
 ## 1. Introduction
 Our project is a cloud-based system designed to execute experiments by processing tasks from Azure Storage Queues. It integrates with Azure Storage to handle experiment requests, download necessary input files, run the experiment, upload the results, and manage the entire lifecycle of an experiment. The purpose of project was developed to automate the process of running experiments, particularly those related to machine learning. The goal is to make the experiment lifecycle efficient, scalable, and manageable in a cloud environment. 
@@ -380,11 +381,8 @@ This class is intended for use within a system that manages experiment requests,
 
 The `AzureStorageProvider` class in the `MyExperiment` namespace is a concrete implementation of the `IStorageProvider` interface, designed to interact with Azure Storage services. The class provides methods for interacting with Azure Storage services, including deleting messages from queues, downloading files from blobs, and uploading results. It handles various exceptions and includes optional logging for operations.
 
-### Constructor
 - **`AzureStorageProvider(IConfigurationSection configSection)`**: Initializes the provider with configuration settings from an `IConfigurationSection`.
-
-### Methods
-
+- 
 1. **`CommitRequestAsync(IExerimentRequest request)`**: It deletes a message from an Azure Storage Queue using the `MessageId` and `PopReceipt` from the `IExerimentRequest`. It handles exceptions for argument errors and Azure SDK request failures.
 
 2. **`DownloadInputAsync(string fileName, string fileName1)`**: It downloads two files from Azure Blob Storage to a local directory. It creates a new directory for the downloaded files, deleting any existing directory with the same name.
@@ -700,14 +698,14 @@ It ensures permanence values stay within the range [0, 1]. Values below 0 are se
 This method and related functions ensure that segments and synapses are dynamically managed based on their activity, maintaining the efficiency and adaptability of the HTM model.
 
 ## 10. Azure Implementation
-1. Resource Group: 
+1. Resource Group (RG): The name of RG is 'RG-Team_NV'
 ![RG](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/RG.png)
-3. Storage account:
-4. Container registry:
+3. Storage account: It is named as 'teamnv2024'.
+4. Container registry: Named as 'teamnv'
 ![Container registry](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20registry.png)
-6. Container Instance:
+6. Container Instance: Named as 'teamnv'
 ![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
-8. Docker Image:
+8. Docker Image: 'teamnv.azurecr.io/mycloudproject:v4'
 ![Docker image](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/docker%20image.png)
 10. Blob type: A Block Blob in Azure Blob Storage is designed to store large amounts of unstructured data, such as text or binary data. Block blobs are the most commonly used type of blobs in Azure and are optimized for streaming and storing files.
 
@@ -734,7 +732,7 @@ The result excel columns reperesents the following:
 6. TestCase : It shows the result of all test cases.
 7. Comments : It represents additional information for each test case.
 
-## Consolidated Information of our resources
+## 13. Consolidated Information of our components
 | Types of cloud components | Name in our experiment | 
 | ---------------           | ---------------        | 
 | Container instance        | teamnv                 | 
