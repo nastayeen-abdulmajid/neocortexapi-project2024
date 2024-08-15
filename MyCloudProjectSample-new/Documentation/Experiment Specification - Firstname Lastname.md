@@ -4,17 +4,17 @@
 
 1. [Introduction](#-1.-introduction)
 2. [Technologies Used](#-2.-Technologies-used)
-3. Our Objective
-4. Project Architecture
-5. Prerequisites
-6. Our input to the experiment
-7. Run Experiment
-8. Our output to the experiment
-9. About adapt segments method
-10. Azure implementation
-11. How to run the experiment
-12. Describing our result
-13. Consolidated information of our components
+3. [Our Objective]()
+4. [Project Architecture]
+5. [Prerequisites]
+6. [Our input to the experiment]
+7. [Run Experiment]
+8. [Our output to the experiment]
+9. [About adapt segments method]
+10. [Azure implementation]
+11. [How to run the experiment]
+12. [Describing our result]
+13. [Consolidated information of our components]
 
 ## 1. Introduction
 Our project is a cloud-based system designed to execute experiments by processing tasks from Azure Storage Queues. It integrates with Azure Storage to handle experiment requests, download necessary input files, run the experiment, upload the results, and manage the entire lifecycle of an experiment. The purpose of project was developed to automate the process of running experiments, particularly those related to machine learning. The goal is to make the experiment lifecycle efficient, scalable, and manageable in a cloud environment. 
