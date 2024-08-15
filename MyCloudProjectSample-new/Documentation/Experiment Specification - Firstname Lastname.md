@@ -2,7 +2,7 @@
 
 ## Table of contents
 
-1. Introduction
+1. [Introduction](##1.-introduction)
 2. Technologies Used
 3. Our Objective
 4. Project Architecture
