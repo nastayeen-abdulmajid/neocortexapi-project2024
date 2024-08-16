@@ -2,6 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using Microsoft.Extensions.Logging.Console;
+using System.Threading;
+
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace MyCloudProject.Common
 {
@@ -53,7 +57,13 @@ namespace MyCloudProject.Common
 
             var configRoot = builder.Build();
 
+           
             return configRoot;
         }
+
+    
+
+
+     
     }
 }

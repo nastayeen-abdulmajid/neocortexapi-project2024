@@ -45,10 +45,10 @@ namespace MyExperiment
         /// Runs the experiment asynchronously using the specified input files and folder.
         /// </summary>
         /// <param name="inputDataFolder">Folder containing input data files.</param>
-        /// <param name="DecrementPermanence_InputFile">File for decrementing permanence input.</param>
-        /// <param name="VerifyPermanence_InputFile">File for verifying permanence input.</param>
+        /// <param name="DecrementPermanenceInputFile">File for decrementing permanence input.</param>
+        /// <param name="VerifyPermanenceInputFile">File for verifying permanence input.</param>
         /// <returns>Returns the result of the experiment as an IExperimentResult.</returns>
-        public async Task<IExperimentResult> RunAsync(string inputDataFolder, string DecrementPermanence_InputFile, string VerifyPermanence_InputFile)
+        public async Task<IExperimentResult> RunAsync(string inputDataFolder, string DecrementPermanenceInputFile, string VerifyPermanenceInputFile)
         {
             string excelName = "table_Result.xlsx"; // Name of the Excel file to be created
             string excelFilePath = Path.Combine(Directory.GetCurrentDirectory(), excelName); // Full path to the Excel file
@@ -81,7 +81,7 @@ namespace MyExperiment
             // Run various unit tests and adapt segments as needed
             try
             {
-                testcases.testcaseAdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(DecrementPermanence_InputFile);
+                testcases.testcaseAdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(DecrementPermanenceInputFile);
                 testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceChangeForPreviousCycle();
                 testcases.testcaseAdaptSegments_UnitTest_VerifySegmentStateAfterMaxSynapsesPerSegment();
                 testcases.testcaseAdaptSegments_UnitTest_VerifySegmentAndActiveSegmentStateAfterAdaptation();
@@ -108,7 +108,7 @@ namespace MyExperiment
                 testcases.testcaseVerify_Emptysegement();
                 testcases.testcaseAdaptSegments_UnitTest_KillSegmentEvenIfOnlyoneSynapse_is_left();
                 testcases.testcaseAdaptSegments_UnitTest_CheckIfSegmentSurvives();
-                testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation(VerifyPermanence_InputFile);
+                testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation(VerifyPermanenceInputFile);
 
                 // Set the path of the output file in the result
                 res.OutputFiles = excelFilePath;
