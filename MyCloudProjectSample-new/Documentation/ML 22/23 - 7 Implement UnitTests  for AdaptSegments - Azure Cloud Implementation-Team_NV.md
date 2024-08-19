@@ -168,7 +168,15 @@ This defines an internal class named `ExerimentRequestMessage` within the `MyExp
 - **PopReceipt** : A string that helps manage the message in a queue, particularly for visibility and deletion.
 - **ExperimentId** : A unique identifier for the experiment.
 - **DecrementPermanenceInputFile** : The file path containing input data used to decrement permanence in the experiment.
-  - 
+  
+   ![DecrementPermanenceInputFile](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/DecrementPermanenceInputfiledemo.png)
+
+The unit test checks if the function correctly adjusts the permanence of synapses based on whether the presynaptic cell is active or inactive.
+If the presynaptic cell is active, the test expects the permanence of the synapse to be incremented. If the presynaptic cell is inactive, the test expects the permanence of the synapse to be decremented. The input parameters are:
+- getCellnumber: The index of the cell used in the distal segment.
+- activeCellnumber: The index of the active cell used for testing.
+- initialPermanence: The initial permanence value of the synapse before adaptation.
+
 - **Name** : The name of the experiment request.
 - **Description** : A detailed description of the experiment.
 - **MessageId** : A unique identifier for the message in the queue.
