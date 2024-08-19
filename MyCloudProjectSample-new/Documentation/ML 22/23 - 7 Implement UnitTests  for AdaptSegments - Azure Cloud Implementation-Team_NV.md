@@ -42,8 +42,8 @@ The adaptation of segments is crucial for HTM's ability to learn sequences and m
 7. Output in excel file
 
 ## 3. Our Objective
-Our research is focused on evaluating the AdaptSynapses method's effectiveness.
-- We created unit test cases specifically designed to verify the functionality of the AdaptSynapses method.
+Our research is focused on evaluating the AdaptSegments method's effectiveness.
+- We created unit test cases specifically designed to verify the functionality of the Adapt segments method.
 - We developed a cloud-based system for automated test management, ensuring regular initiation, tracking, and evaluation of AdaptSegment unit tests.
 - We built methods that allow test cases to be executed either with input files or predefined settings, enhancing flexibility.
 - Designed and implemented a scalable cloud infrastructure to perform thorough unit testing of the HTM algorithm's AdaptSegment method.
@@ -660,8 +660,8 @@ namespace MyExperiment
                 testcases.testcaseAdaptSegments_UnitTest_TestGetCells_ReturnsEmptyArrayForEmptyInput();
                 testcases.testcaseAdaptSegments_UnitTest_TestGetCells_ValidInput_ReturnsExpectedCellArray();
                 testcases.testcaseAdaptSegments_UnitTest_ComplexDoublePermanenceInput_MaxPermanenceReached();
-                testcases.testcaseAdaptSegments_UnitTest_VerifySynapseRemovalOnMinimumPermanenceAdaptation();
-                testcases.testcaseAdaptSegments_UnitTest_VerifySynapseDestructionOnLowPermanenceAdaptation();
+                testcases.testcaseAdaptSegments_UnitTest_VerifyRemovalOnMinimumPermanenceAdaptation();
+                testcases.testcaseAdaptSegments_UnitTest_VerifyDestructionOnLowPermanenceAdaptation();
                 testcases.testcaseAdaptSegments_UnitTest_VerifyStayOfSynapseAfterSegmentAdaptation();
                 testcases.testcaseAdaptSegments_UnitTest_TestInvalidArrayCells_WithInvalidArray_ThrowsIndexOutOfRangeException();
                 testcases.testcaseAdaptSegments_UnitTest_TestNullArrayCells_ThrowsException();
@@ -671,7 +671,7 @@ namespace MyExperiment
                 testcases.testcasePreservesSynapses_ForVeryLargeNegativePermanenceValues();
                 testcases.testcasePreservesSynapses_ForZeroPermanenceValues();
                 testcases.testcaseVerify_Emptysegement();
-                testcases.testcaseAdaptSegments_UnitTest_KillSegmentEvenIfOnlyoneSynapse_is_left();
+                testcases.testcaseAdaptSegments_UnitTest_KillSegmentEvenIfOnlyone_is_left();
                 testcases.testcaseAdaptSegments_UnitTest_CheckIfSegmentSurvives();
                 testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation(VerifyPermanence_InputFile);
 
@@ -696,7 +696,7 @@ The method captures and logs any errors encountered during execution, ensuring r
 
 ## 9. About Adapt segments method
 
-In the Hierarchical Temporal Memory (HTM) algorithm, the `AdaptSegments` method is crucial for updating synaptic permanence values in a distal dendrite segment based on the activity of presynaptic cells. The method starts by creating an empty list, `synapsesToDestroy`, to track synapses that need removal. It iterates over each synapse in the segment. Retrieves the current permanence value of each synapse. Checks if the corresponding presynaptic cell was active in the previous cycle:
+In the Hierarchical Temporal Memory (HTM) algorithm, the `AdaptSegments` method is crucial for updating synaptic permanence values in a distal dendrite segment based on the activity of presynaptic cells. The method starts by creating an empty list, `sToDestroy`, to track s that need removal. It iterates over each synapse in the segment. Retrieves the current permanence value of each synapse. Checks if the corresponding presynaptic cell was active in the previous cycle:
      - **Active**: Increases the permanence by `permanenceIncrement`.
      - **Inactive**: Decreases the permanence by `permanenceDecrement`.
 It ensures permanence values stay within the range [0, 1]. Values below 0 are set to 0, and those above 1 are capped at 1.
