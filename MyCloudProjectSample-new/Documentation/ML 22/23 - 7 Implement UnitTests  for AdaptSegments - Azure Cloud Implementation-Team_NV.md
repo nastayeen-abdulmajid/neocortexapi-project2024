@@ -9,10 +9,10 @@
 5. [Prerequisites](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#5-prerequisites)
 6. [Our input to the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#6-our-input-to-the-experiment)
 7. [Run Experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#7-run-experiment)
-10. [Azure implementation](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#10-azure-implementation)
-11. [How to run the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#10-azure-implementation)
-9. [Our output to the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#8-our-output-of-the-experiment)
-12. [Describing our result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#12-describing-our-result)
+8. [Azure implementation](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#10-azure-implementation)
+9. [How to run the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#10-azure-implementation)
+10. [Our output to the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#8-our-output-of-the-experiment)
+11. [Describing our result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#12-describing-our-result)
 13. [Consolidated information of our components](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#13-consolidated-information-of-our-components)
 
 ## 1. Introduction
@@ -426,6 +426,7 @@ The JSON snippet represents a message format for an experiment request in a queu
 - **`Description`**: `"You can write your own description"` - A textual description of the experiment, which can be customized.
 - **`DecrementPermanenceInputFile`**: `"json.json"` - The file name of the input data used for the "decrement permanence" aspect of the experiment.
 - **`VerifyPermanenceInputFile`**: `"testcases.json"` - The file name of the input data used for verifying permanence in the experiment.
+- 
 ## 8. Azure Implementation
 
 1. Resource Group (RG): The name of RG is 'RG-Team_NV'
