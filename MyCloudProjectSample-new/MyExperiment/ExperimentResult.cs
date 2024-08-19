@@ -97,9 +97,6 @@ namespace MyExperiment
         /// </summary>
         public TimeSpan Duration { get; set; }
 
-        /// <summary>
-        /// Gets or sets the pop receipt used to confirm that the result has been processed.
-        /// </summary>
         public string PopReceipt { get; set; }
 
         /// <summary>

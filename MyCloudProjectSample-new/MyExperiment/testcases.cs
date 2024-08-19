@@ -1348,12 +1348,12 @@ namespace MyExperiment
         /// <summary>
         /// Unit test case to verify the bounds of permanence after adaptation.
         /// </summary>
-        /// <param name="VerifyPermanence_InputFile">The input file containing test data for verifying permanence bounds.</param>
-        public async void testcaseAdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation(string VerifyPermanence_InputFile)
+        /// <param name="VerifyPermanenceInputFile">The input file containing test data for verifying permanence bounds.</param>
+        public async void testcaseAdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation(string VerifyPermanenceInputFile)
         {
             // Define the path to the downloaded files directory and the specific JSON file
             string outputFolder = Path.Combine(Directory.GetCurrentDirectory(), "DownloadedFiles");
-            string jsonFilePath = Path.Combine(outputFolder, VerifyPermanence_InputFile);
+            string jsonFilePath = Path.Combine(outputFolder, VerifyPermanenceInputFile);
 
             // Create an instance of ExperimentResult to store the result of the test case
             ExperimentResult res = new ExperimentResult(null, null);
@@ -1394,15 +1394,16 @@ namespace MyExperiment
         /// Unit test case to decrement permanence if inactive presynaptic cells.
         /// </summary>
         /// <param name="DecrementPermanence_InputFile">The input file containing test cases for decrementing permanence of inactive presynaptic cells.</param>
-        public async void testcaseAdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(string DecrementPermanence_InputFile)
+        public async void testcaseAdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(string DecrementPermanenceInputFile)
         {
             // Define the path to the downloaded files directory and the specific JSON file
             string outputFolder = Path.Combine(Directory.GetCurrentDirectory(), "DownloadedFiles");
-            string jsonFilePath = Path.Combine(outputFolder, DecrementPermanence_InputFile); // Assuming inputFile is the JSON file
+            string jsonFilePath = Path.Combine(outputFolder, DecrementPermanenceInputFile); // Assuming inputFile is the JSON file
 
             // Initialize instances for adaptation and connections
             var adaptSegments = new AdaptSegments();
             var testcases = new testcases();
+            var TestDataReader = new TestDataReader();
             var conn = new Connections();
             Parameters p = Parameters.getAllDefaultParameters();
             p.apply(conn);
@@ -1410,13 +1411,15 @@ namespace MyExperiment
             // Create an instance of ExperimentResult to store the result of the test case
             var res = new ExperimentResult(null, null);
             res.StartTimeUtc = DateTime.UtcNow;
-            List<TestCase> testCases;
+            List<TestCase> testCases = TestDataReader.LoadTestCases(jsonFilePath);
+
 
             // Load test cases from the JSON file
-            using (var stream = File.OpenRead(jsonFilePath))
-            {
-                testCases = await JsonSerializer.DeserializeAsync<List<TestCase>>(stream);
-            }
+            //using (var stream = File.OpenRead(jsonFilePath))
+            //{
+            //    testCases = await JsonSerializer.DeserializeAsync<List<TestCase>>(stream);
+            //    //testCases = await JsonSerializer.DeserializeAsync<List<TestCase>>(stream);
+            //}
 
             int result = 0;
 
@@ -1427,14 +1430,11 @@ namespace MyExperiment
                 result = adaptSegments.AdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(testCase.GetCellnumber, testCase.ActiveCellnumber, testCase.InitialPermanence, conn);
 
                 // Log and print the result of each test case
-                if (result == 1)
-                {
-                    await Console.Out.WriteLineAsync("Test case passed");
-                }
-                else
+                if (result != 1)
                 {
                     await Console.Out.WriteLineAsync("Failed");
                 }
+                
             }
 
             // Set the test case result based on the final outcome
@@ -1442,6 +1442,7 @@ namespace MyExperiment
             {
                 res.testcase = "Passed";
                 res.Comments = "Test passed successfully.";
+                await Console.Out.WriteLineAsync("All Test cases of DecrementPermanenceIfInactivePresynapticCells passed");
             }
 
             // Record the end time of the test case and calculate the duration

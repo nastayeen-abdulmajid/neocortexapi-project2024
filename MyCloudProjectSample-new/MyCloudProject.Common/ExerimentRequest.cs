@@ -17,13 +17,13 @@ namespace MyCloudProject.Common
         /// Gets or sets the URI of the file that contains the input arguments for the decrement permanence operation.
         /// This file should contain the data needed for processing the decrement permanence aspect of the experiment.
         /// </summary>
-        public string DecrementPermanence_InputFile { get; set; }
+        public string DecrementPermanenceInputFile { get; set; }
 
         /// <summary>
         /// Gets or sets the URI of the file that contains the input arguments for the verify permanence operation.
         /// This file should contain the data needed for processing the verify permanence aspect of the experiment.
         /// </summary>
-        public string VerifyPermanence_InputFile { get; set; }
+        public string VerifyPermanenceInputFile { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the experiment request.
@@ -43,11 +43,7 @@ namespace MyCloudProject.Common
         /// </summary>
         public string MessageId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the receipt handle for the message associated with the experiment request.
-        /// This handle is used to identify and process the message in a queue or messaging system.
-        /// </summary>
-        public string MessageReceipt { get; set; }
+        
 
         /// <summary>
         /// Gets or sets the receipt handle used to pop the message from the queue.

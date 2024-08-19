@@ -132,8 +132,8 @@ namespace MyExperiment
                             {
                                 request.MessageId = message.MessageId;
                                 request.PopReceipt = message.PopReceipt;
-                                await Console.Out.WriteLineAsync($"Selected input file for DecrementPermanenceIfInactivePresynapticCells is : {request.DecrementPermanence_InputFile}");
-                                await Console.Out.WriteLineAsync($"Selected input file for VerifyPermanenceBoundsAfterAdaptation is : {request.VerifyPermanence_InputFile}");
+                                await Console.Out.WriteLineAsync($"Selected input file for DecrementPermanenceIfInactivePresynapticCells is : {request.DecrementPermanenceInputFile}");
+                                await Console.Out.WriteLineAsync($"Selected input file for VerifyPermanenceBoundsAfterAdaptation is : {request.VerifyPermanenceInputFile}");
                                 return request;
                             }
                         }

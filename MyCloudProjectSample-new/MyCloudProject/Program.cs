@@ -59,14 +59,14 @@ namespace MyCloudProject
                         logger.LogInformation($"{DateTime.Now} - Received experiment request: {JsonSerializer.Serialize(request)}");
 
                         // Step 4.
-                        logger.LogInformation($"{DateTime.Now} - Downloading input files: DecrementPermanence_InputFile = {request.DecrementPermanence_InputFile}, VerifyPermanence_InputFile = {request.VerifyPermanence_InputFile}");
-                        var localFileWithInputArgs = await storageProvider.DownloadInputAsync(request.DecrementPermanence_InputFile, request.VerifyPermanence_InputFile);
+                        logger.LogInformation($"{DateTime.Now} - Downloading input files: DecrementPermanence_InputFile = {request.DecrementPermanenceInputFile}, VerifyPermanence_InputFile = {request.VerifyPermanenceInputFile}");
+                        var localFileWithInputArgs = await storageProvider.DownloadInputAsync(request.DecrementPermanenceInputFile, request.VerifyPermanenceInputFile);
 
                         logger.LogInformation($"{DateTime.Now} - Download complete. Files saved locally.");
 
                         // Here is your SE Project code started.(Between steps 4 and 5).
                         logger.LogInformation($"{DateTime.Now} - Running experiment...");
-                        IExperimentResult result = await experiment.RunAsync(localFileWithInputArgs, request.DecrementPermanence_InputFile, request.VerifyPermanence_InputFile);
+                        IExperimentResult result = await experiment.RunAsync(localFileWithInputArgs, request.DecrementPermanenceInputFile, request.VerifyPermanenceInputFile);
 
                         logger.LogInformation($"{DateTime.Now} - Experiment run complete. Preparing to upload results.");
 
