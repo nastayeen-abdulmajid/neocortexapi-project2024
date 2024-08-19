@@ -10,7 +10,6 @@
 6. [Our input to the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#6-our-input-to-the-experiment)
 7. [Run Experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#7-run-experiment)
 8. [Our output to the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#8-our-output-of-the-experiment)
-9. [About adapt segments method](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#9-about-adapt-segments-method)
 10. [Azure implementation](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#10-azure-implementation)
 11. [How to run the experiment](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#10-azure-implementation)
 12. [Describing our result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/ML%2022/23%20-%207%20Implement%20UnitTests%20%20for%20AdaptSegments%20-%20Azure%20Cloud%20Implementation-Team_NV.md#12-describing-our-result)
@@ -707,21 +706,6 @@ The `Experiment` class, which implements the `IExperiment` interface, is designe
 - **RunAsync Method**: It deletes any existing Excel result file from the current directory.It runs a series of unit tests related to segment adaptation and permanence in an experimental setup using the provided input files. It creates an `ExperimentResult` object with the path to the generated Excel file, which contains the experiment results. 
 
 The method captures and logs any errors encountered during execution, ensuring robust error handling and logging throughout the experiment.
-
-## 9. About Adapt segments method
-
-In the Hierarchical Temporal Memory (HTM) algorithm, the `AdaptSegments` method is crucial for updating synaptic permanence values in a distal dendrite segment based on the activity of presynaptic cells. The method starts by creating an empty list, `sToDestroy`, to track s that need removal. It iterates over each synapse in the segment. Retrieves the current permanence value of each synapse. Checks if the corresponding presynaptic cell was active in the previous cycle:
-     - **Active**: Increases the permanence by `permanenceIncrement`.
-     - **Inactive**: Decreases the permanence by `permanenceDecrement`.
-It ensures permanence values stay within the range [0, 1]. Values below 0 are set to 0, and those above 1 are capped at 1.
-
- **Destruction**: It compares permanence values to a threshold, `EPSILON`. Synapses with values below this threshold are added to `synapsesToDestroy`.It updates the permanence values of remaining synapses. It removes synapses in the `synapsesToDestroy` list. If a segment ends up with no synapses, it is deleted.
- 
-- CreateDistalSegment: It creates a new segment for a cell if it hasn't reached the maximum number of segments. If the maximum is reached, it removes the least recently used segment.
-- DestroyDistalDendrite : It Deletes a specific segment and its synapses.
-- LeastRecentlyUsedSegment : Finds the least recently used segment for a cell.
-- NumSegments : Returns the number of distal dendrite segments for a cell or across cells.
-This method and related functions ensure that segments and synapses are dynamically managed based on their activity, maintaining the efficiency and adaptability of the HTM model.
 
 ## 10. Azure Implementation
 
