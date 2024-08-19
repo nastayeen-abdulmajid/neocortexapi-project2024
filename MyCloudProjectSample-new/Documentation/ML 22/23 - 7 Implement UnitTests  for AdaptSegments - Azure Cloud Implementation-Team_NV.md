@@ -171,7 +171,7 @@ This defines an internal class named `ExerimentRequestMessage` within the `MyExp
   
    ![DecrementPermanenceInputFile](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/DecrementPermanenceInputfiledemo.png)
 
-The unit test checks if the function correctly adjusts the permanence of synapses based on whether the presynaptic cell is active or inactive.
+Purpose - The unit test method "AdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells" checks if the function correctly adjusts the permanence of synapses based on whether the presynaptic cell is active or inactive.
 If the presynaptic cell is active, the test expects the permanence of the synapse to be incremented. If the presynaptic cell is inactive, the test expects the permanence of the synapse to be decremented. The input parameters are:
 - getCellnumber: The index of the cell used in the distal segment.
 - activeCellnumber: The index of the active cell used for testing.
@@ -182,8 +182,10 @@ If the presynaptic cell is active, the test expects the permanence of the synaps
 - **MessageId** : A unique identifier for the message in the queue.
 - **MessageReceipt** : Another string related to managing the message in the queue.
 - **VerifyPermanenceInputFile** : The file path containing input data used to verify permanence in the experiment.
+  
+![VerifyPermanence](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/VerifyPermanenceInputFile.png)
 
-This class is intended for use within a system that manages experiment requests, likely involving a message queue to handle different experiment tasks.
+Purpose - The unit test method "AdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation" verifies the permanence of synapses in a Temporal Memory system after the adaptation process. It checks whether the permanence values of synapses fall within the expected range as specified by the test cases. '1' indicates success (the permanence values are within the acceptable range). '0' indicates failure (no permanence values were within the acceptable range).
 
 ~~~AzureStorageProvider.cs
   using Azure;
