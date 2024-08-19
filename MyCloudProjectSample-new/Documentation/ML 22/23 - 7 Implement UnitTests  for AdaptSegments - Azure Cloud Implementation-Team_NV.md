@@ -426,7 +426,7 @@ The JSON snippet represents a message format for an experiment request in a queu
 - **`Description`**: `"You can write your own description"` - A textual description of the experiment, which can be customized.
 - **`DecrementPermanenceInputFile`**: `"json.json"` - The file name of the input data used for the "decrement permanence" aspect of the experiment.
 - **`VerifyPermanenceInputFile`**: `"testcases.json"` - The file name of the input data used for verifying permanence in the experiment.
-## 10. Azure Implementation
+## 8. Azure Implementation
 
 1. Resource Group (RG): The name of RG is 'RG-Team_NV'
    
@@ -447,7 +447,7 @@ The JSON snippet represents a message format for an experiment request in a queu
 
 6. Blob type: A Block Blob in Azure Blob Storage is designed to store large amounts of unstructured data, such as text or binary data. Block blobs are the most commonly used type of blobs in Azure and are optimized for streaming and storing files.
 
-## 11. How to run the experiment
+## 9. How to run the experiment
 
 1. Click on "Start" to initiate "teamnv" container instance on Azure.
 
@@ -467,7 +467,7 @@ The JSON snippet represents a message format for an experiment request in a queu
 
 5. After the experiment completes, you can navigate to blob container within storage account to access "result-files".
    
-## 8. Our output of the experiment
+## 10. Our output of the experiment
 
 |                            **Name of Unit test case**                   | **Number of samples** | **Time Duration in seconds** |
 |   ---------------                                                       | ---------------       | ------------                 |
@@ -748,7 +748,7 @@ The `Experiment` class, which implements the `IExperiment` interface, is designe
 The method captures and logs any errors encountered during execution, ensuring robust error handling and logging throughout the experiment.
 
 
-## 12. Describing our Result
+## 11. Describing our Result
 
 The result excel columns reperesents the following:
 1. Timestamp : It shows when the experiment time starts.
@@ -759,7 +759,7 @@ The result excel columns reperesents the following:
 6. TestCase : It shows the result of all test cases.
 7. Comments : It represents additional information for each test case.
 
-## 13. Consolidated Information of our components
+## 12. Consolidated Information of our components
 
 | Types of cloud components | Name in our experiment | 
 | ---------------           | ---------------        | 
