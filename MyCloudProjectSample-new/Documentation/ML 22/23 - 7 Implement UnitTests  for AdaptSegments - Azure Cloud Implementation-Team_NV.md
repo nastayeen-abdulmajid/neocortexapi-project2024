@@ -426,7 +426,47 @@ The JSON snippet represents a message format for an experiment request in a queu
 - **`Description`**: `"You can write your own description"` - A textual description of the experiment, which can be customized.
 - **`DecrementPermanenceInputFile`**: `"json.json"` - The file name of the input data used for the "decrement permanence" aspect of the experiment.
 - **`VerifyPermanenceInputFile`**: `"testcases.json"` - The file name of the input data used for verifying permanence in the experiment.
+## 10. Azure Implementation
 
+1. Resource Group (RG): The name of RG is 'RG-Team_NV'
+   
+![RG](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/RG.png)
+
+2. Storage account: It is named as 'teamnv2024'.
+3. Container registry: Named as 'teamnv'.
+   
+![Container registry](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20registry.png)
+
+4. Container Instance: Named as 'teamnv'.
+   
+![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
+
+5. Docker Image: 'teamnv.azurecr.io/mycloudproject:v4'
+   
+![Docker image](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/docker%20image.png)
+
+6. Blob type: A Block Blob in Azure Blob Storage is designed to store large amounts of unstructured data, such as text or binary data. Block blobs are the most commonly used type of blobs in Azure and are optimized for streaming and storing files.
+
+## 11. How to run the experiment
+
+1. Click on "Start" to initiate "teamnv" container instance on Azure.
+
+![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
+
+2. Adding trigger messages to the queue by accessing the storage account "trigger-queue". The message is placed in the queue to trigger the execution of the experiment. The container instance will read this message, process the input files as specified, and run the experiment accordingly.
+   
+![queue message](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Queues.png)
+
+3. Check input file in storage
+   
+![input container](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Input%20container.png)
+
+4.  Logs monitoring by regularly checking the logs to track the experiment's progress and current status.
+   
+![logs](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/logs.png)
+
+5. After the experiment completes, you can navigate to blob container within storage account to access "result-files".
+   
 ## 8. Our output of the experiment
 
 |                            **Name of Unit test case**                   | **Number of samples** | **Time Duration in seconds** |
@@ -707,47 +747,7 @@ The `Experiment` class, which implements the `IExperiment` interface, is designe
 
 The method captures and logs any errors encountered during execution, ensuring robust error handling and logging throughout the experiment.
 
-## 10. Azure Implementation
 
-1. Resource Group (RG): The name of RG is 'RG-Team_NV'
-   
-![RG](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/RG.png)
-
-2. Storage account: It is named as 'teamnv2024'.
-3. Container registry: Named as 'teamnv'.
-   
-![Container registry](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20registry.png)
-
-4. Container Instance: Named as 'teamnv'.
-   
-![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
-
-5. Docker Image: 'teamnv.azurecr.io/mycloudproject:v4'
-   
-![Docker image](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/docker%20image.png)
-
-6. Blob type: A Block Blob in Azure Blob Storage is designed to store large amounts of unstructured data, such as text or binary data. Block blobs are the most commonly used type of blobs in Azure and are optimized for streaming and storing files.
-
-## 11. How to run the experiment
-
-1. Click on "Start" to initiate "teamnv" container instance on Azure.
-
-![Container instance](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Container%20instance.png)
-
-2. Adding trigger messages to the queue by accessing the storage account "trigger-queue". The message is placed in the queue to trigger the execution of the experiment. The container instance will read this message, process the input files as specified, and run the experiment accordingly.
-   
-![queue message](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Queues.png)
-
-3. Check input file in storage
-   
-![input container](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Input%20container.png)
-
-4.  Logs monitoring by regularly checking the logs to track the experiment's progress and current status.
-   
-![logs](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/logs.png)
-
-5. After the experiment completes, you can navigate to blob container within storage account to access "result-files".
-   
 ## 12. Describing our Result
 
 The result excel columns reperesents the following:
