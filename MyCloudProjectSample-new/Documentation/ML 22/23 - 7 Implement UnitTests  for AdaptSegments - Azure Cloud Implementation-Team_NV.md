@@ -711,10 +711,11 @@ namespace MyExperiment
 ~~~
 
 The `Experiment` class, which implements the `IExperiment` interface, is designed to run machine learning experiments in the cloud. It interacts with Azure services and uses configuration, storage, and logging facilities to manage and execute experiments. It initializes with configuration, a storage provider, and a logger.
-- **RunAsync Method**: It deletes any existing Excel result file from the current directory.It runs a series of unit tests related to segment adaptation and permanence in an experimental setup using the provided input files. It creates an `ExperimentResult` object with the path to the generated Excel file, which contains the experiment results. 
+- **RunAsync Method**: It deletes any existing Excel result file from the current directory. It runs a series of unit tests related to segment adaptation and permanence in an experimental setup using the provided input files. It creates an `ExperimentResult` object with the path to the generated Excel file, which contains the experiment results. 
 
 The method captures and logs any errors encountered during execution, ensuring robust error handling and logging throughout the experiment.
-The description of all test cases can be found here :- https://github.com/UniversityOfAppliedSciencesFrankfurt/se-cloud-2023-2024/blob/Team_NV/Source/MySEProjectSample/Documentation/Implement_UnitTest_for_AdaptSegment_Method_TeamNV.pdf
+The description of all test cases can be found here:- 
+https://github.com/UniversityOfAppliedSciencesFrankfurt/se-cloud-2023-2024/blob/Team_NV/Source/MySEProjectSample/Documentation/Implement_UnitTest_for_AdaptSegment_Method_TeamNV.pdf
 
 ## 11. Describing our Result
 
