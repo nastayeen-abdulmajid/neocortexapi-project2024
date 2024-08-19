@@ -102,6 +102,11 @@ This ensures everything is working fine locally before deploying to Azure.
 
 ## 6. Our input to the experiment
 
+|              **Name of Unit test cases**                                | **Number of input samples used** |
+|                   ---------------                                       |            ---------------       | 
+|     AdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells|                1700              | 
+|     AdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation        |                5356              |    
+
 ~~~ExperimentRequestMessage.cs
 
 ﻿using MyCloudProject.Common;
@@ -425,10 +430,10 @@ The JSON snippet represents a message format for an experiment request in a queu
 
 ## 8. Our output of the experiment
 
-| **Name of Unit test case** | **Number of samples** | **Duration** |
-|   ---------------          | ---------------       | ------------ |
-|     DecrementPermanence    |     1700              |     15       |
-|     VerifyPermanence       |      5356             |     340      |
+|                            **Name of Unit test case**                   | **Number of samples** | **Time Duration in seconds** |
+|   ---------------                                                       | ---------------       | ------------                 |
+|     AdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells|     1700              |     15                       |
+|     AdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation        |      5356             |     340                      |
 
 ~~~
 using Azure;
