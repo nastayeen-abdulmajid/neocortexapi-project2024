@@ -85,7 +85,7 @@ Our research is focused on evaluating the AdaptSegments method's effectiveness.
 - Visual Studio will generate a Dockerfile in our project, which describes how your application will be containerized.
 
 ### Step 2: Build and Run our Docker Container Locally
-To building the Docker Image:
+To build the Docker Image:
 
 - Right-click the project in Solution Explorer. Choose Build or Rebuild to create the Docker image locally.
 - Run the Docker Container Locally:
@@ -103,81 +103,76 @@ This ensures everything is working fine locally before deploying to Azure.
 ## 6. Our input to the experiment
 
 ~~~ExperimentRequestMessage.cs
-  using MyCloudProject.Common;
-  using System;
-  using System.Collections.Generic;
-  using System.Text;
 
-  namespace MyExperiment
-  {
-      /// <summary>
-      /// Represents a request message for an experiment.
-      /// Implements the IExerimentRequest interface to define the structure of an experiment request.
-      /// </summary>
-      internal class ExerimentRequestMessage : IExerimentRequest
-      {
-          /// <summary>
-          /// Gets or sets the receipt of the message from the queue.
-          /// Used to manage the visibility and deletion of the message in the queue.
-          /// </summary>
-          public string PopReceipt { get; set; }
+﻿using MyCloudProject.Common;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-          /// <summary>
-          /// Gets or sets the unique identifier for the experiment.
-          /// Used to track and identify the specific experiment request.
-          /// </summary>
-          public string ExperimentId { get; set; }
+namespace MyExperiment
+{
+    /// <summary>
+    /// Represents a request message for an experiment.
+    /// Implements the IExerimentRequest interface to define the structure of an experiment request.
+    /// </summary>
+    internal class ExerimentRequestMessage : IExerimentRequest
+    {
+        /// <summary>
+        /// Gets or sets the receipt of the message from the queue.
+        /// Used to manage the visibility and deletion of the message in the queue.
+        /// </summary>
+        public string PopReceipt { get; set; }
 
-          /// <summary>
-          /// Gets or sets the file path for the decrement permanence input data.
-          /// This file contains the data used to decrement the permanence in the experiment.
-          /// </summary>
-          public string DecrementPermanence_InputFile { get; set; }
+        /// <summary>
+        /// Gets or sets the unique identifier for the experiment.
+        /// Used to track and identify the specific experiment request.
+        /// </summary>
+        public string ExperimentId { get; set; }
 
-          /// <summary>
-          /// Gets or sets the name of the experiment request.
-          /// Provides a descriptive name for the experiment.
-          /// </summary>
-          public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the file path for the decrement permanence input data.
+        /// This file contains the data used to decrement the permanence in the experiment.
+        /// </summary>
+        public string DecrementPermanenceInputFile { get; set; }
 
-          /// <summary>
-          /// Gets or sets the description of the experiment request.
-          /// Provides additional information about the purpose or details of the experiment.
-          /// </summary>
-          public string Description { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the experiment request.
+        /// Provides a descriptive name for the experiment.
+        /// </summary>
+        public string Name { get; set; }
 
-          /// <summary>
-          /// Gets or sets the unique identifier for the message in the queue.
-          /// Used to track and manage the specific message within the queue.
-          /// </summary>
-          public string MessageId { get; set; }
+        /// <summary>
+        /// Gets or sets the description of the experiment request.
+        /// Provides additional information about the purpose or details of the experiment.
+        /// </summary>
+        public string Description { get; set; }
 
-          /// <summary>
-          /// Gets or sets the receipt associated with the message in the queue.
-          /// Used to manage the visibility and deletion of the message in the queue.
-          /// </summary>
-          public string MessageReceipt { get; set; }
+        /// <summary>
+        /// Gets or sets the unique identifier for the message in the queue.
+        /// Used to track and manage the specific message within the queue.
+        /// </summary>
+        public string MessageId { get; set; }
 
-          /// <summary>
-          /// Gets or sets the file path for the verify permanence input data.
-          /// This file contains the data used to verify the permanence in the experiment.
-          /// </summary>
-          public string VerifyPermanence_InputFile { get; set; }
-      }
-  }
-
+        /// <summary>
+        /// Gets or sets the receipt associated with the message in the queue.
+        /// Used to manage the visibility and deletion of the message in the queue.
+        /// </summary>
+        
+        public string VerifyPermanenceInputFile { get; set; }
+    }
+}
 ~~~
 
 This defines an internal class named `ExerimentRequestMessage` within the `MyExperiment` namespace. This class is designed to represent a request for an experiment and implements the `IExerimentRequest` interface. The class includes several properties that hold information relevant to the experiment:
 
 - **PopReceipt** : A string that helps manage the message in a queue, particularly for visibility and deletion.
 - **ExperimentId** : A unique identifier for the experiment.
-- **DecrementPermanence_InputFile** : The file path containing input data used to decrement permanence in the experiment.
+- **DecrementPermanenceInputFile** : The file path containing input data used to decrement permanence in the experiment.
 - **Name** : The name of the experiment request.
 - **Description** : A detailed description of the experiment.
 - **MessageId** : A unique identifier for the message in the queue.
 - **MessageReceipt** : Another string related to managing the message in the queue.
-- **VerifyPermanence_InputFile** : The file path containing input data used to verify permanence in the experiment.
+- **VerifyPermanenceInputFile** : The file path containing input data used to verify permanence in the experiment.
 
 This class is intended for use within a system that manages experiment requests, likely involving a message queue to handle different experiment tasks.
 
@@ -316,8 +311,8 @@ This class is intended for use within a system that manages experiment requests,
                               {
                                   request.MessageId = message.MessageId;
                                   request.PopReceipt = message.PopReceipt;
-                                  await Console.Out.WriteLineAsync($"Selected input file for DecrementPermanenceIfInactivePresynapticCells is : {request.DecrementPermanence_InputFile}");
-                                  await Console.Out.WriteLineAsync($"Selected input file for VerifyPermanenceBoundsAfterAdaptation is : {request.VerifyPermanence_InputFile}");
+                                  await Console.Out.WriteLineAsync($"Selected input file for DecrementPermanenceIfInactivePresynapticCells is : {request.DecrementPermanenceInputFile}");
+                                  await Console.Out.WriteLineAsync($"Selected input file for VerifyPermanenceBoundsAfterAdaptation is : {request.VerifyPermanenceInputFile}");
                                   return request;
                               }
                           }
@@ -404,8 +399,8 @@ Queue Message
     "ExperimentId": "001",
     "Name": "Adapt Segments",
     "Description": "You can write your own description",
-    "DecrementPermanence_InputFile": "json.json",
-    "VerifyPermanence_InputFile": "testcases.json"
+    "DecrementPermanenceInputFile": "json.json",
+    "VerifyPermanenceInputFile": "testcases.json"
 }
 ~~~
 
@@ -414,8 +409,8 @@ The JSON snippet represents a message format for an experiment request in a queu
 - **`ExperimentId`**: `"001"` - A unique identifier for the experiment.
 - **`Name`**: `"Adapt Segments"` - The name or title of the experiment.
 - **`Description`**: `"You can write your own description"` - A textual description of the experiment, which can be customized.
-- **`DecrementPermanence_InputFile`**: `"json.json"` - The file name of the input data used for the "decrement permanence" aspect of the experiment.
-- **`VerifyPermanence_InputFile`**: `"testcases.json"` - The file name of the input data used for verifying permanence in the experiment.
+- **`DecrementPermanenceInputFile`**: `"json.json"` - The file name of the input data used for the "decrement permanence" aspect of the experiment.
+- **`VerifyPermanenceInputFile`**: `"testcases.json"` - The file name of the input data used for verifying permanence in the experiment.
 
 ## 8. Our output of the experiment
 
@@ -610,10 +605,10 @@ namespace MyExperiment
         /// Runs the experiment asynchronously using the specified input files and folder.
         /// </summary>
         /// <param name="inputDataFolder">Folder containing input data files.</param>
-        /// <param name="DecrementPermanence_InputFile">File for decrementing permanence input.</param>
-        /// <param name="VerifyPermanence_InputFile">File for verifying permanence input.</param>
+        /// <param name="DecrementPermanenceInputFile">File for decrementing permanence input.</param>
+        /// <param name="VerifyPermanenceInputFile">File for verifying permanence input.</param>
         /// <returns>Returns the result of the experiment as an IExperimentResult.</returns>
-        public async Task<IExperimentResult> RunAsync(string inputDataFolder, string DecrementPermanence_InputFile, string VerifyPermanence_InputFile)
+        public async Task<IExperimentResult> RunAsync(string inputDataFolder, string DecrementPermanenceInputFile, string VerifyPermanenceInputFile)
         {
             string excelName = "table_Result.xlsx"; // Name of the Excel file to be created
             string excelFilePath = Path.Combine(Directory.GetCurrentDirectory(), excelName); // Full path to the Excel file
@@ -646,7 +641,7 @@ namespace MyExperiment
             // Run various unit tests and adapt segments as needed
             try
             {
-                testcases.testcaseAdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(DecrementPermanence_InputFile);
+                testcases.testcaseAdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(DecrementPermanenceInputFile);
                 testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceChangeForPreviousCycle();
                 testcases.testcaseAdaptSegments_UnitTest_VerifySegmentStateAfterMaxSynapsesPerSegment();
                 testcases.testcaseAdaptSegments_UnitTest_VerifySegmentAndActiveSegmentStateAfterAdaptation();
