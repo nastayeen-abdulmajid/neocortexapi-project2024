@@ -475,10 +475,12 @@ The JSON snippet represents a message format for an experiment request in a queu
 |     AdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells|     1700              |     15                       |
 |     AdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation        |      5356             |     340                      |
 
-~~~
+
+![Outputimage](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/CC-images/Output%20container.png)
 
 ![result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Output%20file.png)
 
+~~~
 using Azure;
 using Azure.Data.Tables;
 using MyCloudProject.Common;
@@ -747,7 +749,6 @@ The `Experiment` class, which implements the `IExperiment` interface, is designe
 - **RunAsync Method**: It deletes any existing Excel result file from the current directory.It runs a series of unit tests related to segment adaptation and permanence in an experimental setup using the provided input files. It creates an `ExperimentResult` object with the path to the generated Excel file, which contains the experiment results. 
 
 The method captures and logs any errors encountered during execution, ensuring robust error handling and logging throughout the experiment.
-
 
 ## 11. Describing our Result
 
