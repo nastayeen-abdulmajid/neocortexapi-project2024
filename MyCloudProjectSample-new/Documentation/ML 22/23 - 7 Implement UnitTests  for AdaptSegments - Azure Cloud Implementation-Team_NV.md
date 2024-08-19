@@ -436,6 +436,9 @@ The JSON snippet represents a message format for an experiment request in a queu
 |     AdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation        |      5356             |     340                      |
 
 ~~~
+
+![result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Output%20file.png)
+
 using Azure;
 using Azure.Data.Tables;
 using MyCloudProject.Common;
@@ -761,9 +764,6 @@ This method and related functions ensure that segments and synapses are dynamica
 
 5. After the experiment completes, you can navigate to blob container within storage account to access "result-files".
    
-![result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Output%20file.png)
-   
-
 ## 12. Describing our Result
 
 The result excel columns reperesents the following:
@@ -783,8 +783,6 @@ The result excel columns reperesents the following:
 | Queue storage             | trigger-queue          | 
 | Input Blob container      | training-files         | 
 | Output Blob container     | result-files           | 
-
-
 
  
 # References:
