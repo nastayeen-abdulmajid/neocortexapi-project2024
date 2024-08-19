@@ -707,51 +707,7 @@ namespace MyExperiment
 
             // Create an ExperimentResult instance to store the output
             var res = new ExperimentResult(this.config.GroupId, null);
-
-            // Run various unit tests and adapt segments as needed
-            try
-            {
-                testcases.testcaseAdaptSegments_UnitTest_DecrementPermanenceIfInactivePresynapticCells(DecrementPermanenceInputFile);
-                testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceChangeForPreviousCycle();
-                testcases.testcaseAdaptSegments_UnitTest_VerifySegmentStateAfterMaxSynapsesPerSegment();
-                testcases.testcaseAdaptSegments_UnitTest_VerifySegmentAndActiveSegmentStateAfterAdaptation();
-                testcases.testcaseAdaptSegments_UnitTest_VerifyAdaptationWhenMaxSynapsesPerSegmentIsReachedAndExceeded();
-                testcases.testcaseAdaptSegments_UnitTest_VerifySegmentDestructionWhenNoSynapseIsPresent();
-                testcases.testcaseAdaptSegments_UnitTest_PreservesSynapses_ForSmallNegativePermanenceValues();
-                testcases.testcaseAdaptSegments_UnitTest_VerifySynapseDestructionWithNegativePermanenceValuesAfterAdaptation();
-                testcases.testcaseAdaptSegments_UnitTest_EnsureAdaptSegmentThrowsExceptionWhenDistalDendriteIsNull();
-                testcases.testcaseAdaptSegments_UnitTest_CheckSynapseStateAfterAdaptatione();
-                testcases.testcaseAdaptSegments_UnitTest_TestPermanenceIncrement_BoundaryConstraint();
-                testcases.testcaseAdaptSegments_UnitTest_TestGetCells_ReturnsEmptyArrayForEmptyInput();
-                testcases.testcaseAdaptSegments_UnitTest_TestGetCells_ValidInput_ReturnsExpectedCellArray();
-                testcases.testcaseAdaptSegments_UnitTest_ComplexDoublePermanenceInput_MaxPermanenceReached();
-                testcases.testcaseAdaptSegments_UnitTest_VerifyRemovalOnMinimumPermanenceAdaptation();
-                testcases.testcaseAdaptSegments_UnitTest_VerifyDestructionOnLowPermanenceAdaptation();
-                testcases.testcaseAdaptSegments_UnitTest_VerifyStayOfSynapseAfterSegmentAdaptation();
-                testcases.testcaseAdaptSegments_UnitTest_TestInvalidArrayCells_WithInvalidArray_ThrowsIndexOutOfRangeException();
-                testcases.testcaseAdaptSegments_UnitTest_TestNullArrayCells_ThrowsException();
-                testcases.testcaseAdaptSegments_UnitTest_PreservesSynapses_ForVerySmallPermanenceValues();
-                testcases.testcaseAdaptSegments_UnitTest_PreservesSynapses_ForVeryLargePermanenceValues();
-                testcases.testcaseAdjustsSynapsePermanenceBasedOnPreviousActiveCells();
-                testcases.testcasePreservesSynapses_ForVeryLargeNegativePermanenceValues();
-                testcases.testcasePreservesSynapses_ForZeroPermanenceValues();
-                testcases.testcaseVerify_Emptysegement();
-                testcases.testcaseAdaptSegments_UnitTest_KillSegmentEvenIfOnlyone_is_left();
-                testcases.testcaseAdaptSegments_UnitTest_CheckIfSegmentSurvives();
-                testcases.testcaseAdaptSegments_UnitTest_VerifyPermanenceBoundsAfterAdaptation(VerifyPermanence_InputFile);
-
-                // Set the path of the output file in the result
-                res.OutputFiles = excelFilePath;
-                return res;
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex, "Error occurred during experiment execution");
-                throw;
-            }
-        }
-    }
-}
+...
 ~~~
 
 The `Experiment` class, which implements the `IExperiment` interface, is designed to run machine learning experiments in the cloud. It interacts with Azure services and uses configuration, storage, and logging facilities to manage and execute experiments. It initializes with configuration, a storage provider, and a logger.
