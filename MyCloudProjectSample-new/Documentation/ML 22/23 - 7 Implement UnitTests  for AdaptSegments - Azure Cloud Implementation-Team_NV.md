@@ -479,11 +479,11 @@ Output Image -
 ![Outputimage](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/CC-images/Output%20container.png)
 
 Our results - 
-![result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/Documentation/CC-images/Output%20file.png)
+![result](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/CC-images/result.png)
 
 The comprehensive suite of unit tests for the adapt segments method has been successfully executed, with all test cases passing validation.
 
-![NumberOfTests](https://private-user-images.githubusercontent.com/148900873/318230643-9797a078-b282-4038-a9b5-360836ad1d6c.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjQwNzQ5ODgsIm5iZiI6MTcyNDA3NDY4OCwicGF0aCI6Ii8xNDg5MDA4NzMvMzE4MjMwNjQzLTk3OTdhMDc4LWIyODItNDAzOC1hOWI1LTM2MDgzNmFkMWQ2Yy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwODE5JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDgxOVQxMzM4MDhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yZDAwMWNmZmQ1NTVlODU4MWI4MDU0MjdlMjdhZjUzM2UyN2Q3ZDE5NmQyZmYzODU0YWFiM2Q3MjRiMjlmY2QzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.l1PPw-9OHi5ysFSwMrBFAzOPE8y2B5SXLFB4I3nFAjk)
+![Graphical representation](https://github.com/nastayeen-abdulmajid/neocortexapi-project2024/blob/master/MyCloudProjectSample-new/CC-images/graph.jpg)
 
 Code Coverage check:
 Using JetBrains Rider, we have achieved 100% code coverage for the unit testing of the adapt segments method. Every line of code within the method has been executed at least once during testing, ensuring thorough validation of its behavior under various scenarios: By thoroughly testing the adaptation process, including synapse strengthening, weakening, and removal, we ensure that the temporal memory can effectively learn and adapt to patterns in input data over time.
